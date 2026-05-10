@@ -472,7 +472,7 @@ function renderQuestion() {
         <div class="question-signs-label">${matchedSigns.length > 1 ? 'Aktuelle skilt:' : 'Aktuelt skilt:'}</div>
         ${matchedSigns.map(s => `
           <div class="question-sign-item">
-            <img src="${s.img}" alt="${s.name}" onerror="this.style.display='none'">
+            <div style="display:inline-flex;align-items:center;justify-content:center">${renderSignShape(s, 75)}</div>
             <span>${s.name}</span>
           </div>
         `).join('')}
@@ -817,13 +817,6 @@ function renderSignShape(sign, size = 90) {
   const s = size;
   const c = s / 2;
 
-  if (sign.img) {
-    const sym = (sign.symbol || '?').replace(/"/g, '&quot;');
-    return `<img src="${sign.img}" alt="${sign.name}" width="${s}" height="${s}"
-      style="object-fit:contain;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));display:block"
-      onerror="this.outerHTML='<span style=&quot;font-size:2rem;display:flex;align-items:center;justify-content:center;width:${s}px;height:${s}px&quot;>${sym}</span>'">`;
-  }
-
   if (sign.shape === 'triangle') {
     const pad = s * 0.07;
     const bw = s * 0.09;
@@ -891,7 +884,42 @@ function renderSignShape(sign, size = 90) {
     </svg>`;
   }
 
-  return `<div style="font-size:2rem">${sign.symbol}</div>`;
+  if (sign.shape === 'diamond-stripe') {
+    const pts = `${c},${s*.08} ${s*.92},${c} ${c},${s*.92} ${s*.08},${c}`;
+    const ipts = `${c},${s*.23} ${s*.77},${c} ${c},${s*.77} ${s*.23},${c}`;
+    return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <polygon points="${pts}" fill="#f0a500"/>
+      <polygon points="${ipts}" fill="white"/>
+      <line x1="${s*.28}" y1="${c}" x2="${s*.72}" y2="${c}" stroke="#1a1a2e" stroke-width="${s*.1}" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (sign.shape === 'priority-rect') {
+    return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect x="2" y="2" width="${s-4}" height="${s-4}" rx="5" fill="#1a1a2e"/>
+      <text x="${c}" y="${s*.42}" text-anchor="middle" dominant-baseline="central" font-size="${s*.38}" fill="white">→</text>
+      <text x="${c}" y="${s*.72}" text-anchor="middle" dominant-baseline="central" font-size="${s*.22}" fill="#e74c3c">←</text>
+    </svg>`;
+  }
+
+  if (sign.shape === 'rect-blue') {
+    return `<svg width="${s}" height="${s*.72}" viewBox="0 0 ${s} ${s*.72}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect width="${s}" height="${s*.72}" rx="5" fill="#1a5276"/>
+      <path d="M${s*.18} ${s*.62} L${c-s*.04} ${s*.1} M${c+s*.04} ${s*.1} L${s*.82} ${s*.62}" fill="none" stroke="white" stroke-width="${s*.09}" stroke-linecap="round"/>
+      <line x1="${c}" y1="${s*.62}" x2="${c}" y2="${s*.1}" stroke="white" stroke-width="${s*.04}" stroke-dasharray="${s*.07},${s*.05}"/>
+    </svg>`;
+  }
+
+  if (sign.shape === 'rect-gray') {
+    return `<svg width="${s}" height="${s*.72}" viewBox="0 0 ${s} ${s*.72}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect width="${s}" height="${s*.72}" rx="5" fill="#7f8c8d"/>
+      <path d="M${s*.18} ${s*.62} L${c-s*.04} ${s*.1} M${c+s*.04} ${s*.1} L${s*.82} ${s*.62}" fill="none" stroke="white" stroke-width="${s*.09}" stroke-linecap="round"/>
+      <line x1="${c}" y1="${s*.62}" x2="${c}" y2="${s*.1}" stroke="white" stroke-width="${s*.04}" stroke-dasharray="${s*.07},${s*.05}"/>
+      <line x1="${s*.1}" y1="${s*.65}" x2="${s*.9}" y2="${s*.07}" stroke="white" stroke-width="${s*.07}" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  return `<div style="font-size:2rem">${sign.symbol || '?'}</div>`;
 }
 
 // Road situation diagrams for quiz questions
