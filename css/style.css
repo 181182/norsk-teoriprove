@@ -1491,3 +1491,50 @@ nav { display: flex; gap: 4px; }
 .scroll-top:hover { transform: translateY(-3px); background: var(--blue-mid); }
 
 /* Category colors applied via JS inline style --card-color */
+
+/* Sign display in quiz questions */
+.question-signs {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+.question-signs-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+.question-sign-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.question-sign-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+.question-sign-item span {
+  font-size: 0.7rem;
+  color: #374151;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Scenario diagram container */
+.question-diagram {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+}

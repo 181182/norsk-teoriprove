@@ -462,6 +462,28 @@ function renderQuestion() {
     }
   }
 
+  // Show sign images if question references signs
+  const signContainer = document.getElementById('question-signs');
+  if (q.signs && q.signs.length > 0 && signContainer) {
+    const matchedSigns = q.signs.map(sid => SIGNS.find(s => s.id === sid)).filter(Boolean);
+    if (matchedSigns.length > 0) {
+      signContainer.innerHTML = `
+        <div class="question-signs-label">${matchedSigns.length > 1 ? 'Aktuelle skilt:' : 'Aktuelt skilt:'}</div>
+        ${matchedSigns.map(s => `
+          <div class="question-sign-item">
+            <img src="${s.img}" alt="${s.name}" onerror="this.style.display='none'">
+            <span>${s.name}</span>
+          </div>
+        `).join('')}
+      `;
+      signContainer.style.display = 'flex';
+    } else {
+      signContainer.style.display = 'none';
+    }
+  } else if (signContainer) {
+    signContainer.style.display = 'none';
+  }
+
   document.getElementById('question-text').textContent = q.question;
 
   // Combo display
@@ -926,6 +948,212 @@ const ROAD_DIAGRAMS = {
     <text x="20" y="65" font-size="18">🚗</text>
     <text x="110" y="65" font-size="18">🚜</text>
     <text x="120" y="148" text-anchor="middle" font-size="11" fill="#333">Stiplet linje = forbikjøring tillatt ✓</text>
+  </svg>`,
+
+  roundabout_2lane: () => `<svg viewBox="0 0 300 300" width="280" height="280" style="border-radius:10px;display:block">
+    <style>
+      @keyframes pulse-warn { 0%,100%{opacity:0.3} 50%{opacity:0.9} }
+      .pulse-zone { animation: pulse-warn 1.5s infinite; }
+    </style>
+    <rect width="300" height="300" fill="#4d7c5a"/>
+    <circle cx="150" cy="150" r="118" fill="#6b7280"/>
+    <circle cx="150" cy="150" r="78" fill="#4d7c5a"/>
+    <circle cx="150" cy="150" r="98" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="10,8"/>
+    <circle cx="150" cy="150" r="45" fill="#3d6b4a" stroke="white" stroke-width="2"/>
+    <text x="150" y="154" text-anchor="middle" font-size="10" fill="white" font-weight="600">MIDTØY</text>
+    <rect x="130" y="0" width="40" height="70" fill="#6b7280"/>
+    <line x1="150" y1="0" x2="150" y2="70" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <rect x="210" y="130" width="90" height="40" fill="#6b7280"/>
+    <line x1="210" y1="150" x2="300" y2="150" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <rect x="130" y="210" width="40" height="90" fill="#6b7280"/>
+    <line x1="150" y1="210" x2="150" y2="300" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <rect x="0" y="130" width="70" height="40" fill="#6b7280"/>
+    <line x1="0" y1="150" x2="70" y2="150" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <path d="M 195 90 A 50 50 0 0 1 255 150" fill="none" stroke="#fbbf24" stroke-width="6" opacity="0.5" class="pulse-zone"/>
+    <g transform="translate(150,225)">
+      <rect x="-12" y="-8" width="24" height="16" rx="3" fill="#dc2626"/>
+      <text x="0" y="5" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text>
+    </g>
+    <path d="M 155 210 Q 165 195 175 185 Q 210 160 230 150" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#ya)"/>
+    <g transform="translate(240,150)">
+      <rect x="-14" y="-8" width="28" height="16" rx="3" fill="#1d4ed8"/>
+      <text x="0" y="5" text-anchor="middle" font-size="7" fill="white">BIL</text>
+    </g>
+    <circle cx="215" cy="150" r="12" fill="none" stroke="#ef4444" stroke-width="2.5" class="pulse-zone"/>
+    <text x="215" y="154" text-anchor="middle" font-size="11" fill="#ef4444" class="pulse-zone">!</text>
+    <rect x="2" y="2" width="120" height="52" rx="4" fill="rgba(0,0,0,0.55)"/>
+    <rect x="8" y="8" width="12" height="8" rx="2" fill="#dc2626"/>
+    <text x="24" y="16" font-size="8" fill="white">DU (indre felt)</text>
+    <rect x="8" y="20" width="12" height="8" rx="2" fill="#1d4ed8"/>
+    <text x="24" y="28" font-size="8" fill="white">Annen bil (ytre felt)</text>
+    <text x="8" y="42" font-size="8" fill="#fbbf24">Sjekk blindsone!</text>
+    <text x="8" y="52" font-size="7" fill="#aaa">Vike for ytre felt ved skift</text>
+    <defs><marker id="ya" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  </svg>`,
+
+  roundabout_enter: () => `<svg viewBox="0 0 300 260" width="280" height="260" style="border-radius:10px;display:block">
+    <style>@keyframes blink2{0%,100%{opacity:1}50%{opacity:0.2}}.blink2{animation:blink2 1.2s infinite}</style>
+    <rect width="300" height="260" fill="#4d7c5a"/>
+    <circle cx="150" cy="130" r="95" fill="#6b7280"/>
+    <circle cx="150" cy="130" r="60" fill="#3d6b4a" stroke="white" stroke-width="2"/>
+    <text x="150" y="134" text-anchor="middle" font-size="10" fill="white">MIDTØY</text>
+    <rect x="130" y="35" width="40" height="60" fill="#6b7280"/>
+    <rect x="210" y="110" width="90" height="40" fill="#6b7280"/>
+    <rect x="130" y="165" width="40" height="95" fill="#6b7280"/>
+    <rect x="0" y="110" width="65" height="40" fill="#6b7280"/>
+    <line x1="150" y1="35" x2="150" y2="95" stroke="white" stroke-width="1" stroke-dasharray="6,5"/>
+    <line x1="210" y1="130" x2="300" y2="130" stroke="white" stroke-width="1" stroke-dasharray="6,5"/>
+    <line x1="0" y1="130" x2="65" y2="130" stroke="white" stroke-width="1" stroke-dasharray="6,5"/>
+    <g transform="translate(150,230)">
+      <rect x="-11" y="-7" width="22" height="14" rx="3" fill="#dc2626"/>
+      <text x="0" y="4" text-anchor="middle" font-size="7" fill="white" font-weight="700">DU</text>
+    </g>
+    <path d="M150,222 L150,168" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#yb)"/>
+    <g transform="translate(165,75) rotate(-30)">
+      <rect x="-12" y="-7" width="24" height="14" rx="3" fill="#1d4ed8"/>
+      <text x="0" y="4" text-anchor="middle" font-size="7" fill="white">BIL</text>
+    </g>
+    <circle cx="150" cy="165" r="14" fill="#ef4444" class="blink2"/>
+    <text x="150" y="170" text-anchor="middle" font-size="11" fill="white" font-weight="900">!</text>
+    <text x="150" y="250" text-anchor="middle" font-size="9" fill="#fbbf24">Vikeplikt for trafikk inne!</text>
+    <defs><marker id="yb" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  </svg>`,
+
+  motorway_merge: () => `<svg viewBox="0 0 340 200" width="320" height="200" style="border-radius:10px;display:block">
+    <rect width="340" height="200" fill="#4d7c5a"/>
+    <rect x="0" y="20" width="340" height="100" fill="#6b7280"/>
+    <line x1="0" y1="20" x2="340" y2="20" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="120" x2="340" y2="120" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="70" x2="340" y2="70" stroke="white" stroke-width="1.5" stroke-dasharray="14,10"/>
+    <polygon points="120,120 340,120 340,160 200,160" fill="#6b7280"/>
+    <line x1="200" y1="160" x2="340" y2="120" stroke="white" stroke-width="2"/>
+    <line x1="200" y1="160" x2="340" y2="140" stroke="white" stroke-width="1.5" stroke-dasharray="10,8"/>
+    <g transform="translate(30,35)"><rect width="36" height="20" rx="3" fill="#1d4ed8"/><text x="18" y="14" text-anchor="middle" font-size="8" fill="white">110</text></g>
+    <g transform="translate(140,35)"><rect width="36" height="20" rx="3" fill="#1d4ed8"/><text x="18" y="14" text-anchor="middle" font-size="8" fill="white">110</text></g>
+    <g transform="translate(240,35)"><rect width="36" height="20" rx="3" fill="#1d4ed8"/><text x="18" y="14" text-anchor="middle" font-size="8" fill="white">110</text></g>
+    <g transform="translate(220,133)">
+      <rect width="36" height="20" rx="3" fill="#dc2626"/>
+      <text x="18" y="13" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text>
+    </g>
+    <path d="M252,133 Q270,120 285,105" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="5,4" marker-end="url(#yc)"/>
+    <text x="170" y="17" text-anchor="middle" font-size="9" fill="white">MOTORVEI – Kjøreretning</text>
+    <text x="270" y="185" text-anchor="middle" font-size="9" fill="white">Akselerasjonsfelt – vike!</text>
+    <rect x="2" y="125" width="115" height="30" rx="4" fill="rgba(0,0,0,0.6)"/>
+    <text x="8" y="137" font-size="8" fill="white">DU har vikeplikt</text>
+    <text x="8" y="149" font-size="7" fill="#fbbf24">Øk fart til motorveifart</text>
+    <defs><marker id="yc" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  </svg>`,
+
+  motorway_lane_change: () => `<svg viewBox="0 0 340 160" width="320" height="160" style="border-radius:10px;display:block">
+    <rect width="340" height="160" fill="#4d7c5a"/>
+    <rect x="0" y="20" width="340" height="120" fill="#6b7280"/>
+    <line x1="0" y1="20" x2="340" y2="20" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="140" x2="340" y2="140" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="80" x2="340" y2="80" stroke="white" stroke-width="1.5" stroke-dasharray="14,10"/>
+    <text x="15" y="57" font-size="9" fill="rgba(255,255,255,0.5)">FIL 2</text>
+    <text x="15" y="117" font-size="9" fill="rgba(255,255,255,0.5)">FIL 1</text>
+    <g transform="translate(30,90)"><rect width="40" height="22" rx="3" fill="#92400e"/><text x="20" y="15" text-anchor="middle" font-size="8" fill="white">Bil</text></g>
+    <g transform="translate(160,30)"><rect width="40" height="22" rx="3" fill="#dc2626"/><text x="20" y="15" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text></g>
+    <path d="M180,52 Q185,65 185,80 Q185,90 185,100" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#yd)"/>
+    <g transform="translate(160,90)" opacity="0.4"><rect width="40" height="22" rx="3" fill="#dc2626" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,3"/><text x="20" y="15" text-anchor="middle" font-size="7" fill="white">HIT</text></g>
+    <text x="170" y="155" text-anchor="middle" font-size="9" fill="#fbbf24">Hold-til-høyre! Flytt til fil 1 etter forbikjøring.</text>
+    <defs><marker id="yd" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#fbbf24"/></marker></defs>
+  </svg>`,
+
+  t_junction_priority: () => `<svg viewBox="0 0 280 240" width="260" height="240" style="border-radius:10px;display:block">
+    <style>@keyframes blink3{0%,100%{opacity:1}50%{opacity:0.3}}.blink3{animation:blink3 1.5s infinite}</style>
+    <rect width="280" height="240" fill="#4d7c5a"/>
+    <rect x="0" y="90" width="280" height="60" fill="#6b7280"/>
+    <line x1="0" y1="90" x2="280" y2="90" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="150" x2="280" y2="150" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="120" x2="280" y2="120" stroke="white" stroke-width="1.5" stroke-dasharray="12,9"/>
+    <rect x="110" y="0" width="60" height="93" fill="#6b7280"/>
+    <line x1="110" y1="0" x2="110" y2="90" stroke="white" stroke-width="2"/>
+    <line x1="170" y1="0" x2="170" y2="90" stroke="white" stroke-width="2"/>
+    <line x1="140" y1="0" x2="140" y2="75" stroke="white" stroke-width="1" stroke-dasharray="8,7"/>
+    <g transform="translate(50,108) rotate(45)">
+      <rect x="-13" y="-13" width="26" height="26" fill="#f59e0b" stroke="#92400e" stroke-width="2"/>
+    </g>
+    <text x="50" y="132" text-anchor="middle" font-size="7" fill="white">Forkjørs-</text>
+    <text x="50" y="140" text-anchor="middle" font-size="7" fill="white">veg</text>
+    <g transform="translate(165,100)"><rect width="40" height="20" rx="3" fill="#1d4ed8"/><text x="20" y="13" text-anchor="middle" font-size="7" fill="white">80 km/t</text></g>
+    <g transform="translate(120,40)"><rect width="30" height="18" rx="3" fill="#dc2626"/><text x="15" y="12" text-anchor="middle" font-size="7" fill="white" font-weight="700">DU</text></g>
+    <line x1="110" y1="88" x2="170" y2="88" stroke="white" stroke-width="3" stroke-dasharray="5,4"/>
+    <circle cx="140" cy="88" r="10" fill="#ef4444" class="blink3"/>
+    <text x="140" y="92" text-anchor="middle" font-size="8" fill="white" font-weight="900">!</text>
+    <text x="140" y="230" text-anchor="middle" font-size="9" fill="#fbbf24">Sideveg: Vikeplikt for forkjørsveien!</text>
+    <rect x="185" y="100" width="90" height="22" rx="3" fill="rgba(0,0,0,0.55)"/>
+    <text x="230" y="115" text-anchor="middle" font-size="8" fill="white">Forkjørsrett</text>
+  </svg>`,
+
+  crossroads_four_way: () => `<svg viewBox="0 0 260 260" width="250" height="260" style="border-radius:10px;display:block">
+    <rect width="260" height="260" fill="#4d7c5a"/>
+    <rect x="100" y="0" width="60" height="260" fill="#6b7280"/>
+    <rect x="0" y="100" width="260" height="60" fill="#6b7280"/>
+    <line x1="130" y1="0" x2="130" y2="97" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="130" y1="163" x2="130" y2="260" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="0" y1="130" x2="97" y2="130" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="163" y1="130" x2="260" y2="130" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="100" y1="0" x2="100" y2="100" stroke="white" stroke-width="2"/>
+    <line x1="160" y1="0" x2="160" y2="100" stroke="white" stroke-width="2"/>
+    <line x1="100" y1="160" x2="100" y2="260" stroke="white" stroke-width="2"/>
+    <line x1="160" y1="160" x2="160" y2="260" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="100" x2="100" y2="100" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="160" x2="100" y2="160" stroke="white" stroke-width="2"/>
+    <line x1="160" y1="100" x2="260" y2="100" stroke="white" stroke-width="2"/>
+    <line x1="160" y1="160" x2="260" y2="160" stroke="white" stroke-width="2"/>
+    <g transform="translate(22,110)"><rect width="30" height="18" rx="3" fill="#dc2626"/><text x="15" y="12" text-anchor="middle" font-size="7" fill="white" font-weight="700">DU</text></g>
+    <g transform="translate(200,110)"><rect width="30" height="18" rx="3" fill="#1d4ed8"/><text x="15" y="12" text-anchor="middle" font-size="7" fill="white">BIL</text></g>
+    <path d="M52,115 Q90,115 115,100 Q125,90 128,70" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#ye)"/>
+    <path d="M200,119 L165,119" stroke="#1d4ed8" stroke-width="2" marker-end="url(#yf)"/>
+    <circle cx="130" cy="112" r="14" fill="rgba(239,68,68,0.25)" stroke="#ef4444" stroke-width="2"/>
+    <text x="130" y="116" text-anchor="middle" font-size="10" fill="#ef4444">!</text>
+    <text x="130" y="250" text-anchor="middle" font-size="8" fill="#fbbf24">Venstresving: Vikeplikt for møtende!</text>
+    <defs>
+      <marker id="ye" markerWidth="5" markerHeight="5" refX="3" refY="3" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#fbbf24"/></marker>
+      <marker id="yf" markerWidth="5" markerHeight="5" refX="3" refY="3" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#1d4ed8"/></marker>
+    </defs>
+  </svg>`,
+
+  pedestrian_crossing_scenario: () => `<svg viewBox="0 0 280 200" width="270" height="200" style="border-radius:10px;display:block">
+    <style>@keyframes walk{0%{transform:translateX(-5px)}50%{transform:translateX(5px)}100%{transform:translateX(-5px)}}.walk{animation:walk 0.8s infinite}</style>
+    <rect width="280" height="200" fill="#4d7c5a"/>
+    <rect x="0" y="60" width="280" height="100" fill="#6b7280"/>
+    <line x1="0" y1="60" x2="280" y2="60" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="160" x2="280" y2="160" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="110" x2="280" y2="110" stroke="white" stroke-width="1.5" stroke-dasharray="12,9"/>
+    <rect x="120" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <rect x="134" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <rect x="148" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <rect x="162" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <rect x="176" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <rect x="190" y="62" width="10" height="96" fill="white" opacity="0.85"/>
+    <g class="walk">
+      <text x="165" y="90" font-size="22">&#x1F6B6;&#x200D;&#x2640;&#xFE0F;</text>
+    </g>
+    <g transform="translate(30,72)"><rect width="52" height="30" rx="4" fill="#dc2626"/><text x="26" y="19" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text></g>
+    <line x1="85" y1="78" x2="119" y2="78" stroke="#fbbf24" stroke-width="3" stroke-dasharray="4,3"/>
+    <line x1="85" y1="95" x2="119" y2="95" stroke="#fbbf24" stroke-width="3" stroke-dasharray="4,3"/>
+    <rect x="90" y="115" width="25" height="14" rx="2" fill="#ef4444"/>
+    <text x="102" y="126" text-anchor="middle" font-size="8" fill="white" font-weight="700">STOPP</text>
+    <text x="140" y="188" text-anchor="middle" font-size="9" fill="#fbbf24">Fotgjenger i gangfelt = full stopp!</text>
+  </svg>`,
+
+  overtaking_scenario: () => `<svg viewBox="0 0 340 180" width="320" height="180" style="border-radius:10px;display:block">
+    <rect width="340" height="180" fill="#4d7c5a"/>
+    <rect x="0" y="30" width="340" height="120" fill="#6b7280"/>
+    <line x1="0" y1="30" x2="340" y2="30" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="150" x2="340" y2="150" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="90" x2="200" y2="90" stroke="white" stroke-width="3"/>
+    <line x1="200" y1="90" x2="340" y2="90" stroke="white" stroke-width="2" stroke-dasharray="12,8"/>
+    <g transform="translate(100,100)"><rect width="58" height="30" rx="3" fill="#92400e"/><text x="29" y="19" text-anchor="middle" font-size="7" fill="white">40km/t</text></g>
+    <g transform="translate(30,100)"><rect width="40" height="28" rx="3" fill="#dc2626"/><text x="20" y="18" text-anchor="middle" font-size="7" fill="white" font-weight="700">DU</text></g>
+    <g transform="translate(220,42)"><rect width="40" height="26" rx="3" fill="#1d4ed8"/><text x="20" y="17" text-anchor="middle" font-size="7" fill="white">BIL</text></g>
+    <text x="100" y="25" text-anchor="middle" font-size="8" fill="#ef4444">HELTRUKKEN = Forbudt!</text>
+    <text x="270" y="25" text-anchor="middle" font-size="8" fill="#22c55e">Stiplet = Tillatt</text>
+    <text x="100" y="94" text-anchor="middle" font-size="11" fill="rgba(255,80,80,0.8)">X</text>
+    <text x="270" y="94" text-anchor="middle" font-size="11" fill="rgba(0,220,0,0.8)">V</text>
+    <text x="170" y="170" text-anchor="middle" font-size="8" fill="#fbbf24">Heltrukken midtlinje: ALDRI krysse for forbikjøring</text>
   </svg>`,
 };
 

@@ -876,6 +876,302 @@ const QUESTIONS = [
     correct: 1,
     explanation: 'EU-kontroll (Periodisk kjøretøykontroll) er obligatorisk. Første gang 4 år etter registrering, deretter hvert 2. år. Sjekker: bremser, lys, dekk, karosseri, styring, eksos, og mer. Bestås ikke = bilen kan ikke brukes lovlig.'
   },
+
+  // ---- RUNDKJØRING (111-115) ----
+  {
+    id: 111, category: 'vikeplikt', difficulty: 'middels',
+    scenario: 'Du kjører inn i en rundkjøring.',
+    diagram: 'roundabout_enter',
+    question: 'Hvem har du vikeplikt for når du kjører inn i en rundkjøring?',
+    options: ['Ingen – du kjører bare inn', 'All trafikk som allerede er inne i rundkjøringen', 'Bare biler til høyre for deg inne i rundkjøringen', 'Biler som skal ut av rundkjøringen'],
+    correct: 1,
+    explanation: 'Du har alltid vikeplikt for all trafikk som allerede er inne i rundkjøringen. Vent til det er klart, deretter kjør inn uten å stoppe unødvendig.'
+  },
+  {
+    id: 112, category: 'vikeplikt', difficulty: 'vanskelig',
+    scenario: 'Du er i det indre feltet (venstre fil) i en to-felts rundkjøring og vil ta neste avkjørsel.',
+    diagram: 'roundabout_2lane',
+    question: 'Hva må du gjøre for å ta avkjørselen fra indre felt?',
+    options: ['Kjøre rett ut uten videre – indre felt har alltid forkjørsrett', 'Blinke til høyre, sjekke speil og blindsone, flytte til ytre felt, deretter ta avkjørselen', 'Bare blinke og kjøre ut', 'Stoppe i indre felt og vente til det er klart'],
+    correct: 1,
+    explanation: 'Fra indre felt MÅ du bytte til ytre felt for å ta avkjørselen. Prosessen: blink til høyre → sjekk speil → sjekk blindsone → flytt til ytre felt → ta avkjørselen. Du har vikeplikt for biler i ytre felt under feltskiftet.'
+  },
+  {
+    id: 113, category: 'vikeplikt', difficulty: 'vanskelig',
+    diagram: 'roundabout_2lane',
+    question: 'Du kjører i ytre felt (høyre fil) i en to-felts rundkjøring. Bilen inne i indre felt skal bytte til ditt felt. Hvem har vikeplikt?',
+    options: ['Du i ytre felt – du skal jo ut uansett', 'Bilen som bytter fra indre til ytre felt har vikeplikt', 'Dere har lik vikeplikt', 'Bilen i indre felt har alltid forkjørsrett'],
+    correct: 1,
+    explanation: 'Den som bytter felt har alltid vikeplikt. Bilen i indre felt som vil flytte til ytre felt MÅ vike for deg som allerede er i ytre felt. Dette er et vanlig farlig punkt i to-felts rundkjøringer.'
+  },
+  {
+    id: 114, category: 'vikeplikt', difficulty: 'middels',
+    scenario: 'Du nærmer deg en rundkjøring og ser skiltet med tre piler i sirkel (påbudsskilt for rundkjøring).',
+    signs: ['s16'],
+    question: 'Hva betyr dette skiltet og hva gjør du?',
+    options: ['Det er et anbefaling – du kan kjøre som du vil', 'Du SKAL kjøre mot venstre rundt midtøya og har vikeplikt for trafikk inne', 'Du har forkjørsrett i rundkjøringen', 'Du skal stoppe og vente til det er tomt'],
+    correct: 1,
+    explanation: 'Rundkjøringsskiltet (408) er et PÅBUDSSKILT – du MÅ kjøre mot venstre rundt midtøya. Du har vikeplikt for all trafikk som allerede er inne i rundkjøringen.'
+  },
+  {
+    id: 115, category: 'vikeplikt', difficulty: 'lett',
+    question: 'Hva betyr det hvite pilskiltet på vegbanen inne i en rundkjøring?',
+    options: ['Du kan kjøre i hvilken som helst retning', 'Du skal kjøre mot venstre rundt midtøya', 'Du skal kjøre rett frem ut av rundkjøringen', 'Du har vikeplikt'],
+    correct: 1,
+    explanation: 'De hvite buepilene på vegbanen i rundkjøringen indikerer at du skal kjøre mot venstre (mot klokken). Dette er en obligatorisk kjøreretning.'
+  },
+
+  // ---- MOTORVEI (116-120) ----
+  {
+    id: 116, category: 'trafikkregler', difficulty: 'middels',
+    scenario: 'Du kjører inn på motorveien via innkjøringsrampen (akselerasjonsfeltet).',
+    diagram: 'motorway_merge',
+    question: 'Hvem har vikeplikt på akselerasjonsfeltet?',
+    options: ['Du har forkjørsrett – de på motorveien må slippe deg inn', 'Du på akselerasjonsfeltet har vikeplikt for trafikk på motorveien', 'Dere har lik rett', 'Den som kjører raskest har forkjørsrett'],
+    correct: 1,
+    explanation: 'Du har alltid vikeplikt når du kjører inn på motorveien. Tilpass farten i akselerasjonsfeltet til motorveiens hastighet og finn en luke i trafikken. Aldri STOPP i akselerasjonsfeltet med mindre det er helt nødvendig.'
+  },
+  {
+    id: 117, category: 'trafikkregler', difficulty: 'middels',
+    question: 'Du kjører på motorveien. I hvilke tilfeller er det tillatt å stoppe?',
+    options: ['For å ta en pause', 'Aldri – stopp på motorvei er kun tillatt ved nød, ulykke eller teknisk svikt', 'Hvis du trenger å sjekke kartet', 'På nødstopper (parkeringsplasser langs motorveien)'],
+    correct: 1,
+    explanation: 'Stopp på motorvei er FORBUDT bortsett fra: nødsituasjoner, ulykker og teknisk svikt. Nødstopper ved siden av motorveien er til nødssituasjoner, ikke for pause. Bruk rasteplasser (avkjørsler med parkeringsskilt) for pauser.'
+  },
+  {
+    id: 118, category: 'trafikkregler', difficulty: 'vanskelig',
+    scenario: 'Du kjører i fil 2 (venstre fil) på en motorvei med to filer. Fil 1 er fri.',
+    diagram: 'motorway_lane_change',
+    question: 'Hva er riktig atferd?',
+    options: ['Du kan bli i fil 2 om du synes det er greiest', 'Du SKAL flytte tilbake til fil 1 (høyre fil) så snart det er mulig', 'Du skal bremse ned til 80 km/t', 'Du kan velge selv om du kjører mer enn 90 km/t'],
+    correct: 1,
+    explanation: 'Hold-til-høyre-regelen: På motorvei (og andre flerfeltsveger) skal du kjøre i det høyreste ledige feltet. Fil 2 brukes kun til forbikjøring. Etter forbikjøring SKAL du tilbake til fil 1 (høyre felt). Å bli i venstre felt unødvendig er ulovlig.'
+  },
+  {
+    id: 119, category: 'trafikkregler', difficulty: 'middels',
+    question: 'Hva er laveste tillatte hastighet på norsk motorvei?',
+    options: ['Det er ingen minimumshastighet', '60 km/t', '40 km/t', '80 km/t'],
+    correct: 0,
+    explanation: 'Det er ingen fast minimumshastighet angitt i loven for motorveier i Norge (selv om du ikke skal hindre trafikken unødvendig). Derimot er maksimumshastigheten normalt 110 km/t (noen steder 120 km/t). Kjør alltid med sikker fart.'
+  },
+  {
+    id: 120, category: 'trafikkregler', difficulty: 'vanskelig',
+    question: 'En ambulanse nærmer seg bakfra med blålys og sirene på motorveien. Hva gjør du?',
+    options: ['Kjør raskere for å komme av veien', 'Hold samme hastighet og fil', 'Flytt deg til høyre og reduser fart for å slippe nødetatene forbi', 'Stopp umiddelbart i ditt felt'],
+    correct: 2,
+    explanation: 'Når utrykningskjøretøy (ambulanse, brannbil, politi) nærmer seg med blålys/sirene: flytt deg til høyre i ditt felt og reduser farten. Gi dem plass. Stopp aldri plutselig midt i vegen. Aldri kjøre raskere enn lovlig fart selv om du prøver å hjelpe.'
+  },
+
+  // ---- SITUASJONSOPPGAVER (121-130) ----
+  {
+    id: 121, category: 'vikeplikt', difficulty: 'middels',
+    scenario: 'Du kjører på en landeveg. Foran deg ser du en ambulanse med blålys stående på siden av vegen ved en ulykke.',
+    question: 'Hva plikter du å gjøre ved passeringen?',
+    options: ['Kjøre i normal hastighet – de er allerede parkert', 'Redusere farten kraftig og om nødvendig endre kurs for å gi god nok sikkerhetsavstand', 'Stoppe og se om du kan hjelpe uansett', 'Blinke for å vise at du har sett dem'],
+    correct: 1,
+    explanation: 'Loven krever at du reduserer farten og gir god sikkerhetsavstand ved ulykkessteder med nødetatene til stede. Pass-regelen: Reduser fart markant (til 30-40 km/t er vanlig), gi god sideavstand, og ikke skape farlige situasjoner for redningsmanskapene.'
+  },
+  {
+    id: 122, category: 'vikeplikt', difficulty: 'vanskelig',
+    scenario: 'Du kjører i en gate. Et barn springer ut mellom to parkerte biler 15 meter foran deg.',
+    diagram: 'pedestrian_crossing_scenario',
+    question: 'Hva gjør du?',
+    options: ['Blås i hornet og oppretthold farten – barnet vil stoppe', 'Bremse kraftig, bruk hornet for å varsle, og stopp om nødvendig', 'Sving til venstre for å unngå', 'Bremse litt og håpe at barnet ser deg'],
+    correct: 1,
+    explanation: 'Alltid forberedt på uforutsette hendelser – spesielt nær skoler og boligområder. Bremse kraftig er riktig; bruk hornet som et varsel (ikke aggresjon). Prioriter alltid liv over materielle skader. Kjør sakte i gater med parkerte biler nettopp for dette.'
+  },
+  {
+    id: 123, category: 'trafikkregler', difficulty: 'middels',
+    scenario: 'Du er på veg til jobb. Det er glatt, og bilen din begynner å skli i en kurve.',
+    question: 'Hva er riktig reaksjon ved skrens/glidning?',
+    options: ['Bremse hardt og sving rattet motsatt veg', 'Slipp gassen, styr rolig i den retningen du vil bilen skal gå, unngå brå bevegelser', 'Gass på for å "kjøre seg ut" av skrenset', 'Bremse hardt uten å styre'],
+    correct: 1,
+    explanation: 'Ved skrens: 1) Slipp gassen umiddelbart. 2) Styr rolig i den retningen du ønsker å kjøre (ikke "mot" skrenset). 3) Unngå brå ratt- eller bremse-bevegelser. 4) ABS-bremser: trykk jevnt. 5) Uten ABS: pump bremsene. Øvelse i trygge omgivelser hjelper deg reagere riktig.'
+  },
+  {
+    id: 124, category: 'fart', difficulty: 'vanskelig',
+    scenario: 'Du kjører 80 km/t på en veg med fartsgrense 80 km/t. Det er is på vegbanen.',
+    question: 'Er det lov å kjøre 80 km/t i dette tilfellet?',
+    options: ['Ja, du holder fartsgrensen så det er greit', 'Nei – du SKAL alltid kjøre med sikkerhetsfart, tilpasset forholdene. 80 km/t på is er normalt uforsvarlig.', 'Ja, fartsgrensen er absolutt og alltid riktig', 'Bare hvis du har vinterdekk med pigger'],
+    correct: 1,
+    explanation: 'Fartsgrensen er en ABSOLUTT grense, aldri en anbefalt hastighet. Sikkerhetsfart-prinsippet (§ 6 i Trafikkreglene) sier at du alltid skal tilpasse farten til veg-, vær- og siktforhold. På is kan sikkerhetsfart være 30-40 km/t selv om grensen er 80 km/t.'
+  },
+  {
+    id: 125, category: 'trafikkregler', difficulty: 'vanskelig',
+    scenario: 'Du kjører i en tunnel. Bilen din svikter og stopper. Det er ikke mulig å kjøre videre.',
+    question: 'Hva er riktig fremgangsmåte?',
+    options: ['Sett på nødblink og vent i bilen', 'Sett på nødblink → Sett på varseltriangel → Forlat bilen (gå mot nødutganger) → Ring 110/112', 'Prøv å starte bilen gjentatte ganger', 'Gå ut og stopp annen trafikk'],
+    correct: 1,
+    explanation: 'Tunnel-nødsituasjon: 1) Sett på nødblink. 2) Kjør til nødstopp/kantlomme om mulig. 3) Slå av motor (brannfare). 4) Sett ut varseltriangel. 5) Forlat bilen og gå MOT trafikken til nødutgang. 6) Ring 110 (brann) eller 112 (ambulanse). Bli IKKE i bilen ved røyk/brann.'
+  },
+  {
+    id: 126, category: 'parkering', difficulty: 'middels',
+    scenario: 'Du vil parkere på en veg. Du ser disse to skiltene på rad: "Parkering forbudt"-skilt fulgt av et underskilt som sier "Man-fre 08-17".',
+    question: 'Når er det tillatt å parkere?',
+    options: ['Aldri – parkering er forbudt 24/7', 'Hele weekenden (lørdag og søndag) og hverdager kl. 17-08', 'Kun hverdager kl. 08-17', 'Aldri på hverdager, men alltid i helger'],
+    correct: 1,
+    explanation: 'Underskilt presiserer når forbudet gjelder. "Man-fre 08-17" betyr parkering er forbudt mandag-fredag mellom kl. 08 og 17. Utenfor disse tidene – og i helgene – er parkering tillatt (om ingen andre regler gjelder).'
+  },
+  {
+    id: 127, category: 'vikeplikt', difficulty: 'vanskelig',
+    scenario: 'Du kommer til et T-kryss. Du ser et gult diamantskilt (Forkjørsveg-skilt) langs vegen du kjører på.',
+    diagram: 't_junction_priority',
+    signs: ['s20'],
+    question: 'Hvem har forkjørsrett i dette krysset?',
+    options: ['Du har vikeplikt for alle', 'Du har forkjørsrett – biler fra sidevegene har vikeplikt for deg', 'Høyreregelen gjelder', 'Den som kjørte inn i krysset først har forkjørsrett'],
+    correct: 1,
+    explanation: 'Forkjørsvegskiltet (204 – gul diamant) betyr at du er på forkjørsveien. All trafikk fra sideveger har vikeplikt for deg. Du har forkjørsrett. Forkjørsveien er normalt merket med det gule diamantskiltet med jevne mellomrom.'
+  },
+  {
+    id: 128, category: 'vikeplikt', difficulty: 'middels',
+    scenario: 'Du skal svinge til venstre i et kryss. Det kommer en bil fra motsatt retning som skal rett frem.',
+    diagram: 'crossroads_four_way',
+    question: 'Hvem har vikeplikt?',
+    options: ['Den som svinger til venstre har alltid vikeplikt for møtende trafikk som går rett frem', 'Du har forkjørsrett siden du er i krysset', 'Høyreregelen gjelder', 'Den som kjører raskest har forkjørsrett'],
+    correct: 0,
+    explanation: 'Venstresving-regelen: Når du svinger til venstre, har du ALLTID vikeplikt for møtende kjøretøy som går rett frem eller svinger til høyre. Denne regelen gjelder uansett om det er et uregulert kryss eller forkjørsveg.'
+  },
+  {
+    id: 129, category: 'trafikkregler', difficulty: 'lett',
+    scenario: 'En fotgjenger starter å krysse i et gangfelt foran deg.',
+    diagram: 'pedestrian_crossing_scenario',
+    question: 'Hva plikter du å gjøre?',
+    options: ['Kjøre forbi raskt hvis det er plass', 'Stoppe og vente til fotgjengeren er trygt over på andre siden', 'Blinke til fotgjengeren at det er OK å gå', 'Redusere farten litt, men ikke stoppe'],
+    correct: 1,
+    explanation: 'Fotgjengere i gangfelt har ALLTID forkjørsrett. Du MÅ stoppe og vente. Kjøring forbi fotgjengere i gangfelt er et av de alvorligste trafikksikkerhetsbruddene. Gjelder også syklister på sykkelkryssingsfelt.'
+  },
+  {
+    id: 130, category: 'fart', difficulty: 'middels',
+    scenario: 'Du nærmer deg et skilt som viser "30" i rød sirkel ved en skole.',
+    signs: ['s10'],
+    question: 'Hva er fartsgrensen fra dette skiltet?',
+    options: ['30 km/t er en anbefaling, ikke et krav', '30 km/t er absolutt makshastighet fra skiltet til neste fartsgrenseskilt', 'Fartsgrensen gjelder kun i skoletiden', '30 km/t gjelder kun i mørket'],
+    correct: 1,
+    explanation: 'Fartsgrenseskilt er ABSOLUTTE grenser, ikke anbefalinger. 30 km/t gjelder fra skiltet til neste fartsgrenseskilt endrer grensen, uansett tid på døgnet. Fartsgrenser som er satt ned ved skoler gjelder 24/7.'
+  },
+
+  // ---- SKILT-GJENKJENNING (131-145) ----
+  {
+    id: 131, category: 'skilt', difficulty: 'lett',
+    signs: ['s19'],
+    question: 'Du ser dette røde åttekantskiltet. Hva betyr det og hva må du gjøre?',
+    options: ['Vikeplikt – sakte ned og se deg om', 'STOPP – du MÅ stanse fullstendig ved stopplinja, selv om vegen er tom', 'Farlig veg foran – reduser farten', 'Innkjøring forbudt'],
+    correct: 1,
+    explanation: 'STOPP-skiltet (206) krever FULL STOPP – dette er det eneste norske trafikkskilt som absolutt krever at du stopper. Du MÅ stoppe ved stopplinja (eller i kanten av kjørebanen om ingen linje). Deretter gi vikeplikt for all trafikk før du kjører videre.'
+  },
+  {
+    id: 132, category: 'skilt', difficulty: 'lett',
+    signs: ['s18'],
+    question: 'Hva betyr dette skiltet (omvendt rød trekant)?',
+    options: ['Du har forkjørsrett', 'Du har vikeplikt for all trafikk på kryssende eller møtende veg', 'Farlig vegkryss foran', 'Stopp og vent'],
+    correct: 1,
+    explanation: 'Vikepliktsskiltet (202 – omvendt rød og hvit trekant) betyr at du har vikeplikt. Du trenger ikke stoppe om vegen er klar, men du MÅ vike for trafikk på den kryssende vegen. Hvis du er i tvil, stopp.'
+  },
+  {
+    id: 133, category: 'skilt', difficulty: 'middels',
+    signs: ['s20'],
+    question: 'Du ser et gult diamantformet skilt langs vegen. Hva betyr det?',
+    options: ['Farlig kurve foran', 'Du er på en forkjørsveg – annen trafikk har vikeplikt for deg', 'Prioritert veg – kjør raskere', 'Togkryss foran'],
+    correct: 1,
+    explanation: 'Det gule diamantskiltet (204 – Forkjørsveg) varsler at du kjører på en forkjørsveg. Trafikk fra sideveger har vikeplikt for deg. Skiltet settes opp i god avstand til hvert kryss langs forkjørsvegen.'
+  },
+  {
+    id: 134, category: 'skilt', difficulty: 'middels',
+    signs: ['s11'],
+    question: 'Du ser et rødt sirkelskilt med to biler ved siden av hverandre. Hva betyr det?',
+    options: ['Du kan kjøre forbi den foran', 'Forbikjøring er forbudt fra dette punktet', 'Vent på motkommende trafikk', 'To-felts veg begynner'],
+    correct: 1,
+    explanation: 'Forbikjøring forbudt-skiltet (308) betyr at du IKKE kan kjøre forbi biler fra dette punkt. Forbudet gjelder til neste kryss, en hvit strek på vegbanen (opphevingsskilt 508), eller skiltet "Slutt forbikjøring forbudt". Brudd på dette er svært alvorlig.'
+  },
+  {
+    id: 135, category: 'skilt', difficulty: 'vanskelig',
+    signs: ['s13'],
+    question: 'Du ser et rødt sirkelskilt med en bil og en rød strek gjennom. Hva betyr det?',
+    options: ['Parkering forbudt', 'Innkjøring forbudt', 'Stans forbudt – du kan ikke stoppe her under noen omstendigheter', 'Kjøring forbudt'],
+    correct: 2,
+    explanation: 'Stans forbudt (376) er strengere enn Parkering forbudt. Du kan IKKE stoppe her, ikke engang kortvarig for å sette av en passasjer. Gjelder på den siden der skiltet er satt opp. Stans forbudt-steder er oftest foran brannstasjoner, gangfelt, kryss, osv.'
+  },
+  {
+    id: 136, category: 'skilt', difficulty: 'middels',
+    signs: ['s9'],
+    question: 'Du ser et rødt sirkelskilt med en hvit vannrett stripe. Hva betyr det?',
+    options: ['Stopp', 'Parkering forbudt', 'Innkjøring forbudt fra din side', 'Farlig sving'],
+    correct: 2,
+    explanation: 'Innkjøring forbudt (302) betyr at du ikke kan kjøre INN fra den siden skiltet er plassert. Det er normalt brukt i enveisgate-innkjøringer og stengte veier. Det er OK å kjøre UT av slike gater forbi dette skiltet.'
+  },
+  {
+    id: 137, category: 'skilt', difficulty: 'vanskelig',
+    signs: ['s4'],
+    question: 'Du ser et rød-hvit trekantskilt med en bil som glir. Hva varsler det?',
+    options: ['Bratt bakke foran', 'Vegen kan være glatt – reduser farten og øk følgeavstanden markant', 'Snødybde mål foran', 'Sleipeføre kun om vinteren'],
+    correct: 1,
+    explanation: 'Glatt veg-skiltet (144) varsler om fare for glatt vegbane. Det kan stå der permanent (f.eks. ved broer, nordvendte skyggelagte strekninger) eller midlertidig. Tiltak: Reduser fart kraftig, øk følgeavstand til minst 4 sekunders avstand, vær forsiktig i kurver og ved bremsing.'
+  },
+  {
+    id: 138, category: 'skilt', difficulty: 'middels',
+    signs: ['s32'],
+    question: 'Et blått rektangelskilt med et motorvei-symbol varsler deg. Hva gjelder nå?',
+    options: ['Anbefalt hastighet 110 km/t', 'Motorveg begynner – særregler gjelder: ingen stopp, forbikjøring kun til venstre, og motorvegfart', 'Du kan kjøre i alle filer fritt', 'Minste fartsgrense 80 km/t'],
+    correct: 1,
+    explanation: 'Motorvegskiltet (502) varsler at motorvegen begynner. Særregler: 1) Stopp er forbudt (unntatt nød). 2) Forbikjøring KUN til venstre. 3) Hold til høyre normalt. 4) Maks hastighet normalt 110 km/t. 5) Tunge kjøretøy under 60 km/t er forbudt. 6) U-sving er forbudt.'
+  },
+  {
+    id: 139, category: 'skilt', difficulty: 'middels',
+    signs: ['s6'],
+    question: 'Et rød-hvit trekantskilt med to gående figurer varsler deg. Hva betyr det?',
+    options: ['Du er nær en skole', 'Gangfelt foran – vær forberedt på fotgjengere og klar til å stoppe', 'Gangfelt slutt', 'Lek-sone foran'],
+    correct: 1,
+    explanation: 'Gangfelt-skiltet (140) varsler at det er et gangfelt (fotgjengerfelt/zebra) foran. Reduser farten og vær klar til å stoppe. Husk: fotgjengere i gangfelt har alltid forkjørsrett – du MÅ stoppe.'
+  },
+  {
+    id: 140, category: 'skilt', difficulty: 'vanskelig',
+    signs: ['s21'],
+    question: 'Et gult diamantskilt med svart diagonal stripe varsler. Hva betyr det?',
+    options: ['Farlig kurve', 'Forkjørsveien slutter – vanlige vikepliktregler gjelder igjen', 'Slutt på motorvegen', 'Forkjørsveien begynner'],
+    correct: 1,
+    explanation: 'Slutt forkjørsveg-skiltet (208 – gult diamant med svart stripe) varsler at forkjørsveien slutter. Fra dette punkt gjelder høyreregelen eller andre vikepliktregler på nytt. Vær OBS og øk aktsomheten.'
+  },
+  {
+    id: 141, category: 'skilt', difficulty: 'middels',
+    signs: ['s7'],
+    question: 'Et rød-hvit trekantskilt med et elghode varsler. Hva er riktig atferd?',
+    options: ['Bare en turistattraksjon – ingen spesiell atferd nødvendig', 'Reduser farten kraftig, vær ekstra oppmerksom, særlig i skumringen og om natten', 'Det er bare farlig for cyklister', 'Bare farlig om vinteren'],
+    correct: 1,
+    explanation: 'Elg/dyr-skiltet (156) varsler høy risiko for dyrepåkjørsel. Tiltak: Reduser farten, bruk fjernlys om natten, vær ekstra obs i skumringen og grytidlig morgen (dyrenes aktivitetstid). Elg kan veie 300-500 kg og er livsfarlig å kollidere med.'
+  },
+  {
+    id: 142, category: 'skilt', difficulty: 'lett',
+    signs: ['s5'],
+    question: 'Et rød-hvit trekantskilt med en løpende person varsler deg. Hva gjør du?',
+    options: ['Ingenting – det er en info-skilt', 'Reduser farten kraftig – barn kan løpe ut i vegen uventet. Kjør sakte og vær klar til å stoppe', 'Det gjelder kun på skoledager', 'Blink for å varsle barn'],
+    correct: 1,
+    explanation: 'Barn-skiltet (142) varsler om steder der barn oppholder seg nær vegen: ved skoler, barnehager, lekeplasser. Barn er uforutsigbare og ser ikke alltid trafikken. Kjør ALLTID sakte og vær klar til nødstopp i slike soner.'
+  },
+  {
+    id: 143, category: 'skilt', difficulty: 'vanskelig',
+    signs: ['s8'],
+    question: 'Et advarselsskilt med jernbanekryss-symbol. Det er ingen bom. Hva må du gjøre?',
+    options: ['Kjøre om det ikke kommer tog', 'ALLTID stoppe, se og høre i BEGGE retninger, deretter kjøre forsiktig over', 'Bremse litt og se', 'Bare stoppe hvis alarmlyset blinker'],
+    correct: 1,
+    explanation: 'Jernbanekryss uten bom (132) er et av de farligste kryss. Du MÅ alltid: 1) Stoppe. 2) Se deg godt om i BEGGE retninger. 3) Høre etter tog. 4) Deretter kjøre forsiktig over. Toget har alltid forkjørsrett. Et tog i full hastighet kan ikke stoppe på kortere avstand enn 1 km.'
+  },
+  {
+    id: 144, category: 'trafikkregler', difficulty: 'vanskelig',
+    scenario: 'Du kjører på en to-felts veg og vil kjøre forbi en langsom traktor. Vegen har heltrukken (ubrutt) midtlinje.',
+    diagram: 'overtaking_scenario',
+    question: 'Er forbikjøring tillatt?',
+    options: ['Ja, om du er rask nok', 'Nei – heltrukken midtlinje betyr forbikjøring er forbudt fra din side', 'Ja, om det ikke kommer motgående trafikk', 'Kun om traktoren kjører under 30 km/t'],
+    correct: 1,
+    explanation: 'Heltrukken (sammenhengende) midtlinje betyr ABSOLUTT FORBUD mot å krysse linjen. Forbikjøring over en heltrukken midtlinje er ulovlig og svært farlig. Vent til midtlinjen er stiplet (brutt), eller finn en trygg mulighet med stiplet linje.'
+  },
+  {
+    id: 145, category: 'trafikkregler', difficulty: 'vanskelig',
+    scenario: 'Du har kjørt 0.5 promille og blir stoppet av politiet.',
+    question: 'Hva er konsekvensen av 0.5 promille mens du kjører i Norge?',
+    options: ['En liten bot – under 0.8 promille er ikke straffbart', 'Bøter, betinget fengsel og tap av førerkortet – 0.5 promille er allerede straffbart i Norge', 'Advarsel for første gangs lovbrudd', 'Ingen konsekvenser – grensen er 0.8 promille'],
+    correct: 1,
+    explanation: 'Norges grense for alkohol i blodet er 0.2 promille (fra 2012, senket fra 0.5). Ved 0.2-0.5 promille: stor bot og midlertidig tap av førerkortet. Ved 0.5-1.2 promille: bøter, betinget/ubetinget fengsel. Over 1.2 promille: ubetinget fengsel. Det er INGEN safe limit – kjør aldri etter å ha drukket.'
+  },
 ];
 
 // GUIDES – Comprehensive Norwegian Traffic Law Coverage
@@ -1430,6 +1726,239 @@ const GUIDES = [
         text: 'All last i og på bilen MÅ sikres så den ikke beveger seg ved bremsing eller sving. Tillatt totalvekt (tillatt vogntogvekt) må ikke overskrides (sjekk vognkort). Taklast: se bilens manual for maks vekt. Last som stikker ut bak mer enn 1 meter: Rødt flagg eller refleks. Last som stikker ut til siden: Lovlig hvis innenfor 0,3 m på hver side av breddemålet.',
       },
     ]
+  },
+  {
+    id: 'guide-rundkjoring',
+    icon: '🔄',
+    title: 'Rundkjøring – Regler og Teknikk',
+    intro: 'Rundkjøringer er designet for å redusere antall alvorlige ulykker i kryss. Forstå reglene godt, spesielt for to-felts rundkjøringer.',
+    sections: [
+      {
+        icon: '⚠️',
+        title: 'Grunnregel: Vikeplikt ved innkjøring',
+        content: 'Du har ALLTID vikeplikt for all trafikk som allerede er inne i rundkjøringen. Dette gjelder uansett hvilken retning de kommer fra. Husk: rundkjøringspåbudsskiltet (408) bekrefter at du skal kjøre mot venstre rundt midtøya.',
+      },
+      {
+        icon: '1️⃣',
+        title: 'Én-felts rundkjøring',
+        content: 'Innkjøring: Blink til venstre ved innkjøring er ikke påkrevd (ingen standard for det), men blink alltid til HØYRE når du forlater rundkjøringen – signal for de ventende bilene. Velg avkjørselen og kjør ut med god margin.',
+      },
+      {
+        icon: '2️⃣',
+        title: 'To-felts rundkjøring – feltvalg',
+        list: [
+          'Høyre avkjørsel (1. eller 2. utgang): Bruk YTRE felt (høyre) – blink til høyre ved innkjøring og hold ytre felt gjennom hele passasjen',
+          'Venstre avkjørsel (3. eller 4. utgang): Bruk INDRE felt (venstre) – blink til venstre ved innkjøring for å signalisere at du tar en av de siste utgangene',
+          'Rett frem (2. utgang med 4 avkjørsler): Normalt ytre felt, men se oppmerkingen i den aktuelle rundkjøringen',
+        ],
+      },
+      {
+        icon: '🔀',
+        title: 'To-felts: Bytte felt for å ta avkjørsel',
+        content: 'Når du er i indre felt og vil ta en avkjørsel: 1) Blink til HØYRE i god tid. 2) Sjekk speiler. 3) Sjekk BLINDSONE nøye. 4) Flytt rolig til ytre felt. 5) Ta avkjørselen. Du har vikeplikt for biler i ytre felt under feltskiftet!',
+      },
+      {
+        icon: '🚶',
+        title: 'Gangfelt i og rundt rundkjøringen',
+        content: 'Mange rundkjøringer har gangfelt like etter avkjørslene. Fotgjengere i disse gangfeltene har forkjørsrett. Kjør sakte gjennom rundkjøringen og vær klar til å stoppe for fotgjengere.',
+      },
+      {
+        icon: '📏',
+        title: 'Avstand og hastighet',
+        content: 'I rundkjøringer gjelder normal vikeplikt for feltskifte (§ 13 Trafikkreglene). Kjør aldri så raskt at du ikke rekker å stoppe. Typisk riktig hastighet inn i en rundkjøring: 20-30 km/t. Ingen stopp i selve rundkjøringen – det skaper farlige situasjoner.',
+      },
+    ],
+  },
+  {
+    id: 'guide-motorvei',
+    icon: '🛣️',
+    title: 'Motorveikjøring – Regler og Teknikk',
+    intro: 'Motorveier har særegne regler for å håndtere høy hastighet og store trafikkvolum. Å mestre motorveikjøring er viktig for både sikkerhet og trafikkflyt.',
+    sections: [
+      {
+        icon: '🚦',
+        title: 'Innkjøring via akselerasjonsfelt',
+        content: 'Akselerasjonsfeltet er til for å øke farten til motorveifart (normalt 110 km/t) FØR du fletter inn. Prosess: 1) Øk farten i akselerasjonsfeltet. 2) Finn en luke i trafikken (sjekk speil og blindsone). 3) Blink til venstre. 4) Flette inn rolig og jevnt. Du har vikeplikt for trafikken på motorveien.',
+      },
+      {
+        icon: '↔️',
+        title: 'Hold-til-høyre-regelen',
+        content: 'Du skal normalt kjøre i høyre fil. Venstre fil (fil 2, 3, osv.) er KUN til forbikjøring. Etter å ha kjørt forbi: flytt tilbake til høyre fil. Å bli stående i venstre fil uten å kjøre forbi noen er ulovlig og svært irriterende for andre trafikanter.',
+      },
+      {
+        icon: '↩️',
+        title: 'Ut av motorveien via retardasjonsfelt',
+        content: 'Retardasjonsfeltet er til for å BREMSE ned etter du har forlatt motorveien. Blink til høyre i god tid, flytt til høyre fil, deretter til retardasjonsfeltet. Bremse NED i retardasjonsfeltet, ikke på motorveien selv.',
+      },
+      {
+        icon: '🚫',
+        title: 'Forbudt på motorvei',
+        list: [
+          'Stoppe (unntatt nødsituasjoner og teknisk svikt)',
+          'U-sving',
+          'Rygge',
+          'Kjøre saktere enn det trafikkforholdene tilsier',
+          'Forbikjøring til høyre (på siden av bilen)',
+          'Gå til fots (unntatt nød)',
+        ],
+      },
+      {
+        icon: '🆘',
+        title: 'Nødstopp på motorvei',
+        content: 'Ved teknisk svikt: Kjør til nødstopp (lomme i siden). Sett på nødblink. Sett ut varseltriangel 100-200 m bak. Ring Vegtrafikksentralen (175) og/eller veihjelp. GJEM deg bak autovernet (om det finnes) – ALDRI stå mellom bilen og trafikken.',
+      },
+      {
+        icon: '🌧️',
+        title: 'Motorvei i dårlig vær',
+        content: 'Kjøring i tåke, kraftig regn eller snøvær: Reduser farten til det du kan håndtere trygt (sikkerhetsfart). Øk følgeavstanden markant. Slå på tåkelykter kun ved siktbarhet under 100 m (fremre) eller under 50 m (bakre). Sørg for at andre ser deg (dagslys/nærlys).',
+      },
+    ],
+  },
+  {
+    id: 'guide-vinterkjoring',
+    icon: '❄️',
+    title: 'Vinterkjøring – Is, Snø og Kulde',
+    intro: 'Vinterkjøring krever spesielle ferdigheter og forberedelser. Norge har strenge krav til vinterdekk og kjøreadferd i vinterhalvåret.',
+    sections: [
+      {
+        icon: '🔧',
+        title: 'Dekkrav i Norge',
+        list: [
+          'Sommerdekk: Ca. 15. april – 1. november. Mønsterdybde min. 1,6 mm (anbefalt 3+ mm).',
+          'Vinterdekk (friksjon): Ca. 1. november – 15. april. Min. mønsterdybde 3 mm.',
+          'Piggdekk: Lovlig 1. november – 1. søndag april. Gebyrbelagt i noen byer.',
+          'Helårsdekk: Hele året om merket M+S eller 3PMSF og oppfyller vinterdekk-kravet.',
+        ],
+      },
+      {
+        icon: '🧊',
+        title: 'Kjøring på is og snø',
+        list: [
+          'Reduser farten KRAFTIG – bremselengden på is kan være 10x lengre enn tørt asfalt',
+          'Øk følgeavstanden til minst 4-6 sekunders avstand (normalt 2 sek)',
+          'Brems alltid tidlig og rolig – unngå hard brems',
+          'ABS: Trykk jevnt og hardt – la ABS-systemet pumpe',
+          'Uten ABS: Pump bremsene for å unngå blokkering',
+          'Unngå brå rattrykk – styr rolig og tidlig',
+          'Avrimingsveske: Bruk den og sørg for godt sikt',
+        ],
+      },
+      {
+        icon: '⚠️',
+        title: 'Forberedelse av bilen',
+        list: [
+          'Rens hele bilen for snø – ikke bare frontruten. Snø fra taket kan blåse av og treffe bilen bak.',
+          'Sjekk at alle lys fungerer og er synlige',
+          'Sørg for full tank antifrys i sprinklervæske',
+          'Sjekk batteri (kulde svekker batteriet)',
+          'Medbring nødlys, skrape, varme klær og evt. kjettinger',
+          'Sjekk dekk: Tilstrekkelig mønsterdybde og lufttrykk',
+        ],
+      },
+      {
+        icon: '🌡️',
+        title: 'Temperaturfall og black ice',
+        content: 'Svart is (black ice) er usynlig, tynt islag – særlig farlig. Dannes ved temperaturer nær 0°C, spesielt på broer, i skygge og i tunnelinnkjøringer. Symptom: Bilen glir stille uten at det høres eller føles – til du mister kontroll. Tiltak: Observer om andre biler glir, lytt til lavere dekklyd enn normalt.',
+      },
+      {
+        icon: '🚗',
+        title: 'Skrens: Hva du gjør',
+        content: 'Hekkskrens (baksiden glir ut): Styr MOT skrenset (styr dit baksiden glir). Slipp gassen. Ikke bremse. Frontskrens (fremsiden glir rett frem): Slipp gassen, unngå brå rattvraing. La bilen bremse seg ned. Med firehjulstrekk: Du er ikke immun – du kan ikke bremse bedre enn en vanlig bil.',
+      },
+    ],
+  },
+  {
+    id: 'guide-tunnel',
+    icon: '🚇',
+    title: 'Tunnelkjøring – Regler og Sikkerhet',
+    intro: 'Norge har verdens tetteste tunnelnett. Tunneler krever spesiell atferd – spesielt ved brann eller teknisk svikt er riktig reaksjon livreddende.',
+    sections: [
+      {
+        icon: '💡',
+        title: 'Lys i tunnel',
+        content: 'Slå ALLTID på nærlyset (eller kjørlys) ved innkjøring i tunnel – selv i mørke. I lange tunneler kan øynene lure deg til å kjøre raskere enn du tror. Slå av lyset FØR du kjører ut i dagslys for å unngå blending for motkommende.',
+      },
+      {
+        icon: '📏',
+        title: 'Avstand og fart',
+        content: 'Hold god avstand – minimum 4-5 sekunders avstand i tunnel (100+ meter ved 80 km/t). Tunneler er trange og det er vanskelig å unngå ved bremsing. Overhold fartsgrensen – mange tunneler har 80 km/t, noen 70 eller 60 km/t.',
+      },
+      {
+        icon: '🔥',
+        title: 'Brann i tunnelen',
+        list: [
+          'Trekk UNNA – prøv å kjøre ut av tunnelen om mulig',
+          'Kan ikke kjøre ut: Stopp i nødstopp/lomme, LANGT fra bilen som brenner',
+          'Slå av motor og ta med deg nøkkelen (hindrer tyveri og lettere for redning)',
+          'FORLAT bilen – ta med deg verdisaker om mulig',
+          'GÅ mot trafikken (mot innkjørselen du kom fra) – røyken trekker mot utgangen',
+          'Bruk nødtelefon i tunnelen (finnes ca. hver 250 m)',
+          'Ring 110 (brann) fra mobiltelefon',
+          'Gå til nødutgang (merket med grønt skilt med løpende person)',
+        ],
+      },
+      {
+        icon: '🚧',
+        title: 'Teknisk svikt / stopp i tunnel',
+        content: 'Bilen stopper: Sett på nødblink. Kjør til kantlomme om mulig. Slå av motor. Sett ut varseltriangel bak bilen. Ring Vegtrafikksentralen: 175. Vurder om du bør forlate bilen og gå til sikker plass (avhenger av situasjonen).',
+      },
+      {
+        icon: '⛽',
+        title: 'Farlig gods og spesielle regler',
+        content: 'Tankbiler med farlig gods (ADR) er forbudt i mange tunneler (se skilt). Kjøretøy med sykler på takstativ: Sjekk høydebegrensning (varsel ved tunnelinngang). Kjøretøy bredere enn 2,55 m: Sjekk bredderestriksjoner.',
+      },
+    ],
+  },
+  {
+    id: 'guide-rus',
+    icon: '🚫',
+    title: 'Rus, Promille og Medisiner',
+    intro: 'Promillekjøring er en av de største drapsårsakene i norsk trafikk. Konsekvensene er alvorlige – juridisk, helsemessig og menneskelig.',
+    sections: [
+      {
+        icon: '📊',
+        title: 'Norges promillegrenser',
+        list: [
+          '0.0 – 0.19 promille: Lovlig (under juridisk grense)',
+          '0.2 – 0.49 promille: Bot + midlertidig tap av førerkortet (administrativt)',
+          '0.5 – 1.19 promille: Bøter + betinget/ubetinget fengsel + fradømt førerrett',
+          '1.2 og over: Ubetinget fengsel + fradømt førerrett + bil beslaglegges',
+          'Gjentakelse: Strengere straff + krav om alkobil-lås ved tilbakelevering',
+        ],
+      },
+      {
+        icon: '⏱️',
+        title: 'Nedbrytning av alkohol',
+        content: 'Alkohol brytes ned med ca. 0.1-0.15 promille per time – men varierer mye per person (vekt, kjønn, mat, type drikke). Det er INGEN pålitelig måte å beregne dette selv. Tommelfingerregel: Drikker du – kjør ikke. Sov det ut. Ta taxi. Ring noen.',
+        list: [
+          '1 enhet alkohol er ca. 1 time nedbrytning (svært grovt anslag)',
+          'Vann, kaffe eller mat hjelper IKKE mot promille – kun tid',
+          'Du kan fortsatt ha for høy promille neste morgen',
+          'Mange tenker de er edru, men er juridisk påvirket',
+        ],
+      },
+      {
+        icon: '💊',
+        title: 'Medisiner og kjøring',
+        content: 'Mange reseptpliktige medisiner påvirker kjøreevnen: sovemidler, angstdempende, sterke smertestillende (opioider), noen antihistaminer, og mer. I Norge er det forbudt å kjøre med visse medisiner over grenseverdiene (ligner promillegrensene).',
+        list: [
+          'Les alltid pakningsvedlegget: advarsel om kjøring?',
+          'Spør legen eller apoteket om medisinens påvirkning på kjøring',
+          'Politiet kan ta blodprøve ved mistanke – gjelder også medisiner',
+          'Kombinasjon av medisin + alkohol er svært farlig og forbudt',
+        ],
+      },
+      {
+        icon: '🌿',
+        title: 'Narkotika og cannabis',
+        content: 'Cannabis og andre narkotiske stoffer har egne grenseverdier (§ 22a i Vegtrafikkloven). Cannabis: THC over 1,3 ng/ml blod er ulovlig å kjøre med. Cannabis kan gjenfinnes i blodet i dager til uker etter bruk. Selv om du ikke føler deg påvirket, kan du ha ulovlig konsentrasjon. Straffereaksjoner er de samme som for promille.',
+      },
+      {
+        icon: '🤔',
+        title: 'Tretthet – den undervurderte faren',
+        content: 'Tretthet er like farlig som promille ved 0.8 promille – reaksjonstiden øker dramatisk. Microsøvn: Korte (3-5 sekunder) perioder der hjernen slukner – ved 100 km/t kjører du 140 meter blind. Tiltak: Stop og sov om du føler deg trøtt. Drikk kaffe og sov 20 min (koffein virker etter 20 min). Unngå monoton kjøring (motorvei) seint på natten.',
+      },
+    ],
   },
 ];
 
