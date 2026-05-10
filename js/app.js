@@ -782,6 +782,13 @@ function renderSignShape(sign, size = 90) {
   const s = size;
   const c = s / 2;
 
+  if (sign.img) {
+    const sym = (sign.symbol || '?').replace(/"/g, '&quot;');
+    return `<img src="${sign.img}" alt="${sign.name}" width="${s}" height="${s}"
+      style="object-fit:contain;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18));display:block"
+      onerror="this.outerHTML='<span style=&quot;font-size:2rem;display:flex;align-items:center;justify-content:center;width:${s}px;height:${s}px&quot;>${sym}</span>'">`;
+  }
+
   if (sign.shape === 'triangle') {
     const pad = s * 0.07;
     const bw = s * 0.09;

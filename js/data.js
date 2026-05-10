@@ -1433,29 +1433,51 @@ const GUIDES = [
   },
 ];
 
-// SIGNS
+// Base URL for official Norwegian traffic sign images (Lovdata / Skiltforskriften)
+const SIGN_BASE = 'https://lovdata.no/static/SF/sf-20051007-1219-';
+
+// SIGNS — img points to official lovdata.no sign images
 const SIGNS = [
-  { id: 's1',  category: 'advarsel', name: 'Vegkryss',         number: '102',   shape: 'triangle',          color: '#e74c3c', symbol: '✛',    description: 'Varsler om vegkryss foran. Øk aktsomheten og reduser farten. Høyreregelen kan gjelde.' },
-  { id: 's2',  category: 'advarsel', name: 'Sving',            number: '103',   shape: 'triangle',          color: '#e74c3c', symbol: '↪',    description: 'Skarp sving i vegen. Reduser farten markant. Kurven kan være skarpere enn den ser ut.' },
-  { id: 's3',  category: 'advarsel', name: 'Vegsmalning',      number: '108',   shape: 'triangle',          color: '#e74c3c', symbol: '⧖',    description: 'Vegen smalner. Vær forberedt på trang passasje. Møtende trafikk kan komme.' },
-  { id: 's4',  category: 'advarsel', name: 'Glatt veg',        number: '145',   shape: 'triangle',          color: '#e74c3c', symbol: '🌊',   description: 'Vegen kan være glatt. Reduser fart kraftig, øk følgeavstand. Spesielt farlig i kurver.' },
-  { id: 's5',  category: 'advarsel', name: 'Barn',             number: '142',   shape: 'triangle',          color: '#e74c3c', symbol: '🚸',   description: 'Barn kan oppholde seg nær vegen. Nær skoler og lekeplasser. Kjør sakte, vær klar til å stoppe.' },
-  { id: 's6',  category: 'advarsel', name: 'Gangfelt',         number: '140',   shape: 'triangle',          color: '#e74c3c', symbol: '🚶',   description: 'Gangfelt foran. Vær forberedt på fotgjengere. Fotgjengere i gangfelt har alltid forkjørsrett.' },
-  { id: 's7',  category: 'advarsel', name: 'Elg/dyr',          number: '156',   shape: 'triangle',          color: '#e74c3c', symbol: '🦌',   description: 'Fare for dyr på vegen. Spesielt aktivt i skumring/gry og natt. Reduser farten kraftig.' },
-  { id: 's8',  category: 'advarsel', name: 'Jernbanekryss',    number: '132',   shape: 'triangle',          color: '#e74c3c', symbol: '🚂',   description: 'Jernbanekryss uten bom. ALLTID stopp, se og lytt i begge retninger. Toget har forkjørsrett.' },
-  { id: 's9',  category: 'forbud',   name: 'Innkjøring forbudt',number: '202',  shape: 'circle',            color: '#e74c3c', symbol: '—',    description: 'All innkjøring forbudt fra denne siden. Brukes i enveiskjørte gater og stengte veier.' },
-  { id: 's10', category: 'forbud',   name: 'Fartsgrense 60',   number: '362',   shape: 'circle',            color: '#e74c3c', symbol: '60',   description: 'Fartsgrense 60 km/t. Du kan IKKE kjøre raskere enn dette fra her til neste skilting.' },
-  { id: 's11', category: 'forbud',   name: 'Forbikjøring forbudt', number: '306', shape: 'circle',          color: '#e74c3c', symbol: '⛔',   description: 'Forbikjøring forbudt. Gjelder til neste kryss eller opphevingsskilt. Alvorlig brudd å ignorere.' },
-  { id: 's12', category: 'forbud',   name: 'Parkering forbudt',number: '372',   shape: 'circle',            color: '#e74c3c', symbol: 'P̶',   description: 'Parkering forbudt på den siden av vegen der skiltet er satt opp.' },
-  { id: 's13', category: 'forbud',   name: 'Stans forbudt',    number: '376',   shape: 'circle',            color: '#e74c3c', symbol: 'S̶',   description: 'Absolutt stans og parkering forbudt. Ikke stopp her under NOEN omstendigheter.' },
-  { id: 's14', category: 'påbud',    name: 'Rett frem',        number: '403',   shape: 'circle-blue',       color: '#2980b9', symbol: '↑',    description: 'Du MÅ kjøre rett frem. Kan ikke svinge til siden ved dette skiltet.' },
-  { id: 's15', category: 'påbud',    name: 'Sving til høyre',  number: '404',   shape: 'circle-blue',       color: '#2980b9', symbol: '→',    description: 'Du MÅ svinge til høyre. Påbudsskilt – ingen valgfrihet.' },
-  { id: 's16', category: 'påbud',    name: 'Rundkjøring',      number: '408',   shape: 'circle-blue',       color: '#2980b9', symbol: '🔄',   description: 'Rundkjøring. Hold til venstre for midtøya. Vikeplikt for trafikk inne i rundkjøringen.' },
-  { id: 's17', category: 'påbud',    name: 'Gang- og sykkelveg',number: '522',  shape: 'circle-blue',       color: '#2980b9', symbol: '🚴',   description: 'Gang- og sykkelveg. Motorvogn er forbudt. Kun for gående og syklende.' },
-  { id: 's18', category: 'prioritet',name: 'Vikeplikt',        number: '306',   shape: 'inverted-triangle', color: '#e74c3c', symbol: '▽',    description: 'Du har vikeplikt for all trafikk på kryssende/møtende veg. Vike, men trenger ikke stoppe.' },
-  { id: 's19', category: 'prioritet',name: 'STOPP',            number: '306.1', shape: 'octagon',           color: '#e74c3c', symbol: 'STOPP',description: 'Du MÅ stoppe fullstendig ved stopplinja. Gi vikeplikt for ALL trafikk. Selv om vegen er tom.' },
-  { id: 's20', category: 'prioritet',name: 'Forkjørsveg',      number: '202',   shape: 'diamond',           color: '#f39c12', symbol: '◆',    description: 'Forkjørsveg. Du har forkjørsrett over kryssende trafikk med vikepliktskilt.' },
-  { id: 's21', category: 'prioritet',name: 'Slutt forkjørsveg',number: '204',   shape: 'diamond-gray',      color: '#95a5a6', symbol: '◇',    description: 'Forkjørsvegen slutter. Vanlige vikepliktregler gjelder igjen. Høyreregelen kan gjelde.' },
+  // ---- ADVARSELSSKILT (warning – red triangle) ----
+  { id: 's1',  category: 'advarsel', name: 'Vegkryss',              number: '102', img: SIGN_BASE+'102-1-01.gif',  description: 'Varsler om vegkryss foran. Øk aktsomheten og reduser farten. Høyreregelen kan gjelde.' },
+  { id: 's2',  category: 'advarsel', name: 'Farlig sving',          number: '100', img: SIGN_BASE+'100-1-01.gif',  description: 'Skarp sving i vegen. Reduser farten markant. Kurven kan være skarpere enn den ser ut.' },
+  { id: 's3',  category: 'advarsel', name: 'Vegsmalning',           number: '108', img: SIGN_BASE+'108-01.gif',    description: 'Vegen smalner inn. Vær forberedt på trang passasje og møtende trafikk.' },
+  { id: 's4',  category: 'advarsel', name: 'Glatt veg',             number: '144', img: SIGN_BASE+'144-01.gif',    description: 'Vegen kan være glatt. Reduser fart kraftig, øk følgeavstand. Spesielt farlig i kurver.' },
+  { id: 's5',  category: 'advarsel', name: 'Barn',                  number: '142', img: SIGN_BASE+'142-01.gif',    description: 'Barn kan oppholde seg nær vegen. Nær skoler og lekeplasser. Kjør sakte, vær klar til å stoppe.' },
+  { id: 's6',  category: 'advarsel', name: 'Gangfelt',              number: '140', img: SIGN_BASE+'140-01.gif',    description: 'Gangfelt foran. Vær forberedt på fotgjengere. Fotgjengere i gangfelt har alltid forkjørsrett.' },
+  { id: 's7',  category: 'advarsel', name: 'Elg/dyr',               number: '156', img: SIGN_BASE+'156-01.gif',    description: 'Fare for dyr på vegen. Spesielt aktivt i skumring/gry og natt. Reduser farten kraftig.' },
+  { id: 's8',  category: 'advarsel', name: 'Jernbanekryss (u/bom)', number: '132', img: SIGN_BASE+'132-01.gif',    description: 'Jernbanekryss uten bom. ALLTID stopp, se og lytt i begge retninger. Toget har alltid forkjørsrett.' },
+  { id: 's22', category: 'advarsel', name: 'Vegarbeid',             number: '110', img: SIGN_BASE+'110-01.gif',    description: 'Vegarbeid pågår. Reduser fart, følg midlertidige skilt og oppmerking. Vær ekstra oppmerksom.' },
+  { id: 's23', category: 'advarsel', name: 'Ujevn veg',             number: '112', img: SIGN_BASE+'112-01.gif',    description: 'Vegen er ujevn eller har humper. Reduser farten for å unngå skader på kjøretøyet og miste kontrollen.' },
+  { id: 's24', category: 'advarsel', name: 'Svingete veg',          number: '104', img: SIGN_BASE+'104-1-01.gif',  description: 'Svingete veg med flere kurver. Reduser farten og hold deg på din side av midtlinjen.' },
+  { id: 's25', category: 'advarsel', name: 'Syklende',              number: '148', img: SIGN_BASE+'148-01.gif',    description: 'Syklister krysser eller ferdes langs vegen. Vær oppmerksom og gi god siderom ved forbikjøring.' },
+
+  // ---- FORBUDSSKILT (prohibition – red circle) ----
+  { id: 's9',  category: 'forbud',   name: 'Innkjøring forbudt',    number: '302', img: SIGN_BASE+'302-01.gif',    description: 'All innkjøring forbudt fra denne siden. Brukes i enveiskjørte gater og stengte veier.' },
+  { id: 's10', category: 'forbud',   name: 'Fartsgrense',           number: '362', img: SIGN_BASE+'362-01.gif',    description: 'Fartsgrense i km/t. Du kan IKKE kjøre raskere enn det angitte tall fra skiltet til neste endring.' },
+  { id: 's11', category: 'forbud',   name: 'Forbikjøring forbudt',  number: '308', img: SIGN_BASE+'308-01.gif',    description: 'Forbikjøring forbudt. Gjelder til neste kryss eller opphevingsskilt. Svært alvorlig brudd.' },
+  { id: 's12', category: 'forbud',   name: 'Parkering forbudt',     number: '372', img: SIGN_BASE+'372-01.gif',    description: 'Parkering forbudt på den siden av vegen der skiltet er satt opp.' },
+  { id: 's13', category: 'forbud',   name: 'Stans forbudt',         number: '376', img: SIGN_BASE+'376-1-01.gif',  description: 'Absolutt stans og parkering forbudt. Ikke stopp her under NOEN omstendigheter.' },
+  { id: 's26', category: 'forbud',   name: 'Motorsykkel forbudt',   number: '318', img: SIGN_BASE+'318-1-01.gif',  description: 'Motorsykler og mopeder er forbudt å kjøre her. Gjelder kun motorsykkelkjøretøy.' },
+  { id: 's27', category: 'forbud',   name: 'Tunge kjøretøy forbudt',number: '322', img: SIGN_BASE+'322-01.gif',    description: 'Kjøretøy over angitt vekt er forbudt. Sjekk underskilt for nøyaktig vektgrense.' },
+  { id: 's28', category: 'forbud',   name: 'All ferdsel forbudt',   number: '306', img: SIGN_BASE+'306-0-01.gif',  description: 'All ferdsel med motorvogn forbudt fra dette punkt. Gjelder alle kjøretøy.' },
+
+  // ---- PÅBUDSSKILT (mandatory – blue circle) ----
+  { id: 's14', category: 'påbud',    name: 'Rett frem',             number: '402', img: SIGN_BASE+'402-1-01.gif',  description: 'Du MÅ kjøre rett frem. Kan ikke svinge til siden ved dette skiltet.' },
+  { id: 's15', category: 'påbud',    name: 'Sving til høyre',       number: '402', img: SIGN_BASE+'402-2-01.gif',  description: 'Du MÅ svinge til høyre. Påbudsskilt – ingen valgfrihet.' },
+  { id: 's16', category: 'påbud',    name: 'Rundkjøring',           number: '408', img: SIGN_BASE+'408-01.gif',    description: 'Rundkjøring. Hold til venstre for midtøya. Vikeplikt for trafikk inne i rundkjøringen.' },
+  { id: 's17', category: 'påbud',    name: 'Gang- og sykkelveg',    number: '522', img: SIGN_BASE+'522-01.gif',    description: 'Gang- og sykkelveg. Motorvogn er forbudt. Kun for gående og syklende.' },
+  { id: 's29', category: 'påbud',    name: 'Gangveg',               number: '524', img: SIGN_BASE+'524-01.gif',    description: 'Kun for gående. Syklister og motorvogn er forbudt.' },
+  { id: 's30', category: 'påbud',    name: 'Sykkelveg',             number: '528', img: SIGN_BASE+'528-01.gif',    description: 'Kun for syklister. Gående og motorvogn er ikke tillatt.' },
+
+  // ---- PRIORITET / VIKEPLIKT ----
+  { id: 's18', category: 'prioritet',name: 'Vikeplikt',             number: '202', img: SIGN_BASE+'202-01.gif',    description: 'Du har vikeplikt for all trafikk på kryssende/møtende veg. Vike, men trenger ikke stoppe om klart.' },
+  { id: 's19', category: 'prioritet',name: 'STOPP',                 number: '206', img: SIGN_BASE+'206-01.gif',    description: 'Du MÅ stoppe fullstendig ved stopplinja. Gi vikeplikt for ALL trafikk – selv om vegen er tom.' },
+  { id: 's20', category: 'prioritet',name: 'Forkjørsveg',           number: '204', img: SIGN_BASE+'204-01.gif',    description: 'Forkjørsveg. Du har forkjørsrett over kryssende trafikk med vikepliktskilt.' },
+  { id: 's21', category: 'prioritet',name: 'Slutt forkjørsveg',     number: '208', img: SIGN_BASE+'208-01.gif',    description: 'Forkjørsvegen slutter. Vanlige vikepliktregler gjelder igjen. Høyreregelen kan gjelde.' },
+  { id: 's31', category: 'prioritet',name: 'Forkjørsrett møtende',  number: '212', img: SIGN_BASE+'212-01.gif',    description: 'Motkommende trafikk har forkjørsrett forbi innsnevring. Du må vente til det er klart.' },
+  { id: 's32', category: 'prioritet',name: 'Motorveg',              number: '502', img: SIGN_BASE+'502-01.gif',    description: 'Motorveg starter. Særregler gjelder: minstehastighet, forbikjøring kun til venstre, ingen stopp.' },
+  { id: 's33', category: 'prioritet',name: 'Slutt motorveg',        number: '503', img: SIGN_BASE+'503-01.gif',    description: 'Motorvegen slutter. Vanlige trafikkregler gjelder igjen.' },
 ];
 
 window.CATEGORIES = CATEGORIES;
