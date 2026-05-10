@@ -795,6 +795,7 @@ function renderSigns() {
 
 function updateSignsGrid() {
   const grid = document.getElementById('signs-grid');
+  if (!grid) return;
   let signs = SIGNS;
   if (state.signFilter !== 'all') {
     signs = signs.filter(s => s.category === state.signFilter);
@@ -1297,6 +1298,7 @@ function saveProgress() {
 // ============ NOTIFICATIONS ============
 function showNotification(msg, type = 'correct') {
   const notif = document.getElementById('notification');
+  if (!notif) return;
   notif.className = `notification ${type}`;
   notif.querySelector('.notif-text').textContent = msg;
   notif.querySelector('.notif-icon').textContent = type === 'correct' ? '✅' : '❌';
