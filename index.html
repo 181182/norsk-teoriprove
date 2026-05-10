@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Norsk Teoriprøve – Lær Trafikkreglene</title>
+  <meta name="description" content="Komplett læringsside for norsk teoriprøve. Quizzer, guider, skiltdemonstrasjon og mer.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#" onclick="navigateTo('home')">
+      <div class="logo-flag"></div>
+      <div>
+        <span class="logo-text">Kjøreskolen</span>
+        <span class="logo-sub">Norsk Teoriprøve</span>
+      </div>
+    </a>
+    <nav>
+      <button class="nav-btn active" data-page="home">🏠 <span>Hjem</span></button>
+      <button class="nav-btn" data-page="categories">📚 <span>Kategorier</span></button>
+      <button class="nav-btn" data-page="quiz">🎯 <span>Quiz</span></button>
+      <button class="nav-btn" data-page="guides">📖 <span>Guider</span></button>
+      <button class="nav-btn" data-page="signs">🚦 <span>Skilt</span></button>
+      <button class="nav-btn" data-page="exam">✅ <span>Eksamenstips</span></button>
+      <button class="nav-btn" data-page="progress">
+        📊 <span>Fremgang</span>
+        <span class="progress-badge" id="progress-nav-badge">0%</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ PAGE: HOME ============ -->
+<div class="page active" id="page-home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🇳🇴</span>
+        <span>Basert på Statens vegvesen sitt pensum</span>
+      </div>
+      <h1>Bestå Teoriprøven på Første Forsøk</h1>
+      <p>Din komplette læringsplattform for norsk førerprøve. Gjennomgå alle kategorier, øv med quizzer, og lær trafikkskiltene – alt du trenger for å bli klar for veien.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">73+</div>
+          <div class="stat-label">Spørsmål</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">10</div>
+          <div class="stat-label">Kategorier</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">21</div>
+          <div class="stat-label">Trafikkskilt</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">85%</div>
+          <div class="stat-label">Bestå-grense</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" data-goto="quiz">🎯 Start Quiz nå</button>
+        <button class="btn btn-secondary btn-lg" data-goto="categories">📚 Se kategorier</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Slik bruker du Kjøreskolen</h2>
+        <p>Strukturert læring som tar deg fra nybegynner til klar for prøven</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:12px">📖</div>
+          <h3 style="font-weight:700;margin-bottom:8px">1. Les guidene</h3>
+          <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Start med å lese de detaljerte guidene for hvert tema. Forstå reglene grundig.</p>
+        </div>
+        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:12px">🚦</div>
+          <h3 style="font-weight:700;margin-bottom:8px">2. Lær skiltene</h3>
+          <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Gå gjennom alle trafikkskiltene med visuell demonstrasjon og forklaring.</p>
+        </div>
+        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:12px">🎯</div>
+          <h3 style="font-weight:700;margin-bottom:8px">3. Test deg selv</h3>
+          <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Ta quizzer med tidtaker. Alle spørsmål har detaljerte forklaringer.</p>
+        </div>
+        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+          <div style="font-size:2.5rem;margin-bottom:12px">📊</div>
+          <h3 style="font-weight:700;margin-bottom:8px">4. Følg fremgang</h3>
+          <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Se hvor mye du har lært per kategori. Fokuser på svake områder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick quiz categories -->
+  <section class="section" style="background:white;padding:48px 0">
+    <div class="container">
+      <div class="section-header">
+        <h2>Velg en kategori å starte med</h2>
+        <p>Klikk på en kategori for å starte en målrettet quiz</p>
+      </div>
+      <div id="home-categories-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Exam info -->
+  <section class="section">
+    <div class="container">
+      <div style="background:linear-gradient(135deg,var(--dark) 0%,var(--darker) 100%);border-radius:16px;padding:40px;color:white;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center">
+        <div>
+          <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:12px">Om Teoriprøven</h2>
+          <p style="opacity:0.85;line-height:1.7;margin-bottom:16px">Den norske teoriprøven (klasse B) består av 45 spørsmål. Du trenger minst 85% riktige svar (38 av 45) for å bestå.</p>
+          <p style="opacity:0.85;line-height:1.7">Prøven gjennomføres digitalt hos Statens vegvesen sine trafikkstasjoner. Hvert spørsmål har 4 svaralternativer.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">📝</span>
+            <div><strong>45 spørsmål</strong><br><span style="opacity:0.7;font-size:0.85rem">Totalt på prøven</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">✅</span>
+            <div><strong>38 riktige (85%)</strong><br><span style="opacity:0.7;font-size:0.85rem">Krav for å bestå</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">⏱️</span>
+            <div><strong>45 minutter</strong><br><span style="opacity:0.7;font-size:0.85rem">Tid til rådighet</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">🏢</span>
+            <div><strong>Statens vegvesen</strong><br><span style="opacity:0.7;font-size:0.85rem">Kilde for pensum</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: CATEGORIES ============ -->
+<div class="page" id="page-categories">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Alle kategorier</h2>
+        <p>Velg en kategori for å starte en fokusert quiz eller lese guide</p>
+      </div>
+      <div class="categories-grid" id="categories-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: QUIZ ============ -->
+<div class="page" id="page-quiz">
+  <section class="section">
+    <div class="container">
+      <div class="quiz-container">
+
+        <!-- Setup -->
+        <div class="quiz-setup">
+          <h2>🎯 Start Quiz</h2>
+          <p>Velg kategori og vanskelighetsgrad, deretter trykk start</p>
+
+          <p style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:12px;text-align:left">VELG KATEGORI</p>
+          <div class="quiz-options" id="quiz-options-grid"><!-- Rendered by JS --></div>
+
+          <p style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:12px;text-align:left">VANSKELIGHETSGRAD</p>
+          <div class="difficulty-btns">
+            <button class="diff-btn selected" onclick="selectDifficulty(this, 'all')">Alle nivåer</button>
+            <button class="diff-btn lett" onclick="selectDifficulty(this, 'lett')">🟢 Lett</button>
+            <button class="diff-btn middels" onclick="selectDifficulty(this, 'middels')">🟡 Middels</button>
+            <button class="diff-btn vanskelig" onclick="selectDifficulty(this, 'vanskelig')">🔴 Vanskelig</button>
+          </div>
+
+          <button class="btn btn-primary btn-lg" onclick="startQuiz()" style="width:100%;justify-content:center">
+            ▶ Start Quiz
+          </button>
+        </div>
+
+        <!-- Active Quiz -->
+        <div class="quiz-active">
+          <!-- Header bar -->
+          <div class="quiz-header-bar">
+            <div class="quiz-progress-info">
+              <span class="quiz-counter" id="quiz-counter">Spørsmål <strong>1</strong> av 20</span>
+            </div>
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div>
+            </div>
+            <div class="quiz-score-display">
+              <div class="score-item">
+                <div class="score-dot correct"></div>
+                <span id="quiz-score-correct">0</span>
+              </div>
+              <div class="score-item">
+                <div class="score-dot wrong"></div>
+                <span id="quiz-score-wrong">0</span>
+              </div>
+            </div>
+            <div class="quiz-timer" id="quiz-timer">30</div>
+          </div>
+
+          <!-- Question -->
+          <div class="question-card">
+            <div class="question-meta">
+              <span class="question-category-badge" id="question-category">Kategori</span>
+              <span class="difficulty-badge" id="question-difficulty">Lett</span>
+            </div>
+            <div class="question-text" id="question-text">Spørsmål lastes...</div>
+            <div class="answer-options" id="answer-options"></div>
+            <div class="explanation-box" id="explanation-box">
+              <span class="explanation-icon">💡</span>
+              <span class="exp-text"></span>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="quiz-nav">
+            <button class="btn btn-outline" onclick="resetQuiz()">✖ Avslutt</button>
+            <button class="btn btn-primary hide" id="quiz-next-btn" onclick="nextQuestion()">
+              Neste spørsmål →
+            </button>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="quiz-results">
+          <div class="result-circle" id="result-circle">
+            <span class="result-pct" id="result-pct">0%</span>
+            <span class="result-label">Score</span>
+          </div>
+          <h2 class="result-title" id="result-title">Resultater</h2>
+          <p class="result-subtitle" id="result-subtitle"></p>
+
+          <div class="result-stats">
+            <div class="result-stat pass">
+              <div class="num" id="result-correct">0</div>
+              <div class="lbl">Riktige</div>
+            </div>
+            <div class="result-stat fail">
+              <div class="num" id="result-wrong">0</div>
+              <div class="lbl">Gale</div>
+            </div>
+            <div class="result-stat neutral">
+              <div class="num" id="result-total">0</div>
+              <div class="lbl">Totalt</div>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="startQuiz()">🔄 Prøv igjen</button>
+            <button class="btn btn-outline" onclick="resetQuiz()">⚙ Nytt oppsett</button>
+            <button class="btn btn-secondary" style="background:var(--blue);color:white" data-goto="guides">📖 Les guider</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: GUIDES ============ -->
+<div class="page" id="page-guides">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Guider og Teori</h2>
+        <p>Detaljerte forklaringer av alle viktige temaer</p>
+      </div>
+      <div class="guides-layout">
+        <div class="guides-sidebar">
+          <p class="sidebar-title">Velg guide</p>
+          <div id="guides-sidebar-list"></div>
+        </div>
+        <div class="guide-content" id="guides-content"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: SIGNS ============ -->
+<div class="page" id="page-signs">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Trafikkskilt</h2>
+        <p>Klikk på et skilt for å se full forklaring</p>
+      </div>
+
+      <!-- Filter -->
+      <div class="signs-filter">
+        <button class="filter-btn sign-filter-btn active" data-filter="all">Alle skilt</button>
+        <button class="filter-btn sign-filter-btn" data-filter="advarsel">⚠️ Advarselsskilt</button>
+        <button class="filter-btn sign-filter-btn" data-filter="forbud">🚫 Forbudsskilt</button>
+        <button class="filter-btn sign-filter-btn" data-filter="påbud">🔵 Påbudsskilt</button>
+        <button class="filter-btn sign-filter-btn" data-filter="prioritet">⬦ Vikeplikt/Prioritet</button>
+      </div>
+
+      <!-- Signs explanation card -->
+      <div style="background:white;border-radius:12px;padding:24px;margin-bottom:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">🔺</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Advarselsskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Rød trekant, hvit bakgrunn. Varsler om fare foran deg.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">🔴</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Forbudsskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Rød ring, hvit bakgrunn. Forbyr bestemt kjøring.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">🔵</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Påbudsskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Blå sirkel. Du MÅ følge instruksjonen.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">⬦</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Prioritetsskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Diverse former. Gjelder vikeplikt og forkjørsrett.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="signs-grid" id="signs-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: EXAM TIPS ============ -->
+<div class="page" id="page-exam">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Eksamenstips & Råd</h2>
+        <p>Alt du trenger å vite for å bestå teoriprøven</p>
+      </div>
+
+      <!-- Exam facts -->
+      <div style="background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);border-radius:16px;padding:32px;color:white;margin-bottom:32px">
+        <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:20px">📋 Teoriprøven – Fakta</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+          <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:2rem;font-weight:800">45</div>
+            <div style="opacity:0.8;font-size:0.85rem">Spørsmål totalt</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:2rem;font-weight:800">85%</div>
+            <div style="opacity:0.8;font-size:0.85rem">Riktige for å bestå</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:2rem;font-weight:800">45 min</div>
+            <div style="opacity:0.8;font-size:0.85rem">Tid til rådighet</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:2rem;font-weight:800">4</div>
+            <div style="opacity:0.8;font-size:0.85rem">Svaralternativer per spørsmål</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="tips-grid">
+        <div class="tip-card success">
+          <div class="tip-icon">✅</div>
+          <h3>Hva du BØR gjøre</h3>
+          <ul>
+            <li>Les alle spørsmålene nøye</li>
+            <li>Øv med tidtaker (45 sek per spørsmål)</li>
+            <li>Fokuser på vikeplikt og skilt</li>
+            <li>Ta mange øvingsprøver</li>
+            <li>Lær forklaringene – ikke bare svarene</li>
+            <li>Sov godt natten før</li>
+            <li>Spis godt på eksamensdagen</li>
+          </ul>
+        </div>
+        <div class="tip-card danger">
+          <div class="tip-icon">❌</div>
+          <h3>Vanlige feil på prøven</h3>
+          <ul>
+            <li>Misforstår høyreregelen</li>
+            <li>Glemmer syklister og fotgjengere</li>
+            <li>Feil om rundkjøring</li>
+            <li>Blander fartsgrenser</li>
+            <li>Glemmer vikeplikt ved utkjøring</li>
+            <li>Misforstår skiltet "Slutt forkjørsveg"</li>
+            <li>Promilleregler (0,2 promille)</li>
+          </ul>
+        </div>
+        <div class="tip-card warning">
+          <div class="tip-icon">⚠️</div>
+          <h3>Viktige tema å fokusere på</h3>
+          <ul>
+            <li>Vikeplikt (ca. 30% av spørsmålene)</li>
+            <li>Trafikkskilt og deres betydning</li>
+            <li>Fartsgrenser og bremselengder</li>
+            <li>Vegoppmerking (linjer og piler)</li>
+            <li>Førstehjelp ved ulykker</li>
+            <li>Miljøvennlig kjøring</li>
+            <li>Mørke og dårlig sikt</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📅</div>
+          <h3>Forberedelse – Timeplan</h3>
+          <p>Anbefalt studieplan:</p>
+          <ul>
+            <li>Uke 1: Les alle guider (30 min/dag)</li>
+            <li>Uke 2: Lær alle trafikkskilt</li>
+            <li>Uke 3: Quizzer per kategori</li>
+            <li>Uke 4: Blandede quizzer + repetisjon</li>
+            <li>Dagen før: En siste øvingsprøve</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🧠</div>
+          <h3>Hukommelsestips</h3>
+          <ul>
+            <li>Bruk mnemonikk for vikeplikt</li>
+            <li>Visualiser trafikksituasjoner</li>
+            <li>Tegn kryss og øv vikeplikt</li>
+            <li>Koble skilt til former/farger</li>
+            <li>Gjentas spørsmål du feiler</li>
+            <li>Lær i korte bolker (20 min)</li>
+          </ul>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📱</div>
+          <h3>Praktiske råd</h3>
+          <p>For selve eksamensdagen:</p>
+          <ul>
+            <li>Møt tidlig til trafikkstasjonen</li>
+            <li>Ta med gyldig legitimasjon</li>
+            <li>Slå av mobilen</li>
+            <li>Les alle alternativene nøye</li>
+            <li>Bruk hele tidsrammen</li>
+            <li>Ikke endre svar uten grunn</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Key rules summary -->
+      <div style="background:white;border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-top:32px">
+        <h3 style="font-size:1.4rem;font-weight:800;margin-bottom:24px">📌 De Viktigste Reglene – Hurtigguide</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+          <div style="background:rgba(231,76,60,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--red)">
+            <strong style="display:block;margin-bottom:8px;color:var(--red)">⚡ Vikeplikt (Huskeregel)</strong>
+            <p style="font-size:0.88rem;line-height:1.6">1. Trafikklys → 2. Politi → 3. Skilt → 4. Høyreregelen. Høyreregelen er SISTE prioritet! Forkjørsveg og rundkjøring overstyrer høyreregelen.</p>
+          </div>
+          <div style="background:rgba(39,174,96,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--success)">
+            <strong style="display:block;margin-bottom:8px;color:var(--success)">🚦 Fartsgrenser</strong>
+            <p style="font-size:0.88rem;line-height:1.6">50 km/t: Tettbygd. 80 km/t: Utenfor tettbygd. 110 km/t: Motorveg (maks). 0,2 promille alkohol = lovlig grense.</p>
+          </div>
+          <div style="background:rgba(41,128,185,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--blue)">
+            <strong style="display:block;margin-bottom:8px;color:var(--blue)">🔄 Rundkjøring</strong>
+            <p style="font-size:0.88rem;line-height:1.6">ALLTID vikeplikt for trafikk inne i rundkjøringen! Signaler alltid ut med blinklys. Høyreregelen gjelder ikke i rundkjøring.</p>
+          </div>
+          <div style="background:rgba(243,156,18,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--warning)">
+            <strong style="display:block;margin-bottom:8px;color:var(--warning)">🚶 Fotgjengere</strong>
+            <p style="font-size:0.88rem;line-height:1.6">Fotgjengere i gangfelt har ALLTID forkjørsrett. Du plikter å stoppe. Det er forbudt å øke farten mot fotgjengere.</p>
+          </div>
+          <div style="background:rgba(142,68,173,0.06);border-radius:10px;padding:20px;border-left:4px solid #8e44ad">
+            <strong style="display:block;margin-bottom:8px;color:#8e44ad">🚨 Nødnumre</strong>
+            <p style="font-size:0.88rem;line-height:1.6">110 = Brann 🔥 | 112 = Politi 🚔 | 113 = Ambulanse 🚑. Huskeregel: Stigende rekkefølge etter prioritet ved ulykke.</p>
+          </div>
+          <div style="background:rgba(192,57,43,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--red)">
+            <strong style="display:block;margin-bottom:8px;color:var(--red)">🛑 STOPP vs Vikeplikt</strong>
+            <p style="font-size:0.88rem;line-height:1.6">Vikepliktskilt: Vike, men du trenger ikke stoppe. STOPP-skilt: Du MÅ stoppe fullstendig – selv om vegen er klar!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start quiz CTA -->
+      <div style="text-align:center;margin-top:40px">
+        <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:16px">Klar til å teste kunnskapene dine?</h3>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary btn-lg" data-goto="quiz">🎯 Start full quiz (20 spm)</button>
+          <button class="btn btn-outline btn-lg" data-goto="guides">📖 Les guidene</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: PROGRESS ============ -->
+<div class="page" id="page-progress">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Din Fremgang</h2>
+        <p>Oversikt over hva du har lært og hva som gjenstår</p>
+      </div>
+      <div class="progress-overview" id="progress-overview"></div>
+
+      <div class="section-header" style="margin-top:20px">
+        <h3 style="font-size:1.3rem;font-weight:700">Fremgang per kategori</h3>
+      </div>
+      <div class="progress-details" id="progress-details"></div>
+
+      <!-- Motivational -->
+      <div style="background:white;border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-top:24px;text-align:center">
+        <p style="font-size:1.1rem;color:var(--text-light);margin-bottom:16px">
+          💪 Øv jevnt og du vil bestå teoriprøven!
+        </p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" data-goto="quiz">🎯 Fortsett å øve</button>
+          <button class="reset-btn" onclick="resetProgress()">🗑 Nullstill fremgang</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SIGN MODAL ============ -->
+<div class="modal-overlay" id="sign-modal" onclick="if(event.target===this)closeSignModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSignModal()">✕</button>
+    <div class="modal-sign-visual" id="modal-sign-visual"></div>
+    <h3 id="modal-sign-name"></h3>
+    <span class="sign-num-badge" id="modal-sign-number"></span>
+    <p id="modal-sign-desc"></p>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px" onclick="closeSignModal();navigateTo('quiz')">
+      🎯 Test deg om dette skiltet
+    </button>
+  </div>
+</div>
+
+<!-- ============ NOTIFICATION ============ -->
+<div class="notification" id="notification">
+  <span class="notif-icon">✅</span>
+  <span class="notif-text"></span>
+</div>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scroll-top" title="Tilbake til toppen">↑</button>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
