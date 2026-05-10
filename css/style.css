@@ -49,13 +49,347 @@ body {
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
   height: 64px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---- Game bar ---- */
+.header-game-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.level-display {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.xp-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 110px;
+}
+
+.xp-bar-track {
+  height: 7px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f39c12, #e74c3c);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.xp-label {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  text-align: right;
+}
+
+.streak-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  transition: background 0.3s;
+}
+
+.streak-display.active {
+  background: rgba(231,76,60,0.35);
+  animation: pulse-streak 2s infinite;
+}
+
+@keyframes pulse-streak {
+  0%,100% { box-shadow: 0 0 0 0 rgba(231,76,60,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(231,76,60,0); }
+}
+
+/* XP popup */
+.xp-popup {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  background: linear-gradient(135deg, #f39c12, #e74c3c);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 8px 18px;
+  border-radius: 20px;
+  z-index: 1500;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.35s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.xp-popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Badge overlay */
+.badge-overlay {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  z-index: 2000;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.badge-overlay.show { transform: translateX(-50%) translateY(0); }
+
+.badge-popup {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 2px solid #f39c12;
+  border-radius: 16px;
+  padding: 20px 32px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(243,156,18,0.2);
+  min-width: 240px;
+}
+
+.badge-popup-label { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.badge-popup-icon { font-size: 3rem; margin: 8px 0; }
+.badge-popup-name { font-size: 1.2rem; font-weight: 800; color: #f39c12; }
+.badge-popup-desc { font-size: 0.82rem; opacity: 0.75; margin-top: 4px; }
+
+/* Level up overlay */
+.levelup-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  z-index: 2100;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.levelup-overlay.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+.levelup-popup {
+  background: linear-gradient(135deg, #f39c12, #e74c3c);
+  border-radius: 20px;
+  padding: 32px 48px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.levelup-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
+.levelup-icon { font-size: 4rem; margin: 12px 0; }
+.levelup-name { font-size: 1.5rem; font-weight: 900; }
+
+/* Daily challenge card */
+.daily-challenge-card {
+  background: linear-gradient(135deg, #1a5276, #2980b9);
+  border-radius: 14px;
+  padding: 20px 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 6px 24px rgba(41,128,185,0.3);
+  transition: transform 0.2s;
+}
+
+.daily-challenge-card:hover { transform: translateY(-2px); }
+
+.dc-icon { font-size: 2.2rem; flex-shrink: 0; }
+
+.dc-info { flex: 1; }
+.dc-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+.dc-info p { font-size: 0.85rem; opacity: 0.85; }
+
+.dc-btn { flex-shrink: 0; white-space: nowrap; }
+
+.dc-badge {
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Combo display */
+.combo-display {
+  display: none;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  color: white;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  animation: combo-pulse 0.5s ease;
+}
+
+.combo-display.show { display: inline-block; }
+
+@keyframes combo-pulse {
+  0% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Question scenario */
+.question-scenario {
+  background: linear-gradient(135deg, rgba(41,128,185,0.08), rgba(26,82,118,0.05));
+  border-left: 3px solid #2980b9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+/* Badges grid */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.badge-card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+
+.badge-card:hover { transform: translateY(-3px); }
+
+.badge-card.earned {
+  border: 2px solid #f39c12;
+  background: linear-gradient(135deg, #fef9ec, white);
+}
+
+.badge-card.locked {
+  opacity: 0.5;
+  filter: grayscale(0.5);
+}
+
+.badge-card-icon { font-size: 2rem; margin-bottom: 8px; }
+.badge-card-name { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+.badge-card-desc { font-size: 0.72rem; color: var(--text-light); line-height: 1.4; }
+
+/* Guide table */
+.guide-table-wrap { overflow-x: auto; margin: 12px 0; }
+
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.guide-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--gray-light);
+}
+
+.guide-table tr:first-child td {
+  background: var(--blue);
+  color: white;
+  font-weight: 700;
+}
+
+.guide-table tr:nth-child(even) td { background: var(--off-white); }
+
+/* Guide list */
+.guide-list {
+  margin: 10px 0 0 20px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.guide-list li { margin-bottom: 2px; }
+
+/* Result XP summary */
+.result-xp-summary {
+  background: var(--off-white);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+
+.result-xp-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.result-xp-row:last-child { border-bottom: none; }
+
+/* Road diagrams */
+.question-diagram {
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.question-diagram svg {
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  max-width: 100%;
+}
+
+/* Improved sign cards */
+.sign-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 12px 14px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.sign-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue-light);
+  box-shadow: var(--shadow-lg);
+}
+
+.sign-visual {
+  margin-bottom: 10px;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {

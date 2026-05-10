@@ -20,13 +20,28 @@
         <span class="logo-sub">Norsk Teoriprøve</span>
       </div>
     </a>
+    <!-- Game bar -->
+    <div class="header-game-bar">
+      <div class="level-display">
+        <span id="header-level-icon">🌱</span>
+        <span id="header-level-name">Nybegynner</span>
+      </div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-track"><div class="xp-bar-fill" id="header-xp-bar" style="width:0%"></div></div>
+        <span class="xp-label" id="header-xp-label">0 XP</span>
+      </div>
+      <div class="streak-display" id="header-streak">
+        <span>🔥</span>
+        <span id="header-streak-count">0</span>
+      </div>
+    </div>
     <nav>
       <button class="nav-btn active" data-page="home">🏠 <span>Hjem</span></button>
       <button class="nav-btn" data-page="categories">📚 <span>Kategorier</span></button>
       <button class="nav-btn" data-page="quiz">🎯 <span>Quiz</span></button>
       <button class="nav-btn" data-page="guides">📖 <span>Guider</span></button>
       <button class="nav-btn" data-page="signs">🚦 <span>Skilt</span></button>
-      <button class="nav-btn" data-page="exam">✅ <span>Eksamenstips</span></button>
+      <button class="nav-btn" data-page="exam">✅ <span>Tips</span></button>
       <button class="nav-btn" data-page="progress">
         📊 <span>Fremgang</span>
         <span class="progress-badge" id="progress-nav-badge">0%</span>
@@ -34,6 +49,9 @@
     </nav>
   </div>
 </header>
+
+<!-- XP popup -->
+<div class="xp-popup" id="xp-popup">+10 XP</div>
 
 <!-- ============ PAGE: HOME ============ -->
 <div class="page active" id="page-home">
@@ -48,7 +66,7 @@
       <p>Din komplette læringsplattform for norsk førerprøve. Gjennomgå alle kategorier, øv med quizzer, og lær trafikkskiltene – alt du trenger for å bli klar for veien.</p>
       <div class="hero-stats">
         <div class="stat">
-          <div class="stat-num">73+</div>
+          <div class="stat-num">110+</div>
           <div class="stat-label">Spørsmål</div>
         </div>
         <div class="stat">
@@ -99,6 +117,15 @@
           <h3 style="font-weight:700;margin-bottom:8px">4. Følg fremgang</h3>
           <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Se hvor mye du har lært per kategori. Fokuser på svake områder.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily challenge -->
+  <section class="section" style="padding:24px 0 0">
+    <div class="container">
+      <div id="daily-challenge-card" class="daily-challenge-card">
+        <!-- Rendered by JS -->
       </div>
     </div>
   </section>
@@ -216,7 +243,10 @@
             <div class="question-meta">
               <span class="question-category-badge" id="question-category">Kategori</span>
               <span class="difficulty-badge" id="question-difficulty">Lett</span>
+              <span class="combo-display" id="combo-display"></span>
             </div>
+            <div class="question-scenario" id="question-scenario" style="display:none"></div>
+            <div class="question-diagram" id="question-diagram" style="display:none;justify-content:center;margin-bottom:16px"></div>
             <div class="question-text" id="question-text">Spørsmål lastes...</div>
             <div class="answer-options" id="answer-options"></div>
             <div class="explanation-box" id="explanation-box">
@@ -257,6 +287,8 @@
               <div class="lbl">Totalt</div>
             </div>
           </div>
+
+          <div id="result-xp-summary" class="result-xp-summary"></div>
 
           <div class="result-actions">
             <button class="btn btn-primary" onclick="startQuiz()">🔄 Prøv igjen</button>
@@ -515,6 +547,13 @@
       </div>
       <div class="progress-details" id="progress-details"></div>
 
+      <!-- Badges -->
+      <div class="section-header" style="margin-top:32px">
+        <h3 style="font-size:1.3rem;font-weight:700">🏅 Merker</h3>
+        <p>Lås opp merker ved å fullføre utfordringer</p>
+      </div>
+      <div id="badges-grid" class="badges-grid"></div>
+
       <!-- Motivational -->
       <div style="background:white;border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-top:24px;text-align:center">
         <p style="font-size:1.1rem;color:var(--text-light);margin-bottom:16px">
@@ -547,6 +586,25 @@
 <div class="notification" id="notification">
   <span class="notif-icon">✅</span>
   <span class="notif-text"></span>
+</div>
+
+<!-- ============ BADGE UNLOCK OVERLAY ============ -->
+<div class="badge-overlay" id="badge-overlay">
+  <div class="badge-popup">
+    <div class="badge-popup-label">🏅 Nytt merke opplåst!</div>
+    <div class="badge-popup-icon" id="badge-overlay-icon">🎯</div>
+    <div class="badge-popup-name" id="badge-overlay-name">Første steg</div>
+    <div class="badge-popup-desc" id="badge-overlay-desc"></div>
+  </div>
+</div>
+
+<!-- ============ LEVEL UP OVERLAY ============ -->
+<div class="levelup-overlay" id="levelup-overlay">
+  <div class="levelup-popup">
+    <div class="levelup-label">🎊 Nytt nivå!</div>
+    <div class="levelup-icon" id="levelup-icon">🚗</div>
+    <div class="levelup-name" id="levelup-name">Bilist</div>
+  </div>
 </div>
 
 <!-- Scroll to top -->
