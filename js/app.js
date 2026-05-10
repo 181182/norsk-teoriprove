@@ -39,19 +39,20 @@ const state = {
 
 // ============ INIT ============
 document.addEventListener('DOMContentLoaded', () => {
-  checkAndUpdateStreak();
-  initNav();
-  renderCategories();
-  renderGuides();
-  renderSigns();
-  renderProgress();
-  renderQuizSetup();
-  initScrollTop();
-  updateAllProgressBars();
-  renderHomeCategories();
-  updateGameHeader();
-  renderDailyChallenge();
-  renderBadgesPage();
+  const safe = (fn) => { try { fn(); } catch(e) { console.error(fn.name, e); } };
+  safe(checkAndUpdateStreak);
+  safe(initNav);
+  safe(renderCategories);
+  safe(renderGuides);
+  safe(renderSigns);
+  safe(renderProgress);
+  safe(renderQuizSetup);
+  safe(initScrollTop);
+  safe(updateAllProgressBars);
+  safe(renderHomeCategories);
+  safe(updateGameHeader);
+  safe(renderDailyChallenge);
+  safe(renderBadgesPage);
 });
 
 // ============ STREAK ============
@@ -713,35 +714,46 @@ function renderGuides() {
 
   sidebar.innerHTML = GUIDES.map((g, i) => {
     const cat = CATEGORIES.find(c => c.id === g.category);
+    const icon = g.icon || (cat ? cat.icon : '📖');
     return `
       <button class="guide-nav-item ${i === 0 ? 'active' : ''}" onclick="showGuide('${g.id}', this)">
-        <span>${cat ? cat.icon : '📖'}</span>
+        <span>${icon}</span>
         <span>${g.title}</span>
       </button>
     `;
   }).join('');
 
-  const content = document.getElementById('guides-content');
-  content.innerHTML = GUIDES.map((g, i) => {
-    const sections = g.content.map(s => `
-      <div class="guide-section">
-        <div class="guide-section-header">
-          <span class="guide-section-icon">${s.icon}</span>
-          <h3>${s.heading}</h3>
+  const contentEl = document.getElementById('guides-content');
+  contentEl.innerHTML = GUIDES.map((g, i) => {
+    // Support both old format (g.content with heading/text) and new format (g.sections with title/content)
+    const items = g.content || g.sections || [];
+    const sections = items.map(s => {
+      const heading = s.heading || s.title || '';
+      const text = s.text || (typeof s.content === 'string' ? s.content : '');
+      return `
+        <div class="guide-section">
+          <div class="guide-section-header">
+            <span class="guide-section-icon">${s.icon || ''}</span>
+            <h3>${heading}</h3>
+          </div>
+          ${text ? `<p>${text}</p>` : ''}
+          ${s.table ? renderGuideTable(s.table) : ''}
+          ${s.list ? renderGuideList(s.list) : ''}
         </div>
-        <p>${s.text}</p>
-        ${s.table ? renderGuideTable(s.table) : ''}
-        ${s.list ? renderGuideList(s.list) : ''}
-      </div>
-    `).join('');
+      `;
+    }).join('');
+
+    const cat = CATEGORIES.find(c => c.id === g.category);
+    const catName = cat ? cat.name : g.title;
+    const catId = g.category || 'all';
 
     return `
       <div class="guide-card ${i === 0 ? 'active' : ''}" id="guide-${g.id}">
         <h2>${g.title}</h2>
         <p class="guide-intro">${g.intro || 'Lær alt du trenger å vite om dette emnet for å bestå teoriprøven.'}</p>
         ${sections}
-        <button class="quick-quiz-btn" onclick="startCategoryQuiz('${g.category}')">
-          🎯 Test deg selv – Quiz om ${CATEGORIES.find(c => c.id === g.category)?.name || 'dette emnet'}
+        <button class="quick-quiz-btn" onclick="startCategoryQuiz('${catId}')">
+          🎯 Test deg selv – Quiz om ${catName}
         </button>
       </div>
     `;
