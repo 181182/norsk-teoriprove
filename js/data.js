@@ -160,7 +160,7 @@ const QUESTIONS = [
     scenario: '🚨 Bilen din stoppet plutselig på E6 med 110 km/t-trafikk rundt deg.',
     options: ['Åpner panseret, ringer veihjelp, tar en kaffe', 'Slår på varselblinkene, setter ut varseltrekant (100m+), tar på refleksvest og forlater bilen mot autovernet', 'Prøver å starte bilen igjen og venter i bilen', 'Ringer politiet og venter i bilen'],
     correct: 1,
-    explanation: 'Nødstopp på motorveg: 1) Varselblinkene PÅ umiddelbart. 2) Forlat bilen mot autovernet/sikkerhetsside. 3) Sett ut varseltrekant 100m+ bak. Ring veihjelp (02222) fra sikker plass.'
+    explanation: 'Nødstopp på motorveg: 1) Varselblinkene PÅ umiddelbart. 2) Forlat bilen mot autovernet/sikkerhetsside. 3) Sett ut varseltrekant 150m+ bak. Ring veihjelp (02222) fra sikker plass.'
   },
   {
     id: 16, category: 'trafikkregler', difficulty: 'middels',
@@ -227,7 +227,7 @@ const QUESTIONS = [
     question: 'Du ser et trekant-skilt (nesen ned, invertert trekant). Hva betyr det?',
     options: ['Advarsel om sving', 'Vikeplikt – du skal vike for all trafikk på kryssende veg', 'STOPP', 'Forkjørsveg'],
     correct: 1,
-    explanation: 'Invertert trekant (skilt 306) = Vikeplikt. Du MÅ gi vikeplikt for all trafikk på den kryssende vegen. Det betyr ikke nødvendigvis at du må stoppe – men du MÅ vike.'
+    explanation: 'Invertert trekant (skilt 202) = Vikeplikt. Du MÅ gi vikeplikt for all trafikk på den kryssende vegen. Det betyr ikke nødvendigvis at du må stoppe – men du MÅ vike.'
   },
   {
     id: 25, category: 'skilt', difficulty: 'middels',
@@ -235,11 +235,11 @@ const QUESTIONS = [
     scenario: '🛑 Du ser et rødt åttekantet STOPP-skilt.',
     options: ['Ingen forskjell', 'STOPP krever full stans, vikepliktskilt krever bare at du gir vikeplikt', 'STOPP gjelder bare lastebiler', 'Vikepliktskilt er strengere'],
     correct: 1,
-    explanation: 'STOPP-skilt (306.1): Du MÅ stoppe fullstendig ved stopplinja – selv om vegen er tom. Vikepliktskilt: Gi vikeplikt, men du trenger ikke stoppe hvis vegen er klar.'
+    explanation: 'STOPP-skilt (206): Du MÅ stoppe fullstendig ved stopplinja – selv om vegen er tom. Vikepliktskilt (202): Gi vikeplikt, men du trenger ikke stoppe hvis vegen er klar.'
   },
   {
     id: 26, category: 'skilt', difficulty: 'middels',
-    question: 'Hva betyr et gult diamantskilt (skilt 202)?',
+    question: 'Hva betyr et gult diamantskilt (skilt 204)?',
     options: ['Advarsel om farlig kurve', 'Du kjører på forkjørsveg og har forkjørsrett', 'Midlertidig vegarbeid', 'Spesialtransport'],
     correct: 1,
     explanation: 'Gult diamantskilt = Forkjørsveg. Du har forkjørsrett over trafikk på kryssende veger. Gjelder fra skiltet til "slutt forkjørsveg"-skiltet (likt skilt, men i grått).'
@@ -263,7 +263,7 @@ const QUESTIONS = [
     question: 'Du ser et blått rektangulært skilt med hvit "M". Hva betyr det?',
     options: ['Møteplass', 'Motorveg begynner – spesielle regler gjelder', 'Midlertidig stopp', 'Mopedforbud'],
     correct: 1,
-    explanation: 'Blå "M" (skilt 701) = Motorveg. Spesielle regler: minst 2 felt per retning, adskilt kjøreretning, forbikjøring bare til venstre, minstehastighet, kun motorkjøretøy over 40 km/t.'
+    explanation: 'Motorveg-skilt (502) = Motorveg. Spesielle regler: adskilt kjørebane, forbikjøring bare til venstre, kun motorkjøretøy med maks-fart over 40 km/t, ingen lette kjøretøy som moped.'
   },
   {
     id: 30, category: 'skilt', difficulty: 'middels',
@@ -288,10 +288,10 @@ const QUESTIONS = [
   },
   {
     id: 33, category: 'skilt', difficulty: 'lett',
-    question: 'Hva betyr et rundt rødt skilt med en rød diagonal strek gjennom?',
+    question: 'Hva betyr et rundt rødt skilt med en hvit horisontal strek på midten?',
     options: ['Parkering forbudt', 'Innkjøring forbudt – all innkjøring er forbudt', 'Stans forbudt', 'Fartsgrense oppheves'],
     correct: 1,
-    explanation: 'Innkjøring forbudt (skilt 202) = Ingen kan kjøre inn fra denne siden. Brukes bl.a. på enveiskjørte gaters utgang og der innkjøring ikke er tillatt.'
+    explanation: 'Innkjøring forbudt (skilt 302) = Ingen kan kjøre inn fra denne siden. Brukes bl.a. på enveiskjørte gaters utgang og der innkjøring ikke er tillatt.'
   },
   {
     id: 34, category: 'skilt', difficulty: 'middels',
@@ -324,7 +324,7 @@ const QUESTIONS = [
     diagram: 'roundabout',
     options: ['Ingen – du er i gang', 'All trafikk som allerede er inne i rundkjøringen', 'Kun lastebiler og busser', 'Den som kjørte inn etter deg'],
     correct: 1,
-    explanation: 'I rundkjøring merket skilt 132: Trafikk som er inne i rundkjøringen har forkjørsrett. Du som kjører INN har vikeplikt – markert med vikepliktskilt ved innkjøringen.'
+    explanation: 'I rundkjøring (påbudsskilt 408): Trafikk som er inne i rundkjøringen har forkjørsrett. Du som kjører INN har vikeplikt – markert med vikepliktskilt ved innkjøringen.'
   },
   {
     id: 38, category: 'vikeplikt', difficulty: 'middels',
@@ -398,7 +398,7 @@ const QUESTIONS = [
     question: 'Hva er maksimal fartsgrense på norsk motorveg?',
     options: ['100 km/t', '110 km/t', '120 km/t', '130 km/t'],
     correct: 1,
-    explanation: 'Maks fartsgrense i Norge er 110 km/t, kun på noen motorvegstrekninger. De fleste motorveger har 100 km/t. 120 og 130 finnes ikke i Norge.'
+    explanation: 'Standard maksfart på norsk motorveg er 110 km/t. De fleste motorveger har 100 km/t. Noen strekninger tillater 120 km/t. 130 km/t finnes ikke i Norge.'
   },
   {
     id: 48, category: 'fart', difficulty: 'middels',
@@ -480,7 +480,7 @@ const QUESTIONS = [
     question: 'Er varseltrekant påkrevd i norske biler?',
     options: ['Nei, frivillig', 'Ja, alltid påkrevd', 'Bare for yrkeskjøretøy', 'Bare for bilister over 65 år'],
     correct: 1,
-    explanation: 'Varseltrekant er PÅKREVD i alle kjøretøy. Brukes ved nødstopp, ulykker og motorstopp. Plasseres minst 50m bak på åpen veg (100m+ på motorveg).'
+    explanation: 'Varseltrekant er PÅKREVD i alle kjøretøy. Brukes ved nødstopp, ulykker og motorstopp. Plasseres minst 50m bak på åpen veg (150m+ på motorveg).'
   },
   {
     id: 59, category: 'kjoretoy', difficulty: 'middels',
@@ -1113,7 +1113,7 @@ const QUESTIONS = [
     question: 'Et blått rektangelskilt med et motorvei-symbol varsler deg. Hva gjelder nå?',
     options: ['Anbefalt hastighet 110 km/t', 'Motorveg begynner – særregler gjelder: ingen stopp, forbikjøring kun til venstre, og motorvegfart', 'Du kan kjøre i alle filer fritt', 'Minste fartsgrense 80 km/t'],
     correct: 1,
-    explanation: 'Motorvegskiltet (502) varsler at motorvegen begynner. Særregler: 1) Stopp er forbudt (unntatt nød). 2) Forbikjøring KUN til venstre. 3) Hold til høyre normalt. 4) Maks hastighet normalt 110 km/t. 5) Tunge kjøretøy under 60 km/t er forbudt. 6) U-sving er forbudt.'
+    explanation: 'Motorvegskiltet (502) varsler at motorvegen begynner. Særregler: 1) Stopp er forbudt (unntatt nød). 2) Forbikjøring KUN til venstre. 3) Hold til høyre normalt. 4) Maks hastighet normalt 110 km/t. 5) Kjøretøy som ikke kan nå 40 km/t er forbudt. 6) U-sving er forbudt.'
   },
   {
     id: 139, category: 'skilt', difficulty: 'middels',
@@ -1248,7 +1248,7 @@ const GUIDES = [
       {
         heading: 'Forkjørsveg – gult diamantskilt',
         icon: '💎',
-        text: 'Kjører du på en veg merket med gult diamantskilt (202), har du forkjørsrett over all trafikk på veier som krysser med vikepliktskilt. VIKTIG: Selv på forkjørsveg har du vikeplikt for motkommende trafikk når du skal svinge til VENSTRE! Forkjørsvegen slutter ved grått/hvitt diamantskilt (204) – da gjelder høyreregelen igjen.',
+        text: 'Kjører du på en veg merket med gult diamantskilt (204), har du forkjørsrett over all trafikk på veier som krysser med vikepliktskilt. VIKTIG: Selv på forkjørsveg har du vikeplikt for motkommende trafikk når du skal svinge til VENSTRE! Forkjørsvegen slutter ved grått/hvitt diamantskilt (208) – da gjelder høyreregelen igjen.',
       },
       {
         heading: 'Vikepliktskilt og STOPP-skilt',
@@ -1990,7 +1990,7 @@ const GUIDES = [
       { icon: '🌫️', title: 'Tåkelys – front og bak',
         content: 'Fremre tåkelys kan brukes ved tåke, snøfall eller kraftig regn med sikt under ca. 150 meter. Bakre tåkelys (rødt) er svært sterkt og skal KUN brukes ved sikt under 50 meter. Bakre tåkelys er sjenerende og FORBUDT å bruke i normalt regnvær!' },
       { icon: '🚨', title: 'Varselblinklys (hazard)',
-        list: ['Slå på UMIDDELBART ved nødstopp/havari', 'Bruk ved farevarsel for bakenforliggende trafikk (kø, ulykke foran)', 'IKKE bruk under normal kjøring', 'Varseltrekant: minst 50m bak på veg, 100m+ på motorveg'] },
+        list: ['Slå på UMIDDELBART ved nødstopp/havari', 'Bruk ved farevarsel for bakenforliggende trafikk (kø, ulykke foran)', 'IKKE bruk under normal kjøring', 'Varseltrekant: minst 50m bak på veg, 150m+ på motorveg'] },
       { icon: '🔁', title: 'Blinklys – regler',
         content: 'Blinklys MÅ brukes ved feltskifte, sving, inn-/utkjøring og avkjørsel fra motorvei. Sett det på i god tid FØR du manøvrerer. Sjekk alltid at blinklyset er av etterpå. Bruk høyre blinklys ved avkjøring fra rundkjøring og motorvei.' },
     ],
