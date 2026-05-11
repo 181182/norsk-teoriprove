@@ -65,6 +65,7 @@ const QUESTIONS = [
   },
   {
     id: 3, category: 'trafikkregler', difficulty: 'lett',
+    scenario: '🚗 Du nærmer deg en avkjørsel og skal svinge til høyre.',
     question: 'Når skal du bruke blinklys?',
     options: ['Bare i lyskryss', 'Alltid når du endrer retning, skifter fil eller parkerer', 'Bare på motorveg', 'Bare om natten'],
     correct: 1,
@@ -156,6 +157,7 @@ const QUESTIONS = [
   },
   {
     id: 14, category: 'trafikkregler', difficulty: 'lett',
+    scenario: '🚗 Du har to passasjerer i baksetet, en av dem er 13 år.',
     question: 'Hva er kravet til sikkerhetsbelte?',
     options: ['Bare sjåfør trenger belte', 'Alle i bilen skal bruke belte – sjåfør ansvarlig for barn under 15 år', 'Bare på motorveg', 'Frivillig for voksne i baksetet'],
     correct: 1,
@@ -195,6 +197,7 @@ const QUESTIONS = [
   },
   {
     id: 19, category: 'trafikkregler', difficulty: 'lett',
+    scenario: '🍺 Du var på fest i går kveld og drakk to øl. Klokken er 07:00 og du skal kjøre til jobb.',
     question: 'Hva er promillegrensen for å kjøre bil i Norge?',
     options: ['0,1 promille', '0,2 promille', '0,5 promille', '0,8 promille'],
     correct: 1,
@@ -327,6 +330,8 @@ const QUESTIONS = [
   // ===================== VIKEPLIKT =====================
   {
     id: 35, category: 'vikeplikt', difficulty: 'lett',
+    diagram: 'crossroads_right',
+    signs: ['s18'],
     question: 'Du kjører på en vanlig veg. En bil kommer fra høyre i et kryss uten skilt. Hvem har vikeplikt?',
     options: ['Du – bilen fra høyre har forkjørsrett', 'Bilen fra høyre', 'Den som er minst', 'Begge kjører'],
     correct: 0,
@@ -367,6 +372,7 @@ const QUESTIONS = [
   },
   {
     id: 40, category: 'vikeplikt', difficulty: 'lett',
+    scenario: '🚑 Du hører sirener bak deg. I speilet ser du blålys som nærmer seg raskt.',
     question: 'Hvem har ALLTID forkjørsrett?',
     options: ['Privatbiler', 'Utrykningskjøretøy med blålys og sirene', 'Busser', 'Lastebiler'],
     correct: 1,
@@ -454,6 +460,8 @@ const QUESTIONS = [
   },
   {
     id: 51, category: 'fart', difficulty: 'lett',
+    scenario: '🚗 Du kjører 100 km/t på motorveg. Bilen foran bremser plutselig.',
+    diagram: 'stopping_distance',
     question: 'Hva er sammenhengen mellom fart og bremselengde?',
     options: ['Dobbel fart = dobbel bremselengde', 'Dobbel fart = firedobbel bremselengde', 'Dobbel fart = halvparten av bremselengde', 'Det er ingen sammenheng'],
     correct: 1,
@@ -478,6 +486,8 @@ const QUESTIONS = [
   },
   {
     id: 54, category: 'fart', difficulty: 'middels',
+    scenario: '🦌 Du kjører 80 km/t på landeveg. Et rådyr dukker opp i veikanten.',
+    diagram: 'stopping_distance',
     question: 'Du kjører 80 km/t og din totale stoppelengde (reaksjon + bremse) er ca...?',
     options: ['Ca. 30 meter', 'Ca. 50 meter', 'Ca. 70 meter', 'Ca. 100 meter'],
     correct: 2,
@@ -487,6 +497,7 @@ const QUESTIONS = [
   // ===================== KJØRETØY =====================
   {
     id: 55, category: 'kjoretoy', difficulty: 'lett',
+    scenario: '🔧 Du sjekker dekkene før en langtur og legger en mynt i mønsteret.',
     question: 'Hva er minimum mønsterdybde for bildekk?',
     options: ['1 mm', '1,6 mm', '2 mm', '3 mm'],
     correct: 1,
@@ -510,6 +521,8 @@ const QUESTIONS = [
   },
   {
     id: 58, category: 'kjoretoy', difficulty: 'lett',
+    scenario: '🔧 Du pakker bilen for ferie. Kompisen spør om du trenger varseltrekant.',
+    diagram: 'emergency_stop',
     question: 'Er varseltrekant påkrevd i norske biler?',
     options: ['Nei, frivillig', 'Ja, alltid påkrevd', 'Bare for yrkeskjøretøy', 'Bare for bilister over 65 år'],
     correct: 1,
@@ -532,6 +545,8 @@ const QUESTIONS = [
   },
   {
     id: 61, category: 'kjoretoy', difficulty: 'vanskelig',
+    scenario: '🚗 Du kjører på motorvegen og en gul trekant lyser opp på dashbordet.',
+    diagram: 'dashboard_warnings',
     question: 'Du ser et gult advarselsskilt – en trekant – på dashbordet. Hva betyr det generelt?',
     options: ['Drivstoff er nesten tomt', 'Advarsel/feil i et system – se i bileierens håndbok', 'Service er nødvendig', 'Setebelter er ikke festet'],
     correct: 1,
@@ -562,6 +577,8 @@ const QUESTIONS = [
   },
   {
     id: 65, category: 'miljo', difficulty: 'middels',
+    scenario: '🚗 Du kjører på E18 i 80-sone bak en lastebil som holder jevn fart.',
+    diagram: 'two_second_rule',
     question: 'Hva er den anbefalte sikkerhetsavstanden (2-sekundersregelen)?',
     options: ['2 biler mellom deg og forankjørende', 'Velg et fast punkt foran: du skal bruke minst 2 sekunder fra forankjørende passerer det til du gjør det', 'Minimum 20 meter', '2 bilslengder i all trafikk'],
     correct: 1,
@@ -577,6 +594,8 @@ const QUESTIONS = [
   },
   {
     id: 67, category: 'miljo', difficulty: 'vanskelig',
+    scenario: '🚶 En fotgjenger krysser plutselig vegen foran deg i tettbygd strøk.',
+    diagram: 'stopping_distance',
     question: 'Effekten av hastighet på risiko for at en fotgjenger omkomme ved påkjørsel?',
     options: ['Liten forskjell mellom 30 og 60 km/t', '30 km/t: 10% risiko å dø. 50 km/t: 40-80%. 70 km/t: 90%+ risiko', 'Risikoen er alltid 50/50', 'Raskere = alltid like stor risiko'],
     correct: 1,
@@ -593,6 +612,8 @@ const QUESTIONS = [
   // ===================== FØRSTEHJELP =====================
   {
     id: 69, category: 'forstehjelp', difficulty: 'lett',
+    scenario: '💥 Du kommer til en ulykke. To biler har kollidert. En person ligger på bakken.',
+    diagram: 'emergency_stop',
     question: 'Hva er det FØRSTE du gjør når du ankommer en trafikkulykke?',
     options: ['Hjelper de skadde umiddelbart', 'Sikrer ulykkesstedet og varsler nødetatene (SIKRE-MELD-HJELP)', 'Tar bilder av skadene', 'Ringer tøyehelp'],
     correct: 1,
@@ -622,6 +643,7 @@ const QUESTIONS = [
   },
   {
     id: 73, category: 'forstehjelp', difficulty: 'vanskelig',
+    scenario: '🚨 Du finner en bevisstløs person som ikke puster. Du ringer 113 og starter HLR.',
     question: 'HLR – korrekt rytme og dybde?',
     options: ['15 kompresjoner + 2 innblåsinger, 4 cm dybde', '30 kompresjoner + 2 innblåsinger, 5-6 cm dybde, 100-120/min', '20 kompresjoner + 1 innblåsing, 3 cm dybde', '10 kompresjoner + 3 innblåsinger'],
     correct: 1,
@@ -637,6 +659,7 @@ const QUESTIONS = [
   },
   {
     id: 75, category: 'forstehjelp', difficulty: 'vanskelig',
+    scenario: '🩸 En syklist har falt og har et dypt kutt i underarmen. Blodet strømmer.',
     question: 'Hva gjør du ved kraftig blødning fra arm?',
     options: ['Legger personen ned og ringer 113 uten å gjøre noe med sår', 'Trykker hardt direkte på såret med rent tøy og ringer 113', 'Setter tourniquet umiddelbart', 'Vasker såret med vann'],
     correct: 1,
@@ -653,6 +676,8 @@ const QUESTIONS = [
   },
   {
     id: 77, category: 'parkering', difficulty: 'middels',
+    scenario: '🅿️ Du leter etter parkering i sentrum. Eneste ledige plass er nær et kryss.',
+    diagram: 'parking_near_crossroad',
     question: 'Hvor nær et veikryss er parkering forbudt?',
     options: ['5 meter', '10 meter', '15 meter', '20 meter'],
     correct: 1,
@@ -668,6 +693,8 @@ const QUESTIONS = [
   },
   {
     id: 79, category: 'parkering', difficulty: 'middels',
+    scenario: '🅿️ Du vil parkere langs gaten. Et gangfelt er noen meter foran deg.',
+    diagram: 'parking_near_gangfelt',
     question: 'Hvor nær et gangfelt er det forbudt å parkere?',
     options: ['2 meter foran', '5 meter foran (sett i kjøreretning)', '10 meter foran', 'Ingen begrensning'],
     correct: 1,
@@ -698,6 +725,7 @@ const QUESTIONS = [
   // ===================== MØRKE & SIKT =====================
   {
     id: 83, category: 'mørke', difficulty: 'lett',
+    scenario: '☀️ Det er midt på sommeren, sol og varmt. Du skal kjøre til stranden.',
     question: 'Når er det påbudt å ha lys på bilen i Norge?',
     options: ['Bare i mørket', 'Bare i dårlig sikt', 'Hele døgnet, hele året', 'Fra oktober til mars'],
     correct: 2,
@@ -713,6 +741,7 @@ const QUESTIONS = [
   },
   {
     id: 85, category: 'mørke', difficulty: 'middels',
+    scenario: '🌙 Du kjører i mørket på en smal landeveg. En motkommende bil har fjernlys på.',
     question: 'Møtende bil blender deg kraftig. Hva gjør du?',
     options: ['Blender tilbake med fjernlys', 'Ser mot vegkanten til høyre og reduserer farten', 'Stopper midt i veien', 'Kjører videre som normalt og venter til bilen passerer'],
     correct: 1,
@@ -728,6 +757,7 @@ const QUESTIONS = [
   },
   {
     id: 87, category: 'mørke', difficulty: 'middels',
+    scenario: '🌡️ Tidlig morgen i november, ~0°C. Vegen ser tørr ut, men rattet føles lettere.',
     question: 'Hva er "frys-is" og når oppstår det?',
     options: ['Is som fryser i motoren', 'Tynt usynlig islag som dannes ved temperaturer rundt 0°C, spesielt om natten og tidlig morgen', 'Is som bare finnes i Nord-Norge', 'Is på innsiden av frontruten'],
     correct: 1,
