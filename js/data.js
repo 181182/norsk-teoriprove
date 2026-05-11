@@ -46,6 +46,7 @@ const QUESTIONS = [
   // ===================== TRAFIKKREGLER =====================
   {
     id: 1, category: 'trafikkregler', difficulty: 'lett',
+    signs: ["s18"],
     question: 'Du kjører på en vanlig veg uten skilt. En bil kommer fra høyre. Hva gjør du?',
     scenario: '🚗 Du nærmer deg et ukrysset veikryss. Det er ingen skilt.',
     diagram: 'crossroads_right',
@@ -55,6 +56,7 @@ const QUESTIONS = [
   },
   {
     id: 2, category: 'trafikkregler', difficulty: 'middels',
+    signs: ["s20"],
     question: 'Du nærmer deg en forkjørsveg (gult diamantskilt). Hva betyr det for deg?',
     scenario: '💎 Du ser et gult diamantskilt på vegen du kjører på.',
     options: ['Du har nå vikeplikt for alle', 'Du har forkjørsrett over kryssende trafikk', 'Du kan kjøre raskere enn fartsgrensen', 'Du skal stoppe og se deg for'],
@@ -70,6 +72,7 @@ const QUESTIONS = [
   },
   {
     id: 4, category: 'trafikkregler', difficulty: 'middels',
+    signs: ["s6"],
     question: 'Du er på vei til jobb og det er kø. En fotgjenger trer ut i gangfeltet. Du er sent ute. Hva gjør du?',
     scenario: '🚶 En person starter å gå over et gangfelt foran deg i rush-trafikk.',
     diagram: 'gangfelt',
@@ -79,6 +82,7 @@ const QUESTIONS = [
   },
   {
     id: 5, category: 'trafikkregler', difficulty: 'vanskelig',
+    signs: ["s11"],
     question: 'Du vil kjøre forbi en traktor på en tofelts riksveg. Hva MÅ du sjekke?',
     scenario: '🚜 En traktor kjører 30 km/t foran deg på en 80-veg.',
     diagram: 'forbikjoring',
@@ -95,6 +99,7 @@ const QUESTIONS = [
   },
   {
     id: 7, category: 'trafikkregler', difficulty: 'lett',
+    signs: ["s32"],
     question: 'Du kjører inn på en motorveg via oppkjøringsfelt. Hvem har vikeplikt?',
     scenario: '🛣️ Du akselererer i oppkjøringsfeltet på E18.',
     diagram: 'motorway_entry',
@@ -127,6 +132,7 @@ const QUESTIONS = [
   },
   {
     id: 11, category: 'trafikkregler', difficulty: 'lett',
+    signs: ["s8"],
     question: 'Du kommer til et jernbanekryss uten lys og bom. Hva gjør du?',
     options: ['Kjører over uten å stoppe hvis du ikke ser noe', 'Stopper alltid, ser og lytter begge veier, kjører deretter over', 'Blinkser med lysene og kjører over', 'Stopper bare hvis varselklokkene ringer'],
     correct: 1,
@@ -141,6 +147,7 @@ const QUESTIONS = [
   },
   {
     id: 13, category: 'trafikkregler', difficulty: 'middels',
+    signs: ["s11"],
     question: 'Du er i T-kryss og vil svinge til venstre. En bil kommer rett imot deg og skal rett frem. Hvem kjører først?',
     scenario: '↙️ Du venter i et T-kryss med venstresving mens en motkommende bil nærmer seg.',
     options: ['Du – du kom til krysset først', 'Den motkommende bilen – venstresvingende har alltid vikeplikt for motkommende', 'Den som er størst', 'Den som blinkser først'],
@@ -164,6 +171,7 @@ const QUESTIONS = [
   },
   {
     id: 16, category: 'trafikkregler', difficulty: 'middels',
+    signs: ["s20"],
     question: 'Hva er U-sving og hvor er det tillatt?',
     options: ['Tillatt overalt', 'Tillatt der det ikke er forbudt med skilt og der du har god sikt og nok plass', 'Alltid forbudt', 'Bare tillatt i 30-soner'],
     correct: 1,
@@ -179,6 +187,7 @@ const QUESTIONS = [
   },
   {
     id: 18, category: 'trafikkregler', difficulty: 'vanskelig',
+    signs: ["s32"],
     question: 'Hva gjelder for kjøring i vegtunnel?',
     options: ['Fartsgrensen heves automatisk til 90 km/t', 'Forbudt å snu, stoppe eller rygge – bruk nødutganger ved brann', 'Tillatt å stoppe for pauser', 'Forbikjøring er alltid tillatt'],
     correct: 1,
@@ -203,6 +212,7 @@ const QUESTIONS = [
   // ===================== TRAFIKKSKILT =====================
   {
     id: 21, category: 'skilt', difficulty: 'lett',
+    signs: ["s4"],
     question: 'Hva betyr et rødt trekantskilt?',
     options: ['Forbud', 'Advarsel – fare foran', 'Påbud', 'Informasjon'],
     correct: 1,
@@ -210,6 +220,7 @@ const QUESTIONS = [
   },
   {
     id: 22, category: 'skilt', difficulty: 'lett',
+    signs: ["s9"],
     question: 'Hva betyr et rundt skilt med rød kant og hvit bakgrunn?',
     options: ['Advarsel', 'Forbud – noe er forbudt', 'Påbud', 'Informasjon'],
     correct: 1,
@@ -217,6 +228,7 @@ const QUESTIONS = [
   },
   {
     id: 23, category: 'skilt', difficulty: 'lett',
+    signs: ["s14","s15","s16","s17"],
     question: 'Hva betyr et rundt blått skilt?',
     options: ['Forbud', 'Anbefaling', 'Påbud – du MÅ følge instruksjonen', 'Informasjon'],
     correct: 2,
@@ -224,6 +236,7 @@ const QUESTIONS = [
   },
   {
     id: 24, category: 'skilt', difficulty: 'middels',
+    signs: ["s18"],
     question: 'Du ser et trekant-skilt (nesen ned, invertert trekant). Hva betyr det?',
     options: ['Advarsel om sving', 'Vikeplikt – du skal vike for all trafikk på kryssende veg', 'STOPP', 'Forkjørsveg'],
     correct: 1,
@@ -231,6 +244,7 @@ const QUESTIONS = [
   },
   {
     id: 25, category: 'skilt', difficulty: 'middels',
+    signs: ["s19"],
     question: 'Hva er forskjellen mellom vikepliktskilt og STOPP-skilt?',
     scenario: '🛑 Du ser et rødt åttekantet STOPP-skilt.',
     options: ['Ingen forskjell', 'STOPP krever full stans, vikepliktskilt krever bare at du gir vikeplikt', 'STOPP gjelder bare lastebiler', 'Vikepliktskilt er strengere'],
@@ -239,6 +253,7 @@ const QUESTIONS = [
   },
   {
     id: 26, category: 'skilt', difficulty: 'middels',
+    signs: ["s20"],
     question: 'Hva betyr et gult diamantskilt (skilt 204)?',
     options: ['Advarsel om farlig kurve', 'Du kjører på forkjørsveg og har forkjørsrett', 'Midlertidig vegarbeid', 'Spesialtransport'],
     correct: 1,
@@ -246,6 +261,7 @@ const QUESTIONS = [
   },
   {
     id: 27, category: 'skilt', difficulty: 'lett',
+    signs: ["s12"],
     question: 'Du ser et blått rund skilt med et hvitt "P". Hva betyr det?',
     options: ['Parkering forbudt', 'Parkering tillatt her', 'Privat parkering', 'Betalt parkering kun'],
     correct: 1,
@@ -253,6 +269,7 @@ const QUESTIONS = [
   },
   {
     id: 28, category: 'skilt', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Hva betyr et rundt skilt med hvit bakgrunn, rød kant og tallet "80"?',
     options: ['Anbefalt fart 80 km/t', 'Fartsgrense 80 km/t – du kan ikke kjøre fortere', 'Minimum fart 80 km/t', 'Tunge kjøretøy maks 80 km/t'],
     correct: 1,
@@ -260,6 +277,7 @@ const QUESTIONS = [
   },
   {
     id: 29, category: 'skilt', difficulty: 'vanskelig',
+    signs: ["s32"],
     question: 'Du ser et blått rektangulært skilt med hvit "M". Hva betyr det?',
     options: ['Møteplass', 'Motorveg begynner – spesielle regler gjelder', 'Midlertidig stopp', 'Mopedforbud'],
     correct: 1,
@@ -267,6 +285,7 @@ const QUESTIONS = [
   },
   {
     id: 30, category: 'skilt', difficulty: 'middels',
+    signs: ["s32"],
     question: 'Hva betyr et gult blinkende lys i et lyskryss?',
     options: ['Sterk trafikk – vær forsiktig', 'Lyssignalene er ute av drift – vanlige trafikkregler gjelder', 'Politiet dirigerer', 'Kom frem raskt'],
     correct: 1,
@@ -281,6 +300,7 @@ const QUESTIONS = [
   },
   {
     id: 32, category: 'skilt', difficulty: 'vanskelig',
+    signs: ["s17"],
     question: 'Du ser et oransje advarselsskilt. Hva betyr oransje farge på skilt?',
     options: ['Spesielt farlig område', 'Midlertidig skilt – vegarbeid pågår', 'Ny veg åpnet', 'Turiststed'],
     correct: 1,
@@ -288,6 +308,7 @@ const QUESTIONS = [
   },
   {
     id: 33, category: 'skilt', difficulty: 'lett',
+    signs: ["s9"],
     question: 'Hva betyr et rundt rødt skilt med en hvit horisontal strek på midten?',
     options: ['Parkering forbudt', 'Innkjøring forbudt – all innkjøring er forbudt', 'Stans forbudt', 'Fartsgrense oppheves'],
     correct: 1,
@@ -295,6 +316,7 @@ const QUESTIONS = [
   },
   {
     id: 34, category: 'skilt', difficulty: 'middels',
+    signs: ["s5"],
     question: 'Du ser et trekantskilt med et barn på. Du nærmer deg en skole. Hva bør du gjøre?',
     scenario: '🏫 Et advarselsskilt med barn dukker opp 200 meter fra en barneskole.',
     options: ['Ingenting – det er bare et skilt', 'Redusere farten kraftig og være klar til å stoppe – barn kan løpe ut', 'Blåse i hornet for å advare barna', 'Kjøre som normalt, men ha øye med fortauet'],
@@ -320,6 +342,7 @@ const QUESTIONS = [
   },
   {
     id: 37, category: 'vikeplikt', difficulty: 'middels',
+    signs: ["s16"],
     question: 'Du kjører inn i en rundkjøring. Hvem gir du vikeplikt for?',
     diagram: 'roundabout',
     options: ['Ingen – du er i gang', 'All trafikk som allerede er inne i rundkjøringen', 'Kun lastebiler og busser', 'Den som kjørte inn etter deg'],
@@ -336,6 +359,7 @@ const QUESTIONS = [
   },
   {
     id: 39, category: 'vikeplikt', difficulty: 'vanskelig',
+    signs: ["s20","s18"],
     question: 'Du kjører på en prioritert veg (forkjørsveg) og skal svinge til venstre. En bil kommer fra venstre på sideveien med vikepliktskilt. Hvem har vikeplikt?',
     options: ['Bilen på sideveien alltid', 'Du har vikeplikt for motkommende på forkjørsvegen, men bilen fra sideveien har vikeplikt for deg', 'Alle har vikeplikt', 'Bilen fra sideveien trumfer alt'],
     correct: 1,
@@ -381,6 +405,7 @@ const QUESTIONS = [
   // ===================== FARTSGRENSER =====================
   {
     id: 45, category: 'fart', difficulty: 'lett',
+    signs: ["s10"],
     question: 'Hva er normal fartsgrense i tettbygd strøk uten skilting?',
     options: ['30 km/t', '40 km/t', '50 km/t', '60 km/t'],
     correct: 2,
@@ -388,6 +413,7 @@ const QUESTIONS = [
   },
   {
     id: 46, category: 'fart', difficulty: 'lett',
+    signs: ["s10"],
     question: 'Hva er normal fartsgrense utenfor tettbygd strøk uten skilting?',
     options: ['60 km/t', '70 km/t', '80 km/t', '90 km/t'],
     correct: 2,
@@ -395,6 +421,7 @@ const QUESTIONS = [
   },
   {
     id: 47, category: 'fart', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Hva er maksimal fartsgrense på norsk motorveg?',
     options: ['100 km/t', '110 km/t', '120 km/t', '130 km/t'],
     correct: 1,
@@ -402,6 +429,7 @@ const QUESTIONS = [
   },
   {
     id: 48, category: 'fart', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Det er 80 km/t-sone, men det er is og snø på vegen. Du kjører 80 km/t. Er det riktig?',
     scenario: '🌨️ Vegen er dekket av is. Fartsgrenseskilt viser 80 km/t.',
     options: ['Ja – fartsgrensen tillater 80 km/t', 'Nei – du MÅ redusere farten etter forholdene, uavhengig av skiltet', 'Ja, men bare med vinterdekk', 'Nei, men 70 km/t er nok'],
@@ -410,6 +438,7 @@ const QUESTIONS = [
   },
   {
     id: 49, category: 'fart', difficulty: 'vanskelig',
+    signs: ["s10"],
     question: 'Du kjører 115 km/t på en motorveg med 110 km/t-grense. Hva er konsekvensen?',
     options: ['Ingen – toleransen er 10%', 'Forenklet forelegg (bot)', 'Tap av førerretten umiddelbart', 'Advarsel fra politiet'],
     correct: 1,
@@ -417,6 +446,7 @@ const QUESTIONS = [
   },
   {
     id: 50, category: 'fart', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Hva er fartsgrensen for tunge kjøretøy (over 3500 kg) på motorveg med 110 km/t-grense?',
     options: ['110 km/t – samme som alle', '80 km/t', '90 km/t', '100 km/t'],
     correct: 2,
@@ -431,6 +461,7 @@ const QUESTIONS = [
   },
   {
     id: 52, category: 'fart', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Du ser et barneskole og det er skoletid. Fartsgrensen er 50 km/t. Er 50 km/t riktig fart her?',
     scenario: '🏫 Skolebarn flokker seg ved skoleporten. Klokken er 08:15.',
     options: ['Ja – fartsgrensen tillater 50 km/t', 'Nei – du bør redusere til 30 km/t eller under av hensyn til situasjonen', 'Ja, bare blås i hornet som advarsel', 'Det avhenger av om det er skiltet 30-sone'],
@@ -439,6 +470,7 @@ const QUESTIONS = [
   },
   {
     id: 53, category: 'fart', difficulty: 'vanskelig',
+    signs: ["s10"],
     question: 'Hvor mange prikker gir kjøring 26-30 km/t over fartsgrensen?',
     options: ['1 prikk', '2 prikker', '3 prikker', '4 prikker'],
     correct: 2,
@@ -470,6 +502,7 @@ const QUESTIONS = [
   },
   {
     id: 57, category: 'kjoretoy', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Når er piggdekk tillatt i Norge (normalt)?',
     options: ['Hele vinteren', '1. november til første mandag etter 2. påskedag', '1. desember til 1. april', 'Bare i Nord-Norge'],
     correct: 1,
@@ -702,6 +735,7 @@ const QUESTIONS = [
   },
   {
     id: 88, category: 'mørke', difficulty: 'middels',
+    signs: ["s23"],
     question: 'Hva bør du gjøre FØR du kjører inn i en tunnel om natten?',
     options: ['Øke farten siden tunnelen er bedre opplyst', 'Redusere farten og slå på nærlys FØR innkjøringen', 'Slå på fjernlys inne i tunnelen', 'Ingenting spesielt'],
     correct: 1,
@@ -711,6 +745,7 @@ const QUESTIONS = [
   // ===================== VEGOPPMERKING =====================
   {
     id: 89, category: 'vegoppmerking', difficulty: 'lett',
+    signs: ["s11"],
     question: 'Hva betyr en hel (sammenhengende) hvit midtlinje?',
     options: ['Du kan krysse forsiktig', 'Forbudt å krysse eller kjøre på linjen', 'Bare informasjon', 'Kun lastebiler forbudt å krysse'],
     correct: 1,
@@ -718,6 +753,7 @@ const QUESTIONS = [
   },
   {
     id: 90, category: 'vegoppmerking', difficulty: 'lett',
+    signs: ["s11"],
     question: 'Hva betyr en stiplet hvit midtlinje?',
     options: ['Forbudt å krysse', 'Kan krysse når det er trygt og lovlig', 'Bare for syklister', 'Midlertidig markering'],
     correct: 1,
@@ -725,6 +761,7 @@ const QUESTIONS = [
   },
   {
     id: 91, category: 'vegoppmerking', difficulty: 'middels',
+    signs: ["s12"],
     question: 'Hva betyr gul enkel kantlinje langs vegkanten?',
     options: ['Parkering tillatt', 'Stans forbudt', 'Sykkelfelt', 'Parkeringsgrense'],
     correct: 1,
@@ -732,6 +769,7 @@ const QUESTIONS = [
   },
   {
     id: 92, category: 'vegoppmerking', difficulty: 'middels',
+    signs: ["s14","s15","s16"],
     question: 'Du ser hvite piler som peker til høyre i ditt kjørefelt. Hva betyr det?',
     options: ['Anbefalt retning', 'Du MÅ svinge til høyre fra dette feltet', 'Informasjon om avkjørsel til høyre', 'Bare for lastebiler'],
     correct: 1,
@@ -739,6 +777,7 @@ const QUESTIONS = [
   },
   {
     id: 93, category: 'vegoppmerking', difficulty: 'middels',
+    signs: ["s19","s18"],
     question: 'Hva er en bred hvit linje tvers over vegbanen (stopp-linje)?',
     options: ['Gangfelt er nær', 'Stopp her ved rødt lys eller stoppskilt – forbudt å passere linjen ved rødt', 'Bussholdeplass', 'Speedbump varsel'],
     correct: 1,
@@ -746,6 +785,7 @@ const QUESTIONS = [
   },
   {
     id: 94, category: 'vegoppmerking', difficulty: 'vanskelig',
+    signs: ["s13"],
     question: 'Hva betyr gule skrå striper (sperreflate) på vegbanen?',
     options: ['Kjøring er forbudt i det stripelagte området', 'Anbefalt svingebane', 'Informasjon om parkering', 'Kun for syklister'],
     correct: 0,
@@ -753,6 +793,7 @@ const QUESTIONS = [
   },
   {
     id: 95, category: 'vegoppmerking', difficulty: 'middels',
+    signs: ["s13"],
     question: 'Du ser et smalt hvitt felt merket med sykkel-symbol. Hva er dette?',
     options: ['Gangfelt', 'Sykkelfelt – reservert for syklister, biler forbudt', 'Sykkelparkering', 'Moped-fil'],
     correct: 1,
@@ -786,6 +827,7 @@ const QUESTIONS = [
   },
   {
     id: 99, category: 'skilt', difficulty: 'middels',
+    signs: ["s10"],
     question: 'Du ser et gult skilt med svart tekst "VEGARBEID" og et fartsgrenseskilt for 50 km/t. Hva gjelder?',
     scenario: '🚧 Vegarbeid på motorveien. Oransje skilt overalt.',
     options: ['Den vanlige fartsgrensen på veien gjelder', 'Du skal kjøre MAX 50 km/t – arbeidsskilt overstyrer normal fartsgrense', 'Bare en anbefaling', 'Gjelder bare for tunge kjøretøy'],
@@ -825,6 +867,7 @@ const QUESTIONS = [
   },
   {
     id: 104, category: 'vegoppmerking', difficulty: 'vanskelig',
+    signs: ["s11"],
     question: 'Du ser en heltrukken hvit midtlinje til venstre og en stiplet til høyre av midten. Hva betyr det?',
     options: ['Du kan passere fra begge sider', 'Du kan bare passere fra siden med stiplet linje (høyre side), men ikke fra venstre side', 'Begge sider er forbudt', 'Begge sider er tillatt'],
     correct: 1,
@@ -864,6 +907,7 @@ const QUESTIONS = [
   },
   {
     id: 109, category: 'miljo', difficulty: 'lett',
+    signs: ["s17"],
     question: 'Hva er tomgangskjøring og er det tillatt?',
     options: ['Lov overalt', 'Forbudt mer enn 3 minutters unødig tomgangskjøring (mange kommuner)', 'Bare lov om vinteren', 'Kun lov for dieselbiler'],
     correct: 1,
@@ -880,6 +924,7 @@ const QUESTIONS = [
   // ---- RUNDKJØRING (111-115) ----
   {
     id: 111, category: 'vikeplikt', difficulty: 'middels',
+    signs: ["s16","s18"],
     scenario: 'Du kjører inn i en rundkjøring.',
     diagram: 'roundabout_enter',
     question: 'Hvem har du vikeplikt for når du kjører inn i en rundkjøring?',
@@ -889,6 +934,7 @@ const QUESTIONS = [
   },
   {
     id: 112, category: 'vikeplikt', difficulty: 'vanskelig',
+    signs: ["s16","s18"],
     scenario: 'Du er i det indre feltet (venstre fil) i en to-felts rundkjøring og vil ta neste avkjørsel.',
     diagram: 'roundabout_2lane',
     question: 'Hva må du gjøre for å ta avkjørselen fra indre felt?',
@@ -898,6 +944,7 @@ const QUESTIONS = [
   },
   {
     id: 113, category: 'vikeplikt', difficulty: 'vanskelig',
+    signs: ["s16"],
     diagram: 'roundabout_2lane',
     question: 'Du kjører i ytre felt (høyre fil) i en to-felts rundkjøring. Bilen inne i indre felt skal bytte til ditt felt. Hvem har vikeplikt?',
     options: ['Du i ytre felt – du skal jo ut uansett', 'Bilen som bytter fra indre til ytre felt har vikeplikt', 'Dere har lik vikeplikt', 'Bilen i indre felt har alltid forkjørsrett'],
@@ -915,6 +962,7 @@ const QUESTIONS = [
   },
   {
     id: 115, category: 'vikeplikt', difficulty: 'lett',
+    signs: ["s16","s18"],
     question: 'Hva betyr det hvite pilskiltet på vegbanen inne i en rundkjøring?',
     options: ['Du kan kjøre i hvilken som helst retning', 'Du skal kjøre mot venstre rundt midtøya', 'Du skal kjøre rett frem ut av rundkjøringen', 'Du har vikeplikt'],
     correct: 1,
@@ -924,6 +972,7 @@ const QUESTIONS = [
   // ---- MOTORVEI (116-120) ----
   {
     id: 116, category: 'trafikkregler', difficulty: 'middels',
+    signs: ["s32"],
     scenario: 'Du kjører inn på motorveien via innkjøringsrampen (akselerasjonsfeltet).',
     diagram: 'motorway_merge',
     question: 'Hvem har vikeplikt på akselerasjonsfeltet?',
@@ -940,6 +989,7 @@ const QUESTIONS = [
   },
   {
     id: 118, category: 'trafikkregler', difficulty: 'vanskelig',
+    signs: ["s32","s33"],
     scenario: 'Du kjører i fil 2 (venstre fil) på en motorvei med to filer. Fil 1 er fri.',
     diagram: 'motorway_lane_change',
     question: 'Hva er riktig atferd?',
@@ -956,6 +1006,7 @@ const QUESTIONS = [
   },
   {
     id: 120, category: 'trafikkregler', difficulty: 'vanskelig',
+    signs: ["s32"],
     question: 'En ambulanse nærmer seg bakfra med blålys og sirene på motorveien. Hva gjør du?',
     options: ['Kjør raskere for å komme av veien', 'Hold samme hastighet og fil', 'Flytt deg til høyre og reduser fart for å slippe nødetatene forbi', 'Stopp umiddelbart i ditt felt'],
     correct: 2,
@@ -1006,6 +1057,7 @@ const QUESTIONS = [
   },
   {
     id: 126, category: 'parkering', difficulty: 'middels',
+    signs: ["s12"],
     scenario: 'Du vil parkere på en veg. Du ser disse to skiltene på rad: "Parkering forbudt"-skilt fulgt av et underskilt som sier "Man-fre 08-17".',
     question: 'Når er det tillatt å parkere?',
     options: ['Aldri – parkering er forbudt 24/7', 'Hele weekenden (lørdag og søndag) og hverdager kl. 17-08', 'Kun hverdager kl. 08-17', 'Aldri på hverdager, men alltid i helger'],
@@ -1024,6 +1076,7 @@ const QUESTIONS = [
   },
   {
     id: 128, category: 'vikeplikt', difficulty: 'middels',
+    signs: ["s11"],
     scenario: 'Du skal svinge til venstre i et kryss. Det kommer en bil fra motsatt retning som skal rett frem.',
     diagram: 'crossroads_four_way',
     question: 'Hvem har vikeplikt?',
@@ -1157,6 +1210,7 @@ const QUESTIONS = [
   },
   {
     id: 144, category: 'trafikkregler', difficulty: 'vanskelig',
+    signs: ["s11"],
     scenario: 'Du kjører på en to-felts veg og vil kjøre forbi en langsom traktor. Vegen har heltrukken (ubrutt) midtlinje.',
     diagram: 'overtaking_scenario',
     question: 'Er forbikjøring tillatt?',
