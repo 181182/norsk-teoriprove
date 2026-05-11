@@ -1958,7 +1958,8 @@ const GUIDES = [
         title: 'Tretthet – den undervurderte faren',
         content: 'Tretthet er like farlig som promille ved 0.8 promille – reaksjonstiden øker dramatisk. Microsøvn: Korte (3-5 sekunder) perioder der hjernen slukner – ved 100 km/t kjører du 140 meter blind. Tiltak: Stop og sov om du føler deg trøtt. Drikk kaffe og sov 20 min (koffein virker etter 20 min). Unngå monoton kjøring (motorvei) seint på natten.',
       },
-    ],,
+    ],
+  },
   {
     id: 'guide-forbikjoring',
     icon: '⏩',
