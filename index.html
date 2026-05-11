@@ -41,6 +41,7 @@
       <button class="nav-btn" data-page="quiz">🎯 <span>Quiz</span></button>
       <button class="nav-btn" data-page="guides">📖 <span>Guider</span></button>
       <button class="nav-btn" data-page="signs">🚦 <span>Skilt</span></button>
+      <button class="nav-btn" data-page="exam-mode">📝 <span>Teoriprøve</span></button>
       <button class="nav-btn" data-page="exam">✅ <span>Tips</span></button>
       <button class="nav-btn" data-page="progress">
         📊 <span>Fremgang</span>
@@ -66,7 +67,7 @@
       <p>Din komplette læringsplattform for norsk førerprøve. Gjennomgå alle kategorier, øv med quizzer, og lær trafikkskiltene – alt du trenger for å bli klar for veien.</p>
       <div class="hero-stats">
         <div class="stat">
-          <div class="stat-num">110+</div>
+          <div class="stat-num" id="hero-stat-questions">145+</div>
           <div class="stat-label">Spørsmål</div>
         </div>
         <div class="stat">
@@ -74,7 +75,7 @@
           <div class="stat-label">Kategorier</div>
         </div>
         <div class="stat">
-          <div class="stat-num">21</div>
+          <div class="stat-num" id="hero-stat-signs">73</div>
           <div class="stat-label">Trafikkskilt</div>
         </div>
         <div class="stat">
@@ -149,7 +150,7 @@
       <div style="background:linear-gradient(135deg,var(--dark) 0%,var(--darker) 100%);border-radius:16px;padding:40px;color:white;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center">
         <div>
           <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:12px">Om Teoriprøven</h2>
-          <p style="opacity:0.85;line-height:1.7;margin-bottom:16px">Den norske teoriprøven (klasse B) består av 45 spørsmål. Du trenger minst 85% riktige svar (38 av 45) for å bestå.</p>
+          <p style="opacity:0.85;line-height:1.7;margin-bottom:16px">Den norske teoriprøven (klasse B) består av 45 spørsmål. Du trenger minst 85% riktige svar (38 av 45) for å bestå. Du har 90 minutter.</p>
           <p style="opacity:0.85;line-height:1.7">Prøven gjennomføres digitalt hos Statens vegvesen sine trafikkstasjoner. Hvert spørsmål har 4 svaralternativer.</p>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px">
@@ -163,7 +164,7 @@
           </div>
           <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
             <span style="font-size:1.8rem">⏱️</span>
-            <div><strong>45 minutter</strong><br><span style="opacity:0.7;font-size:0.85rem">Tid til rådighet</span></div>
+            <div><strong>90 minutter</strong><br><span style="opacity:0.7;font-size:0.85rem">Tid til rådighet</span></div>
           </div>
           <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px">
             <span style="font-size:1.8rem">🏢</span>
@@ -334,14 +335,16 @@
       <!-- Filter -->
       <div class="signs-filter">
         <button class="filter-btn sign-filter-btn active" data-filter="all">Alle skilt</button>
-        <button class="filter-btn sign-filter-btn" data-filter="advarsel">⚠️ Advarselsskilt</button>
-        <button class="filter-btn sign-filter-btn" data-filter="forbud">🚫 Forbudsskilt</button>
-        <button class="filter-btn sign-filter-btn" data-filter="påbud">🔵 Påbudsskilt</button>
-        <button class="filter-btn sign-filter-btn" data-filter="prioritet">⬦ Vikeplikt/Prioritet</button>
+        <button class="filter-btn sign-filter-btn" data-filter="advarsel">⚠️ Advarsel</button>
+        <button class="filter-btn sign-filter-btn" data-filter="forbud">🚫 Forbud</button>
+        <button class="filter-btn sign-filter-btn" data-filter="påbud">🔵 Påbud</button>
+        <button class="filter-btn sign-filter-btn" data-filter="prioritet">⬦ Prioritet</button>
+        <button class="filter-btn sign-filter-btn" data-filter="opplysning">ℹ️ Opplysning</button>
+        <button class="filter-btn sign-filter-btn" data-filter="service">🅿️ Service</button>
       </div>
 
       <!-- Signs explanation card -->
-      <div style="background:white;border-radius:12px;padding:24px;margin-bottom:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px">
+      <div style="background:white;border-radius:12px;padding:24px;margin-bottom:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px">
         <div style="display:flex;align-items:flex-start;gap:12px">
           <div style="font-size:2rem">🔺</div>
           <div>
@@ -370,9 +373,178 @@
             <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Diverse former. Gjelder vikeplikt og forkjørsrett.</p>
           </div>
         </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">ℹ️</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Opplysningsskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Blå/hvite rektangler. Informasjon om vegen.</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="font-size:2rem">🅿️</div>
+          <div>
+            <strong style="display:block;margin-bottom:4px">Serviceskilt</strong>
+            <p style="font-size:0.83rem;color:var(--text-light);line-height:1.5">Blå rektangler med hvite ikoner. Veiviser til service.</p>
+          </div>
+        </div>
       </div>
 
       <div class="signs-grid" id="signs-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: EXAM MODE ============ -->
+<div class="page" id="page-exam-mode">
+  <section class="section">
+    <div class="container">
+
+      <!-- Exam Setup -->
+      <div class="exam-setup" id="exam-setup">
+        <div class="exam-setup-card">
+          <div class="exam-setup-icon">📝</div>
+          <h2>Teoriprøve – Simulering</h2>
+          <p>Simuler den ekte teoriprøven fra Statens vegvesen, med samme regler og tidsramme.</p>
+
+          <div class="exam-rules-grid">
+            <div class="exam-rule">
+              <span class="exam-rule-num">45</span>
+              <span class="exam-rule-label">Spørsmål</span>
+            </div>
+            <div class="exam-rule">
+              <span class="exam-rule-num">90 min</span>
+              <span class="exam-rule-label">Tid</span>
+            </div>
+            <div class="exam-rule">
+              <span class="exam-rule-num">38/45</span>
+              <span class="exam-rule-label">For å bestå</span>
+            </div>
+            <div class="exam-rule">
+              <span class="exam-rule-num">85%</span>
+              <span class="exam-rule-label">Bestå-grense</span>
+            </div>
+          </div>
+
+          <div class="exam-info-list">
+            <div class="exam-info-item">
+              <span>🔇</span>
+              <span>Ingen tilbakemelding underveis – svarene vises etter innlevering</span>
+            </div>
+            <div class="exam-info-item">
+              <span>🔀</span>
+              <span>Du kan navigere fritt mellom spørsmålene</span>
+            </div>
+            <div class="exam-info-item">
+              <span>🚩</span>
+              <span>Flagg spørsmål du vil komme tilbake til</span>
+            </div>
+            <div class="exam-info-item">
+              <span>⏱️</span>
+              <span>Prøven leveres automatisk når tiden er ute</span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-lg" onclick="startExamMode()" style="width:100%;justify-content:center;margin-top:24px">
+            ▶ Start Teoriprøve
+          </button>
+        </div>
+
+        <!-- Exam history -->
+        <div id="exam-history" class="exam-history"></div>
+      </div>
+
+      <!-- Exam Active -->
+      <div class="exam-active" id="exam-active">
+        <!-- Top bar -->
+        <div class="exam-top-bar">
+          <div class="exam-timer-display">
+            <span class="exam-timer-icon">⏱️</span>
+            <span class="exam-timer-value" id="exam-timer">90:00</span>
+          </div>
+          <div class="exam-counter" id="exam-counter">Spørsmål <strong>1</strong> av 45</div>
+          <div class="exam-top-actions">
+            <button class="btn btn-sm btn-outline" onclick="toggleExamFlag()" id="exam-flag-btn">🚩 Flagg</button>
+            <button class="btn btn-sm btn-primary" onclick="submitExam()" id="exam-submit-btn">Lever inn</button>
+          </div>
+        </div>
+
+        <!-- Navigation grid -->
+        <div class="exam-nav-grid" id="exam-nav-grid"></div>
+
+        <!-- Question card -->
+        <div class="question-card exam-question-card">
+          <div class="question-meta">
+            <span class="question-category-badge" id="exam-question-category">Kategori</span>
+            <span class="difficulty-badge" id="exam-question-difficulty">Lett</span>
+          </div>
+          <div class="question-signs" id="exam-question-signs" style="display:none"></div>
+          <div class="question-scenario" id="exam-question-scenario" style="display:none"></div>
+          <div class="question-diagram" id="exam-question-diagram" style="display:none;justify-content:center;margin-bottom:16px"></div>
+          <div class="question-text" id="exam-question-text">Spørsmål lastes...</div>
+          <div class="answer-options" id="exam-answer-options"></div>
+        </div>
+
+        <!-- Navigation arrows -->
+        <div class="exam-nav-arrows">
+          <button class="btn btn-outline" onclick="navigateExam(-1)" id="exam-prev-btn">← Forrige</button>
+          <button class="btn btn-outline" onclick="navigateExam(1)" id="exam-next-btn">Neste →</button>
+        </div>
+      </div>
+
+      <!-- Exam Results -->
+      <div class="exam-results" id="exam-results">
+        <div class="exam-result-header" id="exam-result-header">
+          <div class="result-circle" id="exam-result-circle">
+            <span class="result-pct" id="exam-result-pct">0%</span>
+            <span class="result-label">Score</span>
+          </div>
+          <h2 class="result-title" id="exam-result-title">Resultater</h2>
+          <p class="result-subtitle" id="exam-result-subtitle"></p>
+        </div>
+
+        <div class="result-stats" id="exam-result-stats">
+          <div class="result-stat pass">
+            <div class="num" id="exam-result-correct">0</div>
+            <div class="lbl">Riktige</div>
+          </div>
+          <div class="result-stat fail">
+            <div class="num" id="exam-result-wrong">0</div>
+            <div class="lbl">Gale</div>
+          </div>
+          <div class="result-stat neutral">
+            <div class="num" id="exam-result-total">0</div>
+            <div class="lbl">Totalt</div>
+          </div>
+          <div class="result-stat neutral">
+            <div class="num" id="exam-result-time">0:00</div>
+            <div class="lbl">Tid brukt</div>
+          </div>
+        </div>
+
+        <div id="exam-result-xp" class="result-xp-summary"></div>
+
+        <!-- Per-category breakdown -->
+        <div class="exam-category-breakdown" id="exam-category-breakdown"></div>
+
+        <!-- Question review list -->
+        <div class="exam-review-section">
+          <h3>Gjennomgang av alle spørsmål</h3>
+          <div class="exam-review-filters">
+            <button class="filter-btn active" onclick="filterExamReview('all', this)">Alle</button>
+            <button class="filter-btn" onclick="filterExamReview('wrong', this)">Feil</button>
+            <button class="filter-btn" onclick="filterExamReview('correct', this)">Riktige</button>
+            <button class="filter-btn" onclick="filterExamReview('unanswered', this)">Ubesvarte</button>
+          </div>
+          <div id="exam-review-list" class="exam-review-list"></div>
+        </div>
+
+        <div class="result-actions" style="margin-top:32px">
+          <button class="btn btn-primary" onclick="startExamMode()">🔄 Ny teoriprøve</button>
+          <button class="btn btn-outline" onclick="resetExamMode()">⚙ Tilbake til start</button>
+          <button class="btn btn-secondary" style="background:var(--blue);color:white" data-goto="guides">📖 Les guider</button>
+        </div>
+      </div>
+
     </div>
   </section>
 </div>
@@ -399,7 +571,7 @@
             <div style="opacity:0.8;font-size:0.85rem">Riktige for å bestå</div>
           </div>
           <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-size:2rem;font-weight:800">45 min</div>
+            <div style="font-size:2rem;font-weight:800">90 min</div>
             <div style="opacity:0.8;font-size:0.85rem">Tid til rådighet</div>
           </div>
           <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px;text-align:center">
@@ -416,7 +588,7 @@
           <h3>Hva du BØR gjøre</h3>
           <ul>
             <li>Les alle spørsmålene nøye</li>
-            <li>Øv med tidtaker (45 sek per spørsmål)</li>
+            <li>Øv med tidtaker (2 min per spørsmål)</li>
             <li>Fokuser på vikeplikt og skilt</li>
             <li>Ta mange øvingsprøver</li>
             <li>Lær forklaringene – ikke bare svarene</li>

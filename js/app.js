@@ -53,7 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(updateGameHeader);
   safe(renderDailyChallenge);
   safe(renderBadgesPage);
+  safe(renderExamHistory);
+  safe(updateHeroStats);
 });
+
+function updateHeroStats() {
+  const qEl = document.getElementById('hero-stat-questions');
+  const sEl = document.getElementById('hero-stat-signs');
+  if (qEl) qEl.textContent = QUESTIONS.length + '+';
+  if (sEl) sEl.textContent = String(SIGNS.length);
+}
 
 // ============ STREAK ============
 function checkAndUpdateStreak() {
@@ -272,6 +281,7 @@ function navigateTo(page) {
   if (btnEl) btnEl.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (page === 'progress') { renderProgress(); renderBadgesPage(); }
+  if (page === 'exam-mode') { renderExamHistory(); }
 }
 
 // ============ HOME CATEGORIES ============
@@ -498,12 +508,20 @@ function renderQuestion() {
     }
   }
 
+  // Shuffle answer options to prevent pattern memorization (original data has 87% B-correct)
+  const shuffledIndices = [0, 1, 2, 3];
+  for (let i = shuffledIndices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+  }
+  state.quiz.shuffledCorrect = shuffledIndices.indexOf(q.correct);
+
   const letters = ['A', 'B', 'C', 'D'];
   const answersEl = document.getElementById('answer-options');
-  answersEl.innerHTML = q.options.map((opt, i) => `
-    <button class="answer-btn" onclick="selectAnswer(${i})" id="ans-${i}">
-      <span class="answer-letter">${letters[i]}</span>
-      <span>${opt}</span>
+  answersEl.innerHTML = shuffledIndices.map((origIdx, displayIdx) => `
+    <button class="answer-btn" onclick="selectAnswer(${displayIdx})" id="ans-${displayIdx}">
+      <span class="answer-letter">${letters[displayIdx]}</span>
+      <span>${q.options[origIdx]}</span>
     </button>
   `).join('');
 
@@ -538,7 +556,8 @@ function timeOut() {
   state.quiz.answered++;
   state.quiz.sessionCombo = 0;
   const q = state.quiz.questions[state.quiz.currentIndex];
-  const correctBtn = document.getElementById(`ans-${q.correct}`);
+  const correctDisplayIdx = state.quiz.shuffledCorrect;
+  const correctBtn = document.getElementById(`ans-${correctDisplayIdx}`);
   if (correctBtn) correctBtn.classList.add('correct');
   document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
   showExplanation(q.explanation);
@@ -552,7 +571,7 @@ window.selectAnswer = function(index) {
   clearInterval(state.quiz.timer);
 
   const q = state.quiz.questions[state.quiz.currentIndex];
-  const isCorrect = index === q.correct;
+  const isCorrect = index === state.quiz.shuffledCorrect;
   const timeBonus = Math.max(0, Math.floor(state.quiz.timeLeft / 6));
 
   state.quiz.answered++;
@@ -585,9 +604,10 @@ window.selectAnswer = function(index) {
   document.getElementById('quiz-score-correct').textContent = state.quiz.correct;
   document.getElementById('quiz-score-wrong').textContent = state.quiz.answered - state.quiz.correct;
 
+  const correctDisplayIdx = state.quiz.shuffledCorrect;
   document.querySelectorAll('.answer-btn').forEach((btn, i) => {
     btn.disabled = true;
-    if (i === q.correct) btn.classList.add('correct');
+    if (i === correctDisplayIdx) btn.classList.add('correct');
     if (i === index && !isCorrect) btn.classList.add('wrong');
   });
 
@@ -919,6 +939,47 @@ function renderSignShape(sign, size = 90) {
     </svg>`;
   }
 
+  if (sign.shape === 'rect-blue-service') {
+    const h = s * 0.72;
+    const fontSize = (sign.symbol && sign.symbol.length <= 2) ? s * 0.32 : s * 0.22;
+    return `<svg width="${s}" height="${h}" viewBox="0 0 ${s} ${h}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect width="${s}" height="${h}" rx="6" fill="#1a5276"/>
+      <rect x="${s*.08}" y="${h*.08}" width="${s*.84}" height="${h*.84}" rx="4" fill="white"/>
+      <text x="${c}" y="${h*.56}" text-anchor="middle" dominant-baseline="central" font-size="${fontSize}" fill="#1a5276">${sign.symbol}</text>
+    </svg>`;
+  }
+
+  if (sign.shape === 'rect-white-blue') {
+    const h = s * 0.72;
+    const isNum = /^\d+$/.test(sign.symbol);
+    const fontSize = isNum ? s * 0.28 : s * 0.24;
+    return `<svg width="${s}" height="${h}" viewBox="0 0 ${s} ${h}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect width="${s}" height="${h}" rx="6" fill="#1a5276" stroke="#1a5276" stroke-width="3"/>
+      <rect x="${s*.06}" y="${h*.06}" width="${s*.88}" height="${h*.88}" rx="4" fill="white"/>
+      <text x="${c}" y="${h*.56}" text-anchor="middle" dominant-baseline="central" font-size="${fontSize}" fill="#1a1a2e">${sign.symbol}</text>
+    </svg>`;
+  }
+
+  if (sign.shape === 'circle-gray-strike') {
+    const r = s * 0.45;
+    const innerR = r - s * 0.08;
+    const fontSize = s * 0.25;
+    return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <circle cx="${c}" cy="${c}" r="${r}" fill="#7f8c8d"/>
+      <circle cx="${c}" cy="${c}" r="${innerR}" fill="white"/>
+      <text x="${c}" y="${c}" text-anchor="middle" dominant-baseline="central" font-size="${fontSize}" font-weight="700" fill="#555">${sign.symbol}</text>
+      <line x1="${c - r * 0.7}" y1="${c + r * 0.7}" x2="${c + r * 0.7}" y2="${c - r * 0.7}" stroke="#555" stroke-width="${s * 0.06}" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  if (sign.shape === 'priority-rect-reverse') {
+    return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" style="filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18))">
+      <rect x="2" y="2" width="${s-4}" height="${s-4}" rx="5" fill="#1a5276"/>
+      <text x="${c}" y="${s*.38}" text-anchor="middle" dominant-baseline="central" font-size="${s*.22}" fill="#e74c3c">←</text>
+      <text x="${c}" y="${s*.66}" text-anchor="middle" dominant-baseline="central" font-size="${s*.38}" fill="white">→</text>
+    </svg>`;
+  }
+
   return `<div style="font-size:2rem">${sign.symbol || '?'}</div>`;
 }
 
@@ -1196,6 +1257,174 @@ const ROAD_DIAGRAMS = {
     <text x="270" y="94" text-anchor="middle" font-size="11" fill="rgba(0,220,0,0.8)">V</text>
     <text x="170" y="170" text-anchor="middle" font-size="8" fill="#fbbf24">Heltrukken midtlinje: ALDRI krysse for forbikjøring</text>
   </svg>`,
+
+  tunnel_fire: () => `<svg viewBox="0 0 340 180" width="320" height="180" style="border-radius:10px;display:block">
+    <rect width="340" height="180" fill="#2d2d2d"/>
+    <rect x="0" y="30" width="340" height="120" fill="#4a4a4a"/>
+    <rect x="0" y="30" width="340" height="5" fill="#6b6b6b"/>
+    <rect x="0" y="145" width="340" height="5" fill="#6b6b6b"/>
+    <line x1="0" y1="90" x2="340" y2="90" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="12,8"/>
+    <text x="170" y="20" text-anchor="middle" font-size="10" fill="#aaa">TUNNEL</text>
+    <g transform="translate(200,50)"><text font-size="24">&#x1f525;</text></g>
+    <g transform="translate(100,95)"><rect width="40" height="24" rx="3" fill="#dc2626"/><text x="20" y="16" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text></g>
+    <path d="M100,107 L30,107" stroke="#22c55e" stroke-width="3" stroke-dasharray="5,3" marker-end="url(#tf1)"/>
+    <text x="40" y="135" font-size="8" fill="#22c55e">GÅ MOT INNKJORSELEN</text>
+    <rect x="5" y="70" width="20" height="30" rx="2" fill="#22c55e"/>
+    <text x="15" y="87" text-anchor="middle" font-size="6" fill="white">EXIT</text>
+    <text x="170" y="170" text-anchor="middle" font-size="8" fill="#fbbf24">Gå MOT trafikken, bort fra royken!</text>
+    <defs><marker id="tf1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="#22c55e"/></marker></defs>
+  </svg>`,
+
+  parking_near_crossroad: () => `<svg viewBox="0 0 240 220" width="230" height="220" style="border-radius:10px;display:block">
+    <rect width="240" height="220" fill="#4d7c5a"/>
+    <rect x="90" y="0" width="60" height="220" fill="#6b7280"/>
+    <rect x="0" y="80" width="240" height="60" fill="#6b7280"/>
+    <line x1="120" y1="0" x2="120" y2="78" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="120" y1="142" x2="120" y2="220" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="0" y1="110" x2="88" y2="110" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <line x1="152" y1="110" x2="240" y2="110" stroke="white" stroke-width="1.5" stroke-dasharray="8,6"/>
+    <rect x="60" y="148" width="28" height="14" rx="2" fill="#dc2626"/>
+    <text x="74" y="158" text-anchor="middle" font-size="6" fill="white">P?</text>
+    <text x="42" y="170" font-size="7" fill="#ef4444">Under 10m</text>
+    <rect x="60" y="185" width="28" height="14" rx="2" fill="#22c55e"/>
+    <text x="74" y="195" text-anchor="middle" font-size="6" fill="white">P OK</text>
+    <text x="42" y="205" font-size="7" fill="#22c55e">10m+</text>
+    <text x="120" y="215" text-anchor="middle" font-size="8" fill="#fbbf24">Parkering forbudt under 10m fra kryss</text>
+  </svg>`,
+
+  stopping_distance: () => `<svg viewBox="0 0 360 160" width="340" height="160" style="border-radius:10px;display:block">
+    <rect width="360" height="160" fill="#4d7c5a"/>
+    <rect x="0" y="50" width="360" height="60" fill="#6b7280"/>
+    <line x1="0" y1="50" x2="360" y2="50" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="110" x2="360" y2="110" stroke="white" stroke-width="2"/>
+    <g transform="translate(20,65)"><rect width="36" height="22" rx="3" fill="#dc2626"/><text x="18" y="15" text-anchor="middle" font-size="7" fill="white" font-weight="700">80km/t</text></g>
+    <line x1="58" y1="100" x2="100" y2="100" stroke="#fbbf24" stroke-width="3"/>
+    <text x="79" y="95" text-anchor="middle" font-size="7" fill="#fbbf24">Reaksjon</text>
+    <text x="79" y="108" text-anchor="middle" font-size="6" fill="#fbbf24">~22m</text>
+    <line x1="100" y1="100" x2="200" y2="100" stroke="#ef4444" stroke-width="3"/>
+    <text x="150" y="95" text-anchor="middle" font-size="7" fill="#ef4444">Bremsing</text>
+    <text x="150" y="108" text-anchor="middle" font-size="6" fill="#ef4444">~48m</text>
+    <line x1="58" y1="70" x2="200" y2="70" stroke="white" stroke-width="1.5"/>
+    <text x="130" y="67" text-anchor="middle" font-size="8" fill="white" font-weight="700">Stoppelengde ~70m</text>
+    <rect x="230" y="55" width="120" height="48" rx="4" fill="rgba(0,0,0,0.5)"/>
+    <text x="290" y="70" text-anchor="middle" font-size="7" fill="white">Dobbel fart =</text>
+    <text x="290" y="82" text-anchor="middle" font-size="8" fill="#ef4444" font-weight="700">4x bremselengde!</text>
+    <text x="290" y="95" text-anchor="middle" font-size="6" fill="#fbbf24">50-100: 25m-100m</text>
+    <text x="180" y="150" text-anchor="middle" font-size="8" fill="#fbbf24">Stoppelengde = reaksjonstid + bremselengde</text>
+  </svg>`,
+
+  hill_parking: () => `<svg viewBox="0 0 280 180" width="260" height="180" style="border-radius:10px;display:block">
+    <rect width="280" height="180" fill="#4d7c5a"/>
+    <polygon points="0,120 280,60 280,140 0,180" fill="#6b7280"/>
+    <line x1="0" y1="120" x2="280" y2="60" stroke="white" stroke-width="2"/>
+    <text x="245" y="55" font-size="8" fill="white">Oppover</text>
+    <g transform="translate(80,100) rotate(-12)"><rect width="40" height="22" rx="3" fill="#dc2626"/><text x="20" y="15" text-anchor="middle" font-size="7" fill="white" font-weight="700">BIL</text></g>
+    <rect x="10" y="8" width="140" height="40" rx="4" fill="rgba(0,0,0,0.6)"/>
+    <text x="18" y="22" font-size="7" fill="white">Oppover: Hjul BORT fra kant</text>
+    <text x="18" y="32" font-size="7" fill="#fbbf24">Nedover: Hjul MOT kant</text>
+    <text x="18" y="42" font-size="7" fill="#22c55e">Alltid: Handbrekk + 1. gir</text>
+    <text x="140" y="170" text-anchor="middle" font-size="8" fill="#fbbf24">Sikre bilen mot aa rulle!</text>
+  </svg>`,
+
+  speed_zones: () => `<svg viewBox="0 0 340 140" width="320" height="140" style="border-radius:10px;display:block">
+    <rect width="340" height="140" fill="#4d7c5a"/>
+    <rect x="0" y="40" width="340" height="60" fill="#6b7280"/>
+    <line x1="0" y1="40" x2="340" y2="40" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="100" x2="340" y2="100" stroke="white" stroke-width="2"/>
+    <circle cx="55" cy="70" r="18" fill="#c0392b"/><circle cx="55" cy="70" r="14" fill="white"/><text x="55" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#1a1a2e">50</text>
+    <text x="55" y="25" text-anchor="middle" font-size="8" fill="white">Tettbygd</text>
+    <circle cx="170" cy="70" r="18" fill="#c0392b"/><circle cx="170" cy="70" r="14" fill="white"/><text x="170" y="75" text-anchor="middle" font-size="12" font-weight="800" fill="#1a1a2e">80</text>
+    <text x="170" y="25" text-anchor="middle" font-size="8" fill="white">Landeveg</text>
+    <circle cx="285" cy="70" r="18" fill="#c0392b"/><circle cx="285" cy="70" r="14" fill="white"/><text x="285" y="75" text-anchor="middle" font-size="11" font-weight="800" fill="#1a1a2e">110</text>
+    <text x="285" y="25" text-anchor="middle" font-size="8" fill="white">Motorveg</text>
+    <text x="170" y="125" text-anchor="middle" font-size="8" fill="#fbbf24">Standard fartsgrenser uten skilting</text>
+  </svg>`,
+
+  emergency_stop: () => `<svg viewBox="0 0 340 160" width="320" height="160" style="border-radius:10px;display:block">
+    <style>@keyframes hazard4{0%,100%{opacity:1}50%{opacity:0.2}}.hazard4{animation:hazard4 0.8s infinite}</style>
+    <rect width="340" height="160" fill="#4d7c5a"/>
+    <rect x="0" y="30" width="340" height="80" fill="#6b7280"/>
+    <line x1="0" y1="30" x2="340" y2="30" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="110" x2="340" y2="110" stroke="white" stroke-width="2"/>
+    <g transform="translate(230,42)"><rect width="44" height="24" rx="3" fill="#dc2626"/><text x="22" y="16" text-anchor="middle" font-size="7" fill="white" font-weight="700">DU</text><rect x="3" y="2" width="6" height="4" rx="1" fill="#fbbf24" class="hazard4"/><rect x="35" y="2" width="6" height="4" rx="1" fill="#fbbf24" class="hazard4"/></g>
+    <polygon points="100,75 108,60 116,75" fill="#ef4444" stroke="white" stroke-width="1"/>
+    <text x="108" y="73" text-anchor="middle" font-size="7" fill="white">!</text>
+    <text x="108" y="90" text-anchor="middle" font-size="7" fill="#fbbf24">100m+</text>
+    <path d="M118,75 L225,55" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <rect x="5" y="118" width="210" height="36" rx="4" fill="rgba(0,0,0,0.6)"/>
+    <text x="12" y="130" font-size="7" fill="white">1. Nodblink PA</text>
+    <text x="12" y="140" font-size="7" fill="white">2. Refleksvest + varseltrekant 100m+</text>
+    <text x="12" y="150" font-size="7" fill="#fbbf24">3. Forlat bilen – ring 112</text>
+  </svg>`,
+
+  aquaplaning: () => `<svg viewBox="0 0 300 160" width="280" height="160" style="border-radius:10px;display:block">
+    <rect width="300" height="160" fill="#3d5a6e"/>
+    <rect x="0" y="40" width="300" height="80" fill="#5a7a8a"/>
+    <line x1="0" y1="80" x2="300" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="12,8"/>
+    <text x="30" y="30" font-size="9" fill="#7ab8d4">Kraftig regn</text>
+    <g transform="translate(80,55)"><rect width="42" height="24" rx="3" fill="#dc2626"/><text x="21" y="16" text-anchor="middle" font-size="7" fill="white" font-weight="700">80km/t</text></g>
+    <ellipse cx="101" cy="82" rx="25" ry="5" fill="rgba(100,180,255,0.4)"/>
+    <text x="101" y="97" text-anchor="middle" font-size="6" fill="#7ab8d4">Vannflate</text>
+    <g transform="translate(180,58)"><rect width="42" height="24" rx="3" fill="#22c55e"/><text x="21" y="16" text-anchor="middle" font-size="7" fill="white" font-weight="700">60km/t</text></g>
+    <text x="201" y="97" text-anchor="middle" font-size="6" fill="#22c55e">Kontroll</text>
+    <text x="150" y="140" text-anchor="middle" font-size="8" fill="#fbbf24">Aquaplaning: Reduser fart, IKKE brems bratt!</text>
+  </svg>`,
+
+  two_second_rule: () => `<svg viewBox="0 0 340 140" width="320" height="140" style="border-radius:10px;display:block">
+    <rect width="340" height="140" fill="#4d7c5a"/>
+    <rect x="0" y="30" width="340" height="80" fill="#6b7280"/>
+    <line x1="0" y1="30" x2="340" y2="30" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="110" x2="340" y2="110" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="70" x2="340" y2="70" stroke="white" stroke-width="1.5" stroke-dasharray="14,10"/>
+    <g transform="translate(200,40)"><rect width="40" height="22" rx="3" fill="#1d4ed8"/><text x="20" y="15" text-anchor="middle" font-size="8" fill="white">BIL</text></g>
+    <g transform="translate(60,40)"><rect width="40" height="22" rx="3" fill="#dc2626"/><text x="20" y="15" text-anchor="middle" font-size="8" fill="white" font-weight="700">DU</text></g>
+    <line x1="100" y1="50" x2="200" y2="50" stroke="#fbbf24" stroke-width="2"/>
+    <rect x="120" y="75" width="80" height="22" rx="4" fill="rgba(0,0,0,0.6)"/>
+    <text x="160" y="90" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="800">2 sekunder</text>
+    <text x="160" y="25" text-anchor="middle" font-size="7" fill="white">Fast punkt</text>
+    <text x="170" y="130" text-anchor="middle" font-size="8" fill="#fbbf24">2s torr | 4s vaat | 6s is/sno</text>
+  </svg>`,
+
+  dashboard_warnings: () => `<svg viewBox="0 0 340 140" width="320" height="140" style="border-radius:10px;display:block">
+    <rect width="340" height="140" fill="#1a1a2e"/>
+    <rect x="10" y="10" width="320" height="120" rx="10" fill="#111827" stroke="#374151" stroke-width="1"/>
+    <text x="170" y="30" text-anchor="middle" font-size="9" fill="#9ca3af">DASHBORD — Kontrolllamper</text>
+    <circle cx="50" cy="70" r="16" fill="none" stroke="#ef4444" stroke-width="2"/><text x="50" y="76" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">OIL</text>
+    <text x="50" y="105" text-anchor="middle" font-size="7" fill="#ef4444">Olje</text><text x="50" y="115" text-anchor="middle" font-size="6" fill="#9ca3af">STOPP!</text>
+    <circle cx="120" cy="70" r="16" fill="none" stroke="#ef4444" stroke-width="2"/><text x="120" y="76" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">TEMP</text>
+    <text x="120" y="105" text-anchor="middle" font-size="7" fill="#ef4444">Temp</text><text x="120" y="115" text-anchor="middle" font-size="6" fill="#9ca3af">STOPP!</text>
+    <circle cx="190" cy="70" r="16" fill="none" stroke="#fbbf24" stroke-width="2"/><text x="190" y="76" text-anchor="middle" font-size="12" fill="#fbbf24" font-weight="800">B</text>
+    <text x="190" y="105" text-anchor="middle" font-size="7" fill="#fbbf24">Batteri</text><text x="190" y="115" text-anchor="middle" font-size="6" fill="#9ca3af">Sjekk</text>
+    <circle cx="260" cy="70" r="16" fill="none" stroke="#fbbf24" stroke-width="2"/><text x="260" y="76" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="800">ABS</text>
+    <text x="260" y="105" text-anchor="middle" font-size="7" fill="#fbbf24">ABS</text><text x="260" y="115" text-anchor="middle" font-size="6" fill="#9ca3af">Sjekk</text>
+    <rect x="100" y="122" width="140" height="12" rx="3" fill="rgba(239,68,68,0.15)"/>
+    <text x="170" y="131" text-anchor="middle" font-size="6" fill="#ef4444">Rodt = STOPP | Gult = Sjekk snart</text>
+  </svg>`,
+
+  winter_braking: () => `<svg viewBox="0 0 340 140" width="320" height="140" style="border-radius:10px;display:block">
+    <rect width="340" height="140" fill="#a8c8e0"/>
+    <rect x="0" y="40" width="340" height="60" fill="#b0bec5"/>
+    <text x="15" y="25" font-size="8" fill="#546e7a">Vinterfare — bremselengder</text>
+    <g transform="translate(10,50)"><rect width="30" height="16" rx="2" fill="#dc2626"/><text x="15" y="11" text-anchor="middle" font-size="6" fill="white">60km/t</text></g>
+    <line x1="42" y1="58" x2="80" y2="58" stroke="#22c55e" stroke-width="3"/><text x="61" y="54" text-anchor="middle" font-size="6" fill="#22c55e">Torrt: 20m</text>
+    <line x1="42" y1="70" x2="120" y2="70" stroke="#fbbf24" stroke-width="3"/><text x="81" y="80" text-anchor="middle" font-size="6" fill="#fbbf24">Vaat: 40m</text>
+    <line x1="42" y1="82" x2="240" y2="82" stroke="#ef4444" stroke-width="3"/><text x="141" y="92" text-anchor="middle" font-size="6" fill="#ef4444">Is: 100m+ (5-10x!)</text>
+    <text x="170" y="125" text-anchor="middle" font-size="8" fill="#1a5276" font-weight="700">Is/sno = opptil 10x lengre bremselengde!</text>
+  </svg>`,
+
+  parking_near_gangfelt: () => `<svg viewBox="0 0 280 180" width="260" height="180" style="border-radius:10px;display:block">
+    <rect width="280" height="180" fill="#4d7c5a"/>
+    <rect x="0" y="50" width="280" height="80" fill="#6b7280"/>
+    <line x1="0" y1="50" x2="280" y2="50" stroke="white" stroke-width="2"/>
+    <line x1="0" y1="130" x2="280" y2="130" stroke="white" stroke-width="2"/>
+    ${[0,1,2,3,4].map(i=>`<rect x="${140+i*18}" y="54" width="12" height="72" fill="white" opacity="0.85"/>`).join('')}
+    <text x="175" y="45" text-anchor="middle" font-size="7" fill="white">GANGFELT</text>
+    <rect x="100" y="135" width="28" height="14" rx="2" fill="#ef4444"/><text x="114" y="145" text-anchor="middle" font-size="6" fill="white">P X</text>
+    <rect x="45" y="135" width="28" height="14" rx="2" fill="#22c55e"/><text x="59" y="145" text-anchor="middle" font-size="6" fill="white">P OK</text>
+    <text x="114" y="160" text-anchor="middle" font-size="6" fill="#ef4444">Under 5m</text>
+    <text x="59" y="160" text-anchor="middle" font-size="6" fill="#22c55e">5m+</text>
+    <text x="140" y="175" text-anchor="middle" font-size="7" fill="#fbbf24">Parkering forbudt under 5m foran gangfelt</text>
+  </svg>`,
 };
 
 window.ROAD_DIAGRAMS = ROAD_DIAGRAMS;
@@ -1342,6 +1571,490 @@ function initScrollTop() {
     btn.classList.toggle('show', window.scrollY > 300);
   });
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// ============ EXAM MODE ============
+const examState = {
+  active: false,
+  questions: [],
+  answers: [],
+  shuffledMaps: [],
+  flagged: new Set(),
+  currentIndex: 0,
+  timer: null,
+  timeLeft: 5400,
+  startTime: null,
+  submitted: false,
+  reviewFilter: 'all',
+};
+
+const EXAM_CATEGORY_WEIGHTS = {
+  trafikkregler: 8,
+  skilt: 7,
+  vikeplikt: 7,
+  fart: 5,
+  kjoretoy: 4,
+  miljo: 4,
+  forstehjelp: 3,
+  parkering: 3,
+  'mørke': 2,
+  vegoppmerking: 2,
+};
+
+window.startExamMode = function() {
+  const questions = selectExamQuestions();
+  if (questions.length === 0) {
+    showNotification('Ingen spørsmål tilgjengelig.', 'wrong');
+    return;
+  }
+
+  examState.questions = questions;
+  examState.answers = new Array(questions.length).fill(null);
+  examState.shuffledMaps = questions.map(() => {
+    const indices = [0, 1, 2, 3];
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices;
+  });
+  examState.flagged = new Set();
+  examState.currentIndex = 0;
+  examState.timeLeft = 5400;
+  examState.startTime = Date.now();
+  examState.submitted = false;
+  examState.active = true;
+
+  const setup = document.getElementById('exam-setup');
+  const active = document.getElementById('exam-active');
+  const results = document.getElementById('exam-results');
+  if (setup) setup.classList.add('hide');
+  if (active) active.classList.add('show');
+  if (results) results.classList.remove('show');
+
+  renderExamNavGrid();
+  renderExamQuestion();
+  startExamTimer();
+};
+
+function selectExamQuestions() {
+  const selected = [];
+  const usedIds = new Set();
+
+  for (const [catId, count] of Object.entries(EXAM_CATEGORY_WEIGHTS)) {
+    const catQuestions = shuffle(QUESTIONS.filter(q => q.category === catId));
+    const take = Math.min(count, catQuestions.length);
+    for (let i = 0; i < take; i++) {
+      selected.push(catQuestions[i]);
+      usedIds.add(catQuestions[i].id);
+    }
+  }
+
+  const target = 45;
+  if (selected.length < target) {
+    const remaining = shuffle(QUESTIONS.filter(q => !usedIds.has(q.id)));
+    const need = target - selected.length;
+    for (let i = 0; i < Math.min(need, remaining.length); i++) {
+      selected.push(remaining[i]);
+    }
+  }
+
+  return shuffle(selected);
+}
+
+function startExamTimer() {
+  clearInterval(examState.timer);
+  updateExamTimerDisplay();
+
+  examState.timer = setInterval(() => {
+    examState.timeLeft--;
+    updateExamTimerDisplay();
+
+    const timerEl = document.getElementById('exam-timer');
+    const timerWrap = timerEl ? timerEl.closest('.exam-timer-display') : null;
+    if (examState.timeLeft <= 300 && timerWrap) {
+      timerWrap.classList.add('urgent');
+    }
+
+    if (examState.timeLeft <= 0) {
+      clearInterval(examState.timer);
+      submitExam();
+    }
+  }, 1000);
+}
+
+function updateExamTimerDisplay() {
+  const timerEl = document.getElementById('exam-timer');
+  if (!timerEl) return;
+  const mins = Math.floor(examState.timeLeft / 60);
+  const secs = examState.timeLeft % 60;
+  timerEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function renderExamNavGrid() {
+  const grid = document.getElementById('exam-nav-grid');
+  if (!grid) return;
+  grid.innerHTML = examState.questions.map((_, i) => {
+    const classes = ['exam-nav-btn'];
+    if (i === examState.currentIndex) classes.push('current');
+    if (examState.answers[i] !== null) classes.push('answered');
+    if (examState.flagged.has(i)) classes.push('flagged');
+    return `<button class="${classes.join(' ')}" onclick="jumpToExamQuestion(${i})">${i + 1}</button>`;
+  }).join('');
+}
+
+function renderExamQuestion() {
+  const q = examState.questions[examState.currentIndex];
+  if (!q) return;
+
+  const idx = examState.currentIndex;
+  const total = examState.questions.length;
+
+  document.getElementById('exam-counter').innerHTML = `Spørsmål <strong>${idx + 1}</strong> av ${total}`;
+
+  const cat = CATEGORIES.find(c => c.id === q.category);
+  const diffLabels = { lett: 'Lett', middels: 'Middels', vanskelig: 'Vanskelig' };
+  document.getElementById('exam-question-category').textContent = cat ? cat.name : '';
+  document.getElementById('exam-question-difficulty').className = `difficulty-badge ${q.difficulty}`;
+  document.getElementById('exam-question-difficulty').textContent = diffLabels[q.difficulty] || q.difficulty;
+
+  const scenarioEl = document.getElementById('exam-question-scenario');
+  if (scenarioEl) {
+    if (q.scenario) {
+      scenarioEl.textContent = q.scenario;
+      scenarioEl.style.display = 'block';
+    } else {
+      scenarioEl.style.display = 'none';
+    }
+  }
+
+  const diagramEl = document.getElementById('exam-question-diagram');
+  if (diagramEl) {
+    if (q.diagram && ROAD_DIAGRAMS[q.diagram]) {
+      diagramEl.innerHTML = ROAD_DIAGRAMS[q.diagram]();
+      diagramEl.style.display = 'flex';
+    } else {
+      diagramEl.style.display = 'none';
+    }
+  }
+
+  const signContainer = document.getElementById('exam-question-signs');
+  if (q.signs && q.signs.length > 0 && signContainer) {
+    const matchedSigns = q.signs.map(sid => SIGNS.find(s => s.id === sid)).filter(Boolean);
+    if (matchedSigns.length > 0) {
+      signContainer.innerHTML = `
+        <div class="question-signs-label">${matchedSigns.length > 1 ? 'Aktuelle skilt:' : 'Aktuelt skilt:'}</div>
+        ${matchedSigns.map(s => `
+          <div class="question-sign-item">
+            <div style="display:inline-flex;align-items:center;justify-content:center">${renderSignShape(s, 75)}</div>
+            <span>${s.name}</span>
+          </div>
+        `).join('')}
+      `;
+      signContainer.style.display = 'flex';
+    } else {
+      signContainer.style.display = 'none';
+    }
+  } else if (signContainer) {
+    signContainer.style.display = 'none';
+  }
+
+  document.getElementById('exam-question-text').textContent = q.question;
+
+  const shuffledIndices = examState.shuffledMaps[idx];
+  const letters = ['A', 'B', 'C', 'D'];
+  const answersEl = document.getElementById('exam-answer-options');
+  const selectedAnswer = examState.answers[idx];
+
+  answersEl.innerHTML = shuffledIndices.map((origIdx, displayIdx) => {
+    const selectedClass = selectedAnswer === displayIdx ? 'selected' : '';
+    return `
+      <button class="exam-answer-btn ${selectedClass}" onclick="selectExamAnswer(${displayIdx})">
+        <span class="answer-letter">${letters[displayIdx]}</span>
+        <span>${q.options[origIdx]}</span>
+      </button>
+    `;
+  }).join('');
+
+  const flagBtn = document.getElementById('exam-flag-btn');
+  if (flagBtn) {
+    flagBtn.classList.toggle('flagged', examState.flagged.has(idx));
+    flagBtn.textContent = examState.flagged.has(idx) ? '🚩 Flagget' : '🚩 Flagg';
+  }
+
+  document.getElementById('exam-prev-btn').disabled = idx === 0;
+  document.getElementById('exam-next-btn').disabled = idx === total - 1;
+
+  renderExamNavGrid();
+}
+
+window.selectExamAnswer = function(displayIdx) {
+  if (examState.submitted) return;
+  examState.answers[examState.currentIndex] = displayIdx;
+
+  document.querySelectorAll('.exam-answer-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === displayIdx);
+  });
+
+  renderExamNavGrid();
+};
+
+window.navigateExam = function(direction) {
+  const newIdx = examState.currentIndex + direction;
+  if (newIdx >= 0 && newIdx < examState.questions.length) {
+    examState.currentIndex = newIdx;
+    renderExamQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+window.jumpToExamQuestion = function(index) {
+  if (index >= 0 && index < examState.questions.length) {
+    examState.currentIndex = index;
+    renderExamQuestion();
+  }
+};
+
+window.toggleExamFlag = function() {
+  const idx = examState.currentIndex;
+  if (examState.flagged.has(idx)) {
+    examState.flagged.delete(idx);
+  } else {
+    examState.flagged.add(idx);
+  }
+  renderExamQuestion();
+};
+
+window.submitExam = function() {
+  const unanswered = examState.answers.filter(a => a === null).length;
+  if (unanswered > 0 && examState.timeLeft > 0) {
+    if (!confirm(`Du har ${unanswered} ubesvarte spørsmål. Vil du levere inn likevel?`)) return;
+  }
+
+  clearInterval(examState.timer);
+  examState.submitted = true;
+  examState.active = false;
+
+  const timeUsed = 5400 - examState.timeLeft;
+
+  let correct = 0;
+  const categoryResults = {};
+
+  examState.questions.forEach((q, i) => {
+    const shuffledIndices = examState.shuffledMaps[i];
+    const userAnswer = examState.answers[i];
+    const isCorrect = userAnswer !== null && shuffledIndices[userAnswer] === q.correct;
+
+    if (isCorrect) correct++;
+
+    if (!categoryResults[q.category]) {
+      categoryResults[q.category] = { correct: 0, total: 0 };
+    }
+    categoryResults[q.category].total++;
+    if (isCorrect) categoryResults[q.category].correct++;
+
+    if (!state.progress[q.category]) state.progress[q.category] = {};
+    if (!(q.id in state.progress[q.category]) || isCorrect) {
+      state.progress[q.category][q.id] = isCorrect;
+    }
+  });
+
+  const total = examState.questions.length;
+  const pct = Math.round(correct / total * 100);
+  const pass = correct >= 38;
+
+  game.totalAnswered += total;
+  game.totalCorrect += correct;
+  game.lastPlayDate = todayStr();
+
+  if (pass) awardXP(200, '(bestått teoriprøve!)');
+  if (correct === total) awardXP(500, '(perfekt teoriprøve! 💯)');
+  awardXP(50, '(fullført teoriprøve)');
+
+  if (!game.examHistory) game.examHistory = [];
+  game.examHistory = [...game.examHistory.slice(-19), {
+    date: todayStr(),
+    correct, total, pct, pass,
+    timeUsed,
+    ts: Date.now(),
+  }];
+
+  game.quizResults = [...(game.quizResults || []).slice(-50), { cat: 'exam', pct, total, ts: Date.now() }];
+
+  saveProgress();
+  saveGame();
+  checkBadges();
+
+  renderExamResults(correct, total, pct, pass, timeUsed, categoryResults);
+};
+
+function renderExamResults(correct, total, pct, pass, timeUsed, categoryResults) {
+  const active = document.getElementById('exam-active');
+  const results = document.getElementById('exam-results');
+  if (active) active.classList.remove('show');
+  if (results) results.classList.add('show');
+
+  document.getElementById('exam-result-pct').textContent = pct + '%';
+  document.getElementById('exam-result-circle').className = `result-circle ${pass ? 'pass' : 'fail'}`;
+  document.getElementById('exam-result-title').textContent = pass ? '🎉 Bestått teoriprøven!' : '📚 Ikke bestått';
+  document.getElementById('exam-result-subtitle').textContent = pass
+    ? `Gratulerer! Du fikk ${correct} av ${total} riktige (krav: 38).`
+    : `Du fikk ${correct} av ${total} riktige. Du trenger minst 38 for å bestå.`;
+
+  document.getElementById('exam-result-correct').textContent = correct;
+  document.getElementById('exam-result-wrong').textContent = total - correct;
+  document.getElementById('exam-result-total').textContent = total;
+
+  const mins = Math.floor(timeUsed / 60);
+  const secs = timeUsed % 60;
+  document.getElementById('exam-result-time').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+  const xpEl = document.getElementById('exam-result-xp');
+  if (xpEl) {
+    const lvl = getCurrentLevel();
+    let xpEarned = 50;
+    if (pass) xpEarned += 200;
+    if (correct === total) xpEarned += 500;
+    xpEl.innerHTML = `
+      <div class="result-xp-row">
+        <span>🏆 XP opptjent</span>
+        <span style="color:var(--warning);font-weight:700">+${xpEarned} XP</span>
+      </div>
+      <div class="result-xp-row">
+        <span>${lvl.icon} Nivå ${lvl.level}: ${lvl.name}</span>
+        <span>${game.xp} XP totalt</span>
+      </div>
+    `;
+  }
+
+  const breakdownEl = document.getElementById('exam-category-breakdown');
+  if (breakdownEl) {
+    const rows = CATEGORIES.map(cat => {
+      const r = categoryResults[cat.id];
+      if (!r) return '';
+      const catPct = Math.round(r.correct / r.total * 100);
+      const color = catPct >= 85 ? 'var(--success)' : catPct >= 50 ? 'var(--warning)' : 'var(--danger)';
+      return `
+        <div class="exam-cat-row">
+          <div class="exam-cat-icon">${cat.icon}</div>
+          <div class="exam-cat-name">${cat.name}</div>
+          <div class="exam-cat-bar"><div class="exam-cat-bar-fill" style="width:${catPct}%;background:${color}"></div></div>
+          <div class="exam-cat-score" style="color:${color}">${r.correct}/${r.total}</div>
+        </div>
+      `;
+    }).filter(Boolean).join('');
+
+    breakdownEl.innerHTML = `<h3>Resultater per kategori</h3>${rows}`;
+  }
+
+  renderExamReviewList('all');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderExamReviewList(filter) {
+  examState.reviewFilter = filter;
+  const listEl = document.getElementById('exam-review-list');
+  if (!listEl) return;
+
+  const items = examState.questions.map((q, i) => {
+    const shuffledIndices = examState.shuffledMaps[i];
+    const userAnswer = examState.answers[i];
+    const isCorrect = userAnswer !== null && shuffledIndices[userAnswer] === q.correct;
+    const isUnanswered = userAnswer === null;
+
+    let status, statusClass, badgeText;
+    if (isUnanswered) {
+      status = 'unanswered'; statusClass = 'review-unanswered'; badgeText = 'Ubesvart';
+    } else if (isCorrect) {
+      status = 'correct'; statusClass = 'review-correct'; badgeText = 'Riktig';
+    } else {
+      status = 'wrong'; statusClass = 'review-wrong'; badgeText = 'Feil';
+    }
+
+    if (filter !== 'all' && filter !== status) return '';
+
+    const cat = CATEGORIES.find(c => c.id === q.category);
+    const letters = ['A', 'B', 'C', 'D'];
+
+    const answersHtml = shuffledIndices.map((origIdx, dispIdx) => {
+      const classes = [];
+      if (origIdx === q.correct) classes.push('is-correct');
+      if (userAnswer === dispIdx && !isCorrect) classes.push('is-wrong');
+      if (userAnswer === dispIdx) classes.push('is-selected');
+
+      const marker = origIdx === q.correct ? '✓' : (userAnswer === dispIdx ? '✗' : '');
+      return `<div class="eri-answer ${classes.join(' ')}">${marker ? marker + ' ' : ''}${letters[dispIdx]}. ${q.options[origIdx]}</div>`;
+    }).join('');
+
+    return `
+      <div class="exam-review-item ${statusClass}" onclick="toggleReviewDetail(${i})">
+        <div class="eri-header">
+          <span class="eri-num">${i + 1}. ${cat ? cat.name : ''}</span>
+          <span class="eri-badge ${status}">${badgeText}</span>
+        </div>
+        <div class="eri-question">${q.question}</div>
+        <div class="eri-detail" id="eri-detail-${i}">
+          <div class="eri-answers">${answersHtml}</div>
+          <div class="eri-explanation">💡 ${q.explanation}</div>
+        </div>
+      </div>
+    `;
+  }).filter(Boolean).join('');
+
+  listEl.innerHTML = items || '<p style="text-align:center;color:var(--text-light);padding:20px">Ingen spørsmål matcher filteret.</p>';
+}
+
+window.toggleReviewDetail = function(index) {
+  const detail = document.getElementById(`eri-detail-${index}`);
+  if (detail) detail.classList.toggle('show');
+};
+
+window.filterExamReview = function(filter, btnEl) {
+  document.querySelectorAll('.exam-review-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  renderExamReviewList(filter);
+};
+
+window.resetExamMode = function() {
+  clearInterval(examState.timer);
+  examState.active = false;
+  examState.submitted = false;
+
+  const setup = document.getElementById('exam-setup');
+  const active = document.getElementById('exam-active');
+  const results = document.getElementById('exam-results');
+  if (setup) setup.classList.remove('hide');
+  if (active) active.classList.remove('show');
+  if (results) results.classList.remove('show');
+
+  renderExamHistory();
+};
+
+function renderExamHistory() {
+  const container = document.getElementById('exam-history');
+  if (!container) return;
+  const history = game.examHistory || [];
+  if (history.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const items = [...history].reverse().slice(0, 10).map(h => {
+    const passClass = h.pass ? 'pass' : 'fail';
+    const passText = h.pass ? 'Bestått' : 'Ikke bestått';
+    const mins = Math.floor(h.timeUsed / 60);
+    const secs = h.timeUsed % 60;
+    return `
+      <div class="exam-history-item">
+        <div>
+          <div class="ehi-result ${passClass}">${passText} – ${h.pct}%</div>
+          <div class="ehi-details">${h.correct}/${h.total} riktige &middot; ${mins}:${secs.toString().padStart(2, '0')} brukt &middot; ${h.date}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `<h3>Tidligere teoriprøver</h3>${items}`;
 }
 
 // ============ UTILS ============
