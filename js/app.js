@@ -833,7 +833,22 @@ function updateSignsGrid() {
   `).join('');
 }
 
+// Build Lovdata GIF URL for official Norwegian road sign images
+function getSignImageUrl(signNumber) {
+  const num = String(signNumber).replace(/\./g, '-');
+  return `https://lovdata.no/static/SF/sf-20051007-1219-${num}-01.gif`;
+}
+
+// Render sign as real image with fallback to inline SVG
 function renderSignShape(sign, size = 90) {
+  const s = size;
+  const imageUrl = getSignImageUrl(sign.number);
+  const id = 'sign-img-' + sign.id + '-' + Math.random().toString(36).substr(2, 5);
+  // Show image, on error replace with SVG fallback
+  return `<div id="${id}" style="display:inline-flex;align-items:center;justify-content:center;width:${s}px;height:${s}px"><img src="${imageUrl}" alt="Skilt ${sign.number}: ${sign.name}" width="${s}" height="${s}" style="object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15))" onerror="this.parentElement.innerHTML=renderSignSvgFallback(SIGNS.find(function(x){return x.id==='${sign.id}'}),${s})"></div>`;
+}
+
+function renderSignSvgFallback(sign, size = 90) {
   const s = size;
   const c = s / 2;
 
@@ -1428,6 +1443,7 @@ const ROAD_DIAGRAMS = {
 };
 
 window.ROAD_DIAGRAMS = ROAD_DIAGRAMS;
+window.renderSignSvgFallback = renderSignSvgFallback;
 
 window.showSignModal = function(id) {
   const sign = SIGNS.find(s => s.id === id);

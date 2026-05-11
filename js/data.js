@@ -2906,7 +2906,7 @@ const GUIDES = [
 const SIGNS = [
   // ---- ADVARSELSSKILT (warning – red triangle) ----
   { id: 's1',  category: 'advarsel', shape: 'triangle', symbol: '+',  name: 'Vegkryss',              number: '102', description: 'Varsler om vegkryss foran. Øk aktsomheten og reduser farten. Høyreregelen kan gjelde.' },
-  { id: 's2',  category: 'advarsel', shape: 'triangle', symbol: '↩', name: 'Farlig sving',          number: '100', description: 'Skarp sving i vegen. Reduser farten markant. Kurven kan være skarpere enn den ser ut.' },
+  { id: 's2',  category: 'advarsel', shape: 'triangle', symbol: '↩', name: 'Farlig sving',          number: '100.1', description: 'Skarp sving i vegen. Reduser farten markant. Kurven kan være skarpere enn den ser ut.' },
   { id: 's3',  category: 'advarsel', shape: 'triangle', symbol: '⇔', name: 'Vegsmalning',           number: '108', description: 'Vegen smalner inn. Vær forberedt på trang passasje og møtende trafikk.' },
   { id: 's4',  category: 'advarsel', shape: 'triangle', symbol: '❄', name: 'Glatt veg',             number: '144', description: 'Vegen kan være glatt. Reduser fart kraftig, øk følgeavstand. Spesielt farlig i kurver.' },
   { id: 's5',  category: 'advarsel', shape: 'triangle', symbol: '🏃', name: 'Barn',                  number: '142', description: 'Barn kan oppholde seg nær vegen. Nær skoler og lekeplasser. Kjør sakte, vær klar til å stoppe.' },
@@ -2915,7 +2915,7 @@ const SIGNS = [
   { id: 's8',  category: 'advarsel', shape: 'triangle', symbol: '×',  name: 'Jernbanekryss (u/bom)', number: '132', description: 'Jernbanekryss uten bom. ALLTID stopp, se og lytt i begge retninger. Toget har alltid forkjørsrett.' },
   { id: 's22', category: 'advarsel', shape: 'triangle', symbol: '⚒', name: 'Vegarbeid',             number: '110', description: 'Vegarbeid pågår. Reduser fart, følg midlertidige skilt og oppmerking. Vær ekstra oppmerksom.' },
   { id: 's23', category: 'advarsel', shape: 'triangle', symbol: '≈',  name: 'Ujevn veg',             number: '112', description: 'Vegen er ujevn eller har humper. Reduser farten for å unngå skader på kjøretøyet og miste kontrollen.' },
-  { id: 's24', category: 'advarsel', shape: 'triangle', symbol: 'S',  name: 'Svingete veg',          number: '104', description: 'Svingete veg med flere kurver. Reduser farten og hold deg på din side av midtlinjen.' },
+  { id: 's24', category: 'advarsel', shape: 'triangle', symbol: 'S',  name: 'Svingete veg',          number: '104.1', description: 'Svingete veg med flere kurver. Reduser farten og hold deg på din side av midtlinjen.' },
   { id: 's25', category: 'advarsel', shape: 'triangle', symbol: '🚴', name: 'Syklende',              number: '148', description: 'Syklister krysser eller ferdes langs vegen. Vær oppmerksom og gi god siderom ved forbikjøring.' },
   { id: 's34', category: 'advarsel', shape: 'triangle', symbol: '⤡',  name: 'Farlig stigning/fall',  number: '106', description: 'Bratt stigning eller fall. Reduser fart i nedoverbakker, bruk lavt gir. Bremselengden øker.' },
   { id: 's35', category: 'advarsel', shape: 'triangle', symbol: '⌇',  name: 'Farlig vegkant',        number: '114', description: 'Svak eller farlig vegkant. Hold deg unna kanten. Hjulene kan synke ned og du kan miste kontroll.' },
@@ -2936,7 +2936,7 @@ const SIGNS = [
   { id: 's13', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '||',  name: 'Stans forbudt',          number: '376', description: 'Absolutt stans og parkering forbudt. Ikke stopp her under NOEN omstendigheter.' },
   { id: 's26', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: 'MC',  name: 'Motorsykkel forbudt',    number: '318', description: 'Motorsykler og mopeder er forbudt å kjøre her. Gjelder kun motorsykkelkjøretøy.' },
   { id: 's27', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '10t', name: 'Tunge kjøretøy forbudt', number: '322', description: 'Kjøretøy over angitt vekt er forbudt. Sjekk underskilt for nøyaktig vektgrense.' },
-  { id: 's28', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '⊘',  name: 'All ferdsel forbudt',    number: '306', description: 'All ferdsel med motorvogn forbudt fra dette punkt. Gjelder alle kjøretøy.' },
+  { id: 's28', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '⊘',  name: 'All ferdsel forbudt',    number: '306.0', description: 'All ferdsel med motorvogn forbudt fra dette punkt. Gjelder alle kjøretøy.' },
   { id: 's44', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '🚗',  name: 'Motorvogn forbudt',      number: '304', description: 'Motorkjøretøy forbudt. Gjelder biler, motorsykler og mopeder – men ikke traktorer eller sykler.' },
   { id: 's45', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '↰',   name: 'Venstresving forbudt',   number: '310', description: 'Svinging til venstre forbudt. Du kan ikke svinge til venstre ved neste kryss.' },
   { id: 's46', category: 'forbud', shape: 'circle', color: '#e74c3c', symbol: '↱',   name: 'Høyresving forbudt',     number: '312', description: 'Svinging til høyre forbudt. Du kan ikke svinge til høyre ved neste kryss.' },
@@ -2950,8 +2950,8 @@ const SIGNS = [
   { id: 's54', category: 'forbud', shape: 'circle-gray-strike', symbol: '50', name: 'Slutt fartsgrense 50', number: '552.50', description: 'Slutt på fartsgrense 50 km/t. Ny fartsgrense gjelder (som regel generell fartsgrense for vegtypen).' },
 
   // ---- PÅBUDSSKILT (mandatory – blue circle) ----
-  { id: 's14', category: 'påbud', shape: 'circle-blue', symbol: '↑',  name: 'Rett frem',          number: '402', description: 'Du MÅ kjøre rett frem. Kan ikke svinge til siden ved dette skiltet.' },
-  { id: 's15', category: 'påbud', shape: 'circle-blue', symbol: '↗',  name: 'Sving til høyre',    number: '404', description: 'Du MÅ svinge til høyre. Påbudsskilt – ingen valgfrihet.' },
+  { id: 's14', category: 'påbud', shape: 'circle-blue', symbol: '↑',  name: 'Rett frem',          number: '402.1', description: 'Du MÅ kjøre rett frem. Kan ikke svinge til siden ved dette skiltet.' },
+  { id: 's15', category: 'påbud', shape: 'circle-blue', symbol: '↗',  name: 'Sving til høyre',    number: '402.3', description: 'Du MÅ svinge til høyre. Påbudsskilt – ingen valgfrihet.' },
   { id: 's16', category: 'påbud', shape: 'circle-blue', symbol: '↺',  name: 'Rundkjøring',        number: '408', description: 'Rundkjøring. Hold til venstre for midtøya. Vikeplikt for trafikk inne i rundkjøringen.' },
   { id: 's17', category: 'påbud', shape: 'circle-blue', symbol: 'G+S',name: 'Gang- og sykkelveg', number: '522', description: 'Gang- og sykkelveg. Motorvogn er forbudt. Kun for gående og syklende.' },
   { id: 's29', category: 'påbud', shape: 'circle-blue', symbol: '🚶', name: 'Gangveg',             number: '524', description: 'Kun for gående. Syklister og motorvogn er forbudt.' },
