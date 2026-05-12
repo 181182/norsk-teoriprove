@@ -762,17 +762,18 @@
 </div>
 
 <!-- ============ BADGE UNLOCK OVERLAY ============ -->
-<div class="badge-overlay" id="badge-overlay">
+<div class="badge-overlay" id="badge-overlay" onclick="this.classList.remove('show')">
   <div class="badge-popup">
     <div class="badge-popup-label">🏅 Nytt merke opplåst!</div>
     <div class="badge-popup-icon" id="badge-overlay-icon">🎯</div>
     <div class="badge-popup-name" id="badge-overlay-name">Første steg</div>
     <div class="badge-popup-desc" id="badge-overlay-desc"></div>
+    <div style="font-size:0.7rem;opacity:0.5;margin-top:8px">Klikk for å lukke</div>
   </div>
 </div>
 
 <!-- ============ LEVEL UP OVERLAY ============ -->
-<div class="levelup-overlay" id="levelup-overlay">
+<div class="levelup-overlay" id="levelup-overlay" onclick="this.classList.remove('show')">
   <div class="levelup-popup">
     <div class="levelup-label">🎊 Nytt nivå!</div>
     <div class="levelup-icon" id="levelup-icon">🚗</div>

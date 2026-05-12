@@ -307,16 +307,27 @@ function renderCategories() {
   if (!grid) return;
   grid.innerHTML = CATEGORIES.map(cat => {
     const catProgress = getCategoryProgress(cat.id);
+    const guide = GUIDES.find(g => g.category === cat.id);
+    const qCount = QUESTIONS.filter(q => q.category === cat.id).length;
+    const pctColor = catProgress.pct >= 85 ? '#27ae60' : catProgress.pct >= 50 ? '#f39c12' : '#e74c3c';
     return `
-      <div class="category-card" style="--card-color: ${cat.color}" onclick="startCategoryQuiz('${cat.id}')">
+      <div class="category-card" style="--card-color: ${cat.color}">
         <div class="category-icon">${cat.icon}</div>
         <h3>${cat.name}</h3>
         <p>${cat.description}</p>
+        <div class="category-stats">
+          <span>${qCount} spørsmål</span>
+          <span style="color:${pctColor};font-weight:700">${catProgress.pct}% fullført</span>
+        </div>
         <div class="category-progress">
           <div class="progress-bar">
             <div class="progress-fill" style="width: ${catProgress.pct}%; background: ${cat.color}"></div>
           </div>
           <span class="progress-text">${catProgress.correct}/${catProgress.total}</span>
+        </div>
+        <div class="category-actions">
+          <button class="btn btn-primary btn-sm" onclick="startCategoryQuiz('${cat.id}')">🎯 Start quiz</button>
+          ${guide ? `<button class="btn btn-outline btn-sm" onclick="navigateTo('guides');setTimeout(()=>showGuide('${guide.id}',document.querySelector('.guide-nav-item')),100)">📖 Les guide</button>` : ''}
         </div>
       </div>
     `;
