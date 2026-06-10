@@ -279,7 +279,6 @@ function showBadgeUnlock(badge) {
   document.getElementById('badge-overlay-name').textContent = badge.name;
   document.getElementById('badge-overlay-desc').textContent = badge.desc;
   playSound('badge');
-  fireConfetti(90);
   overlay.classList.add('show');
   setTimeout(() => overlay.classList.remove('show'), 3500);
 }

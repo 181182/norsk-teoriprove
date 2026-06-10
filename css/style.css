@@ -39,7 +39,9 @@
 }
 
 [data-theme="dark"] .sign-visual,
-[data-theme="dark"] .sign-card .sign-visual {
+[data-theme="dark"] .sign-card .sign-visual,
+[data-theme="dark"] .flash-sign,
+[data-theme="dark"] .question-sign-item > div:first-child {
   background: #ffffff;
   border-radius: 8px;
   padding: 6px;
@@ -833,7 +835,7 @@ nav::-webkit-scrollbar { display: none; }
   text-align: center;
   margin-bottom: 40px;
 }
-.section-header h2 { font-size: 2rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+.section-header h2 { font-size: 2rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
 .section-header p { color: var(--text-light); font-size: 1.05rem; }
 
 .categories-grid {
@@ -872,7 +874,7 @@ nav::-webkit-scrollbar { display: none; }
 }
 
 .category-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.category-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--dark); }
+.category-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
 .category-card p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 12px; flex: 1; }
 
 .category-stats {
@@ -946,7 +948,7 @@ nav::-webkit-scrollbar { display: none; }
   background: rgba(26,82,118,0.08);
 }
 .quiz-option .opt-icon { font-size: 1.5rem; margin-bottom: 6px; }
-.quiz-option .opt-name { font-size: 0.9rem; font-weight: 600; color: var(--dark); }
+.quiz-option .opt-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
 .quiz-option .opt-count { font-size: 0.75rem; color: var(--text-light); }
 
 .difficulty-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
@@ -985,7 +987,7 @@ nav::-webkit-scrollbar { display: none; }
 
 .quiz-progress-info { display: flex; align-items: center; gap: 16px; }
 .quiz-counter { font-size: 0.9rem; color: var(--text-light); }
-.quiz-counter strong { color: var(--dark); font-size: 1.1rem; }
+.quiz-counter strong { color: var(--text); font-size: 1.1rem; }
 
 .quiz-score-display {
   display: flex;
@@ -1007,7 +1009,7 @@ nav::-webkit-scrollbar { display: none; }
 .quiz-timer {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--dark);
+  color: var(--text);
   min-width: 48px;
   text-align: center;
   background: var(--off-white);
@@ -1071,7 +1073,7 @@ nav::-webkit-scrollbar { display: none; }
 .question-text {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--text);
   line-height: 1.5;
   margin-bottom: 28px;
 }
@@ -1262,7 +1264,7 @@ nav::-webkit-scrollbar { display: none; }
 }
 .guide-card.active { display: block; }
 
-.guide-card h2 { font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+.guide-card h2 { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
 
 .guide-intro {
   color: var(--text-light);
@@ -1287,7 +1289,7 @@ nav::-webkit-scrollbar { display: none; }
   margin-bottom: 12px;
 }
 .guide-section-icon { font-size: 1.5rem; }
-.guide-section h3 { font-size: 1.05rem; font-weight: 700; color: var(--dark); }
+.guide-section h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); }
 .guide-section p { font-size: 0.92rem; line-height: 1.7; color: var(--text); }
 
 .quick-quiz-btn {
@@ -1453,7 +1455,7 @@ nav::-webkit-scrollbar { display: none; }
 .sign-card .sign-name {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--dark);
+  color: var(--text);
   margin-bottom: 6px;
 }
 .sign-card .sign-desc {
@@ -1541,7 +1543,7 @@ nav::-webkit-scrollbar { display: none; }
   box-shadow: var(--shadow);
 }
 .overview-card .ov-icon { font-size: 2.5rem; margin-bottom: 10px; }
-.overview-card .ov-num { font-size: 2rem; font-weight: 800; color: var(--dark); }
+.overview-card .ov-num { font-size: 2rem; font-weight: 800; color: var(--text); }
 .overview-card .ov-label { font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
 
 .progress-details { display: flex; flex-direction: column; gap: 16px; }
@@ -1558,7 +1560,7 @@ nav::-webkit-scrollbar { display: none; }
 
 .pcat-icon { font-size: 1.8rem; flex-shrink: 0; }
 .pcat-info { flex: 1; min-width: 0; }
-.pcat-info h4 { font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.pcat-info h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
 .pcat-info .pcat-bar {
   height: 8px;
   background: var(--gray-light);
@@ -1610,7 +1612,7 @@ nav::-webkit-scrollbar { display: none; }
 .tip-card.danger { border-top-color: var(--danger); }
 
 .tip-icon { font-size: 2rem; margin-bottom: 12px; }
-.tip-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--dark); }
+.tip-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
 .tip-card p { font-size: 0.875rem; color: var(--text-light); line-height: 1.6; }
 .tip-card ul { list-style: none; margin-top: 8px; }
 .tip-card ul li {
@@ -1862,7 +1864,7 @@ nav::-webkit-scrollbar { display: none; }
 }
 
 .exam-setup-icon { font-size: 3.5rem; margin-bottom: 16px; }
-.exam-setup-card h2 { font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+.exam-setup-card h2 { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
 .exam-setup-card > p { color: var(--text-light); font-size: 1rem; margin-bottom: 32px; }
 
 .exam-rules-grid {
@@ -1909,7 +1911,7 @@ nav::-webkit-scrollbar { display: none; }
   margin: 24px auto 0;
 }
 
-.exam-history h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+.exam-history h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
 
 .exam-history-item {
   background: var(--surface);
@@ -1967,7 +1969,7 @@ nav::-webkit-scrollbar { display: none; }
   border-radius: var(--radius-sm);
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--dark);
+  color: var(--text);
   min-width: 120px;
 }
 
@@ -1985,7 +1987,7 @@ nav::-webkit-scrollbar { display: none; }
 }
 
 .exam-counter strong {
-  color: var(--dark);
+  color: var(--text);
   font-size: 1.1rem;
 }
 
@@ -2124,7 +2126,7 @@ nav::-webkit-scrollbar { display: none; }
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 16px;
-  color: var(--dark);
+  color: var(--text);
 }
 
 .exam-cat-row {
@@ -2138,7 +2140,7 @@ nav::-webkit-scrollbar { display: none; }
 .exam-cat-row:last-child { border-bottom: none; }
 
 .exam-cat-icon { font-size: 1.3rem; flex-shrink: 0; width: 32px; text-align: center; }
-.exam-cat-name { font-size: 0.88rem; font-weight: 600; flex: 1; min-width: 0; color: var(--dark); }
+.exam-cat-name { font-size: 0.88rem; font-weight: 600; flex: 1; min-width: 0; color: var(--text); }
 
 .exam-cat-bar {
   width: 120px;
@@ -2172,7 +2174,7 @@ nav::-webkit-scrollbar { display: none; }
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 12px;
-  color: var(--dark);
+  color: var(--text);
 }
 
 .exam-review-filters {
@@ -2228,7 +2230,7 @@ nav::-webkit-scrollbar { display: none; }
 .eri-question {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--text);
   margin-bottom: 8px;
   line-height: 1.4;
 }
