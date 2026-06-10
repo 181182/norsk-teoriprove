@@ -34,6 +34,8 @@
         <span>🔥</span>
         <span id="header-streak-count">0</span>
       </div>
+      <button class="icon-toggle" id="theme-toggle" onclick="toggleTheme()" title="Lys/mørk modus" aria-label="Bytt fargetema">🌙</button>
+      <button class="icon-toggle" id="sound-toggle" onclick="toggleSound()" title="Lyd av/på" aria-label="Lyd av/på">🔊</button>
     </div>
     <nav>
       <button class="nav-btn active" data-page="home">🏠 <span>Hjem</span></button>
@@ -41,6 +43,7 @@
       <button class="nav-btn" data-page="quiz">🎯 <span>Quiz</span></button>
       <button class="nav-btn" data-page="guides">📖 <span>Guider</span></button>
       <button class="nav-btn" data-page="signs">🚦 <span>Skilt</span></button>
+      <button class="nav-btn" data-page="flashcards">🃏 <span>Skiltkort</span></button>
       <button class="nav-btn" data-page="exam-mode">📝 <span>Teoriprøve</span></button>
       <button class="nav-btn" data-page="exam">✅ <span>Tips</span></button>
       <button class="nav-btn" data-page="progress">
@@ -98,22 +101,22 @@
         <p>Strukturert læring som tar deg fra nybegynner til klar for prøven</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
-        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+        <div style="background:var(--surface);border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
           <div style="font-size:2.5rem;margin-bottom:12px">📖</div>
           <h3 style="font-weight:700;margin-bottom:8px">1. Les guidene</h3>
           <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Start med å lese de detaljerte guidene for hvert tema. Forstå reglene grundig.</p>
         </div>
-        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+        <div style="background:var(--surface);border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
           <div style="font-size:2.5rem;margin-bottom:12px">🚦</div>
           <h3 style="font-weight:700;margin-bottom:8px">2. Lær skiltene</h3>
           <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Gå gjennom alle trafikkskiltene med visuell demonstrasjon og forklaring.</p>
         </div>
-        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+        <div style="background:var(--surface);border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
           <div style="font-size:2.5rem;margin-bottom:12px">🎯</div>
           <h3 style="font-weight:700;margin-bottom:8px">3. Test deg selv</h3>
           <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Ta quizzer med tidtaker. Alle spørsmål har detaljerte forklaringer.</p>
         </div>
-        <div style="background:white;border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
+        <div style="background:var(--surface);border-radius:12px;padding:28px;box-shadow:var(--shadow);text-align:center">
           <div style="font-size:2.5rem;margin-bottom:12px">📊</div>
           <h3 style="font-weight:700;margin-bottom:8px">4. Følg fremgang</h3>
           <p style="color:var(--text-light);font-size:0.9rem;line-height:1.6">Se hvor mye du har lært per kategori. Fokuser på svake områder.</p>
@@ -132,7 +135,7 @@
   </section>
 
   <!-- Quick quiz categories -->
-  <section class="section" style="background:white;padding:48px 0">
+  <section class="section" style="background:var(--surface);padding:48px 0">
     <div class="container">
       <div class="section-header">
         <h2>Velg en kategori å starte med</h2>
@@ -213,6 +216,9 @@
 
           <button class="btn btn-primary btn-lg" onclick="startQuiz()" style="width:100%;justify-content:center">
             ▶ Start Quiz
+          </button>
+          <button class="btn btn-smart btn-lg" onclick="startSmartQuiz()" style="width:100%;justify-content:center;margin-top:12px" title="15 spørsmål plukket fra det du sliter mest med">
+            🧠 Smart øving – tren på svakhetene dine
           </button>
         </div>
 
@@ -296,6 +302,7 @@
             <button class="btn btn-primary" onclick="startQuiz()">🔄 Prøv igjen</button>
             <button class="btn btn-outline" onclick="resetQuiz()">⚙ Nytt oppsett</button>
             <button class="btn btn-secondary" style="background:var(--blue);color:white" data-goto="guides">📖 Les guider</button>
+            <button class="btn btn-secondary" style="background:var(--success);color:white" onclick="shareResult()">📤 Del resultat</button>
           </div>
         </div>
 
@@ -344,7 +351,7 @@
       </div>
 
       <!-- Signs explanation card -->
-      <div style="background:white;border-radius:12px;padding:24px;margin-bottom:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px">
+      <div style="background:var(--surface);border-radius:12px;padding:24px;margin-bottom:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px">
         <div style="display:flex;align-items:flex-start;gap:12px">
           <div style="font-size:2rem">🔺</div>
           <div>
@@ -390,6 +397,74 @@
       </div>
 
       <div class="signs-grid" id="signs-grid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PAGE: FLASHCARDS ============ -->
+<div class="page" id="page-flashcards">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>🃏 Skiltkort</h2>
+        <p>Snu kortet og test om du kan skiltet. Kortene du er usikker på kommer tilbake til du kan dem!</p>
+      </div>
+
+      <!-- Setup -->
+      <div class="flash-setup" id="flash-setup">
+        <div class="signs-filter">
+          <button class="filter-btn flash-filter-btn active" data-filter="all">Alle skilt</button>
+          <button class="filter-btn flash-filter-btn" data-filter="advarsel">⚠️ Advarsel</button>
+          <button class="filter-btn flash-filter-btn" data-filter="forbud">🚫 Forbud</button>
+          <button class="filter-btn flash-filter-btn" data-filter="påbud">🔵 Påbud</button>
+          <button class="filter-btn flash-filter-btn" data-filter="prioritet">⬦ Prioritet</button>
+          <button class="filter-btn flash-filter-btn" data-filter="opplysning">ℹ️ Opplysning</button>
+          <button class="filter-btn flash-filter-btn" data-filter="service">🅿️ Service</button>
+        </div>
+        <div style="text-align:center;margin-top:24px">
+          <button class="btn btn-primary btn-lg" onclick="startFlashSession()">🃏 Start økten</button>
+        </div>
+      </div>
+
+      <!-- Active session -->
+      <div class="flash-active" id="flash-active">
+        <div class="flash-status">
+          <span class="flash-stat" id="flash-counter">Kort 1 av 20</span>
+          <span class="flash-stat flash-stat-known">✅ <span id="flash-known">0</span></span>
+          <span class="flash-stat flash-stat-missed">🔁 <span id="flash-missed">0</span></span>
+        </div>
+        <div class="flashcard-scene" onclick="flipCard()">
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-face flashcard-front">
+              <div class="flash-sign" id="flash-sign"></div>
+              <div class="flash-hint">Trykk for å snu 👆</div>
+            </div>
+            <div class="flashcard-face flashcard-back">
+              <div class="flash-name" id="flash-name"></div>
+              <div class="flash-number" id="flash-number"></div>
+              <div class="flash-desc" id="flash-desc"></div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-actions">
+          <button class="flash-btn flash-btn-miss" onclick="markCard(false)">🤔 Usikker</button>
+          <button class="flash-btn flash-btn-know" onclick="markCard(true)">✅ Kan den!</button>
+        </div>
+        <div style="text-align:center;margin-top:16px">
+          <button class="filter-btn" onclick="exitFlashSession()">Avslutt økten</button>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="flash-summary" id="flash-summary">
+        <div class="flash-summary-icon" id="flash-summary-icon">🏆</div>
+        <h3 id="flash-summary-title">Økten fullført!</h3>
+        <p id="flash-summary-text"></p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px">
+          <button class="btn btn-primary" onclick="startFlashSession()">🔁 Ny økt</button>
+          <button class="filter-btn" onclick="exitFlashSession()">Velg kategori</button>
+        </div>
+      </div>
     </div>
   </section>
 </div>
@@ -662,7 +737,7 @@
       </div>
 
       <!-- Key rules summary -->
-      <div style="background:white;border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-top:32px">
+      <div style="background:var(--surface);border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-top:32px">
         <h3 style="font-size:1.4rem;font-weight:800;margin-bottom:24px">📌 De Viktigste Reglene – Hurtigguide</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
           <div style="background:rgba(231,76,60,0.06);border-radius:10px;padding:20px;border-left:4px solid var(--red)">
@@ -728,7 +803,7 @@
       <div id="badges-grid" class="badges-grid"></div>
 
       <!-- Motivational -->
-      <div style="background:white;border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-top:24px;text-align:center">
+      <div style="background:var(--surface);border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-top:24px;text-align:center">
         <p style="font-size:1.1rem;color:var(--text-light);margin-bottom:16px">
           💪 Øv jevnt og du vil bestå teoriprøven!
         </p>
@@ -783,6 +858,9 @@
 
 <!-- Scroll to top -->
 <button class="scroll-top" id="scroll-top" title="Tilbake til toppen">↑</button>
+
+<!-- Confetti -->
+<canvas id="confetti-canvas"></canvas>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>

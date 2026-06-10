@@ -24,6 +24,105 @@ function saveGame() {
 
 let game = loadGame();
 
+// ============ THEME ============
+(function applyTheme() {
+  const saved = localStorage.getItem('no-driving-theme');
+  const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = theme;
+})();
+
+window.toggleTheme = function() {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('no-driving-theme', next);
+  updateToggleIcons();
+};
+
+// ============ SOUND ============
+let soundOn = localStorage.getItem('no-driving-sound') !== 'off';
+
+window.toggleSound = function() {
+  soundOn = !soundOn;
+  localStorage.setItem('no-driving-sound', soundOn ? 'on' : 'off');
+  updateToggleIcons();
+  if (soundOn) playSound('correct');
+};
+
+function updateToggleIcons() {
+  const t = document.getElementById('theme-toggle');
+  const s = document.getElementById('sound-toggle');
+  if (t) t.textContent = document.documentElement.dataset.theme === 'dark' ? '☀️' : '🌙';
+  if (s) s.textContent = soundOn ? '🔊' : '🔇';
+}
+
+let audioCtx = null;
+function tone(freq, start, dur, type = 'sine', gain = 0.12) {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  const t0 = audioCtx.currentTime + start;
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(gain, t0 + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  osc.connect(g).connect(audioCtx.destination);
+  osc.start(t0);
+  osc.stop(t0 + dur + 0.05);
+}
+
+function playSound(type) {
+  if (!soundOn) return;
+  try {
+    switch (type) {
+      case 'correct': tone(880, 0, 0.15); tone(1318.5, 0.08, 0.2); break;
+      case 'wrong':   tone(220, 0, 0.25, 'square', 0.06); tone(185, 0.1, 0.3, 'square', 0.05); break;
+      case 'levelup': [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, i * 0.12, 0.25, 'triangle')); break;
+      case 'badge':   [659.25, 783.99, 987.77].forEach((f, i) => tone(f, i * 0.1, 0.3, 'triangle')); break;
+      case 'perfect': [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => tone(f, i * 0.1, 0.35, 'triangle')); break;
+      case 'flip':    tone(600, 0, 0.06, 'sine', 0.05); break;
+    }
+  } catch {}
+}
+
+// ============ CONFETTI ============
+function fireConfetti(count = 120) {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+  const colors = ['#e74c3c', '#f39c12', '#27ae60', '#2980b9', '#8e44ad', '#f1c40f'];
+  const parts = Array.from({ length: count }, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * canvas.height * 0.3,
+    w: 6 + Math.random() * 6,
+    h: 8 + Math.random() * 8,
+    color: colors[(Math.random() * colors.length) | 0],
+    vy: 2 + Math.random() * 3.5,
+    vx: -1.5 + Math.random() * 3,
+    rot: Math.random() * Math.PI,
+    vr: -0.1 + Math.random() * 0.2,
+  }));
+  const t0 = performance.now();
+  function frame(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of parts) {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    if (t - t0 < 3500 && parts.some(p => p.y < canvas.height + 20)) requestAnimationFrame(frame);
+    else { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.style.display = 'none'; }
+  }
+  requestAnimationFrame(frame);
+}
+
 // ============ APP STATE ============
 const state = {
   currentPage: 'home',
@@ -55,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(renderBadgesPage);
   safe(renderExamHistory);
   safe(updateHeroStats);
+  safe(updateToggleIcons);
 });
 
 function updateHeroStats() {
@@ -178,6 +278,8 @@ function showBadgeUnlock(badge) {
   document.getElementById('badge-overlay-icon').textContent = badge.icon;
   document.getElementById('badge-overlay-name').textContent = badge.name;
   document.getElementById('badge-overlay-desc').textContent = badge.desc;
+  playSound('badge');
+  fireConfetti(90);
   overlay.classList.add('show');
   setTimeout(() => overlay.classList.remove('show'), 3500);
 }
@@ -187,6 +289,8 @@ function showLevelUp(lvl) {
   if (!overlay) return;
   document.getElementById('levelup-icon').textContent = lvl.icon;
   document.getElementById('levelup-name').textContent = `Nivå ${lvl.level}: ${lvl.name}`;
+  playSound('levelup');
+  fireConfetti(140);
   overlay.classList.add('show');
   setTimeout(() => overlay.classList.remove('show'), 3500);
 }
@@ -282,7 +386,110 @@ function navigateTo(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (page === 'progress') { renderProgress(); renderBadgesPage(); }
   if (page === 'exam-mode') { renderExamHistory(); }
+  if (page === 'flashcards') { initFlashcards(); }
 }
+
+// ============ FLASHCARDS ============
+state.flash = { deck: [], idx: 0, known: 0, missed: 0, total: 0, filter: 'all', active: false, flipped: false, wired: false };
+
+function initFlashcards() {
+  if (state.flash.wired) return;
+  state.flash.wired = true;
+  document.querySelectorAll('.flash-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.flash-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.flash.filter = btn.dataset.filter;
+    });
+  });
+}
+
+window.startFlashSession = function() {
+  const f = state.flash;
+  let pool = f.filter === 'all' ? [...SIGNS] : SIGNS.filter(s => s.category === f.filter);
+  pool = shuffle(pool);
+  if (f.filter === 'all') pool = pool.slice(0, 20);
+  f.deck = pool;
+  f.idx = 0;
+  f.known = 0;
+  f.missed = 0;
+  f.total = pool.length;
+  f.active = true;
+  f.flipped = false;
+  document.getElementById('flash-setup').style.display = 'none';
+  document.getElementById('flash-summary').classList.remove('show');
+  document.getElementById('flash-active').classList.add('show');
+  renderFlashCard();
+};
+
+function renderFlashCard() {
+  const f = state.flash;
+  const sign = f.deck[f.idx];
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  f.flipped = false;
+  // Re-trigger entrance animation
+  card.classList.remove('deal-in');
+  void card.offsetWidth;
+  card.classList.add('deal-in');
+  document.getElementById('flash-sign').innerHTML = renderSignShape(sign, 130);
+  document.getElementById('flash-name').textContent = sign.name;
+  document.getElementById('flash-number').textContent = `Skilt ${sign.number}`;
+  document.getElementById('flash-desc').textContent = sign.description;
+  document.getElementById('flash-counter').textContent = `Kort ${f.idx + 1} av ${f.deck.length}`;
+  document.getElementById('flash-known').textContent = f.known;
+  document.getElementById('flash-missed').textContent = f.missed;
+}
+
+window.flipCard = function() {
+  if (!state.flash.active) return;
+  state.flash.flipped = !state.flash.flipped;
+  document.getElementById('flashcard').classList.toggle('flipped', state.flash.flipped);
+  playSound('flip');
+};
+
+window.markCard = function(known) {
+  const f = state.flash;
+  if (!f.active) return;
+  const sign = f.deck[f.idx];
+  if (known) {
+    f.known++;
+    playSound('correct');
+  } else {
+    f.missed++;
+    playSound('wrong');
+    // Re-insert missed card 3-6 positions later
+    const insertAt = Math.min(f.deck.length, f.idx + 3 + Math.floor(Math.random() * 4));
+    f.deck.splice(insertAt, 0, sign);
+  }
+  f.idx++;
+  if (f.idx >= f.deck.length) endFlashSession();
+  else renderFlashCard();
+};
+
+function endFlashSession() {
+  const f = state.flash;
+  f.active = false;
+  document.getElementById('flash-active').classList.remove('show');
+  const summary = document.getElementById('flash-summary');
+  summary.classList.add('show');
+  const perfect = f.missed === 0;
+  const xp = 5 * f.total + (perfect ? 50 : 0);
+  document.getElementById('flash-summary-icon').textContent = perfect ? '🏆' : '💪';
+  document.getElementById('flash-summary-title').textContent = perfect ? 'Perfekt økt!' : 'Økten fullført!';
+  document.getElementById('flash-summary-text').textContent =
+    `${f.total} skilt gjennomgått – ${f.missed === 0 ? 'alle riktige på første forsøk!' : `${f.missed} repetisjoner før alt satt.`}`;
+  if (perfect) { playSound('perfect'); fireConfetti(180); }
+  else playSound('badge');
+  awardXP(xp, perfect ? '(perfekt skiltøkt! 🃏)' : '(skiltøkt 🃏)');
+}
+
+window.exitFlashSession = function() {
+  state.flash.active = false;
+  document.getElementById('flash-active').classList.remove('show');
+  document.getElementById('flash-summary').classList.remove('show');
+  document.getElementById('flash-setup').style.display = '';
+};
 
 // ============ HOME CATEGORIES ============
 function renderHomeCategories() {
@@ -291,12 +498,12 @@ function renderHomeCategories() {
   const highlight = CATEGORIES.slice(0, 6);
   grid.innerHTML = highlight.map(c => `
     <div onclick="startCategoryQuiz('${c.id}')"
-         style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.08);cursor:pointer;transition:all 0.3s;border-top:4px solid ${c.color}"
+         style="background:var(--surface);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.08);cursor:pointer;transition:all 0.3s;border-top:4px solid ${c.color}"
          onmouseover="this.style.transform='translateY(-4px)'"
          onmouseout="this.style.transform=''">
       <div style="font-size:2rem;margin-bottom:8px">${c.icon}</div>
       <strong style="display:block;font-size:0.95rem">${c.name}</strong>
-      <span style="font-size:0.8rem;color:#7f8c8d">Start quiz →</span>
+      <span style="font-size:0.8rem;color:var(--gray-dark)">Start quiz →</span>
     </div>
   `).join('');
 }
@@ -305,13 +512,13 @@ function renderHomeCategories() {
 function renderCategories() {
   const grid = document.getElementById('categories-grid');
   if (!grid) return;
-  grid.innerHTML = CATEGORIES.map(cat => {
+  grid.innerHTML = CATEGORIES.map((cat, i) => {
     const catProgress = getCategoryProgress(cat.id);
     const guide = GUIDES.find(g => g.category === cat.id);
     const qCount = QUESTIONS.filter(q => q.category === cat.id).length;
     const pctColor = catProgress.pct >= 85 ? '#27ae60' : catProgress.pct >= 50 ? '#f39c12' : '#e74c3c';
     return `
-      <div class="category-card" style="--card-color: ${cat.color}">
+      <div class="category-card stagger-in" style="--card-color: ${cat.color}; --i: ${i}">
         <div class="category-icon">${cat.icon}</div>
         <h3>${cat.name}</h3>
         <p>${cat.description}</p>
@@ -396,24 +603,55 @@ window.startQuiz = function() {
   startQuizWithCount(20);
 };
 
-function startQuizWithCount(count) {
-  let questions = [...QUESTIONS];
-  if (state.quiz.selectedCategory !== 'all') {
-    questions = questions.filter(q => q.category === state.quiz.selectedCategory);
-  }
-  if (state.quiz.selectedDifficulty !== 'all') {
-    questions = questions.filter(q => q.difficulty === state.quiz.selectedDifficulty);
-  }
-  if (questions.length === 0) {
-    showNotification('Ingen spørsmål funnet for dette valget.', 'wrong');
+window.startSmartQuiz = function() {
+  state.quiz.isDailyChallenge = false;
+  state.quiz.selectedCategory = 'all';
+
+  const wrong = [], fresh = [], done = [];
+  QUESTIONS.forEach(q => {
+    const rec = state.progress[q.category];
+    if (!rec || !(q.id in rec)) fresh.push(q);
+    else if (rec[q.id] === false) wrong.push(q);
+    else done.push(q);
+  });
+
+  // Unattempted questions from weakest categories first
+  const weakness = {};
+  CATEGORIES.forEach(c => { weakness[c.id] = 100 - getCategoryProgress(c.id).pct; });
+  const freshSorted = shuffle(fresh).sort((a, b) => (weakness[b.category] || 0) - (weakness[a.category] || 0));
+
+  const pool = [...shuffle(wrong), ...freshSorted, ...shuffle(done)];
+  if (pool.length === 0) {
+    showNotification('Ingen spørsmål funnet.', 'wrong');
     return;
   }
+  startQuizWithCount(15, pool);
+  showNotification('🧠 Smart øving: spørsmålene du trenger mest!', 'correct');
+};
 
-  // Prioritize unseen questions
-  const seenIds = new Set(getSeenIds(state.quiz.selectedCategory));
-  const unseen = questions.filter(q => !seenIds.has(q.id));
-  const seen = questions.filter(q => seenIds.has(q.id));
-  const pool = shuffle(unseen.length >= count ? unseen : [...unseen, ...shuffle(seen)]);
+function startQuizWithCount(count, poolOverride) {
+  let pool;
+  if (poolOverride) {
+    pool = poolOverride;
+  } else {
+    let questions = [...QUESTIONS];
+    if (state.quiz.selectedCategory !== 'all') {
+      questions = questions.filter(q => q.category === state.quiz.selectedCategory);
+    }
+    if (state.quiz.selectedDifficulty !== 'all') {
+      questions = questions.filter(q => q.difficulty === state.quiz.selectedDifficulty);
+    }
+    if (questions.length === 0) {
+      showNotification('Ingen spørsmål funnet for dette valget.', 'wrong');
+      return;
+    }
+
+    // Prioritize unseen questions
+    const seenIds = new Set(getSeenIds(state.quiz.selectedCategory));
+    const unseen = questions.filter(q => !seenIds.has(q.id));
+    const seen = questions.filter(q => seenIds.has(q.id));
+    pool = shuffle(unseen.length >= count ? unseen : [...unseen, ...shuffle(seen)]);
+  }
 
   state.quiz.questions = pool.slice(0, Math.min(count, pool.length));
   state.quiz.currentIndex = 0;
@@ -641,8 +879,10 @@ window.selectAnswer = function(index) {
   checkBadges();
 
   if (isCorrect) {
+    playSound('correct');
     showNotification(state.quiz.sessionCombo >= 3 ? `✅ Riktig! 🔥×${state.quiz.sessionCombo}` : '✅ Riktig svar!', 'correct');
   } else {
+    playSound('wrong');
     showNotification('❌ Feil svar. Les forklaringen.', 'wrong');
   }
 
@@ -674,10 +914,14 @@ function showResults() {
   const correct = state.quiz.correct;
   const pct = Math.round(correct / total * 100);
   const pass = pct >= 85;
+  state.lastResult = { pct, correct, total };
 
   // Award bonus XP
   if (pct === 100 && total >= 10) awardXP(100, '(perfekt quiz! 💯)');
   else if (pct >= 85) awardXP(30, '(bestått!)');
+
+  if (pct === 100) { playSound('perfect'); fireConfetti(220); }
+  else if (pass) { playSound('badge'); fireConfetti(100); }
 
   // Daily challenge completion
   if (state.quiz.isDailyChallenge) {
@@ -728,6 +972,20 @@ function showResults() {
     `;
   }
 }
+
+window.shareResult = function() {
+  const r = state.lastResult;
+  if (!r) return;
+  const text = `Jeg fikk ${r.pct}% (${r.correct}/${r.total}) på norsk teoriprøve-quiz! ${r.pct >= 85 ? '🎉 Bestått!' : 'Snart bestått! 💪'} Prøv selv:`;
+  const url = 'https://181182.github.io/norsk-teoriprove/';
+  if (navigator.share) {
+    navigator.share({ title: 'Norsk Teoriprøve', text, url }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(`${text} ${url}`)
+      .then(() => showNotification('📋 Kopiert til utklippstavlen!', 'correct'))
+      .catch(() => {});
+  }
+};
 
 window.resetQuiz = function() {
   clearInterval(state.quiz.timer);
@@ -832,8 +1090,8 @@ function updateSignsGrid() {
     signs = signs.filter(s => s.category === state.signFilter);
   }
 
-  grid.innerHTML = signs.map(sign => `
-    <div class="sign-card" onclick="showSignModal('${sign.id}')">
+  grid.innerHTML = signs.map((sign, i) => `
+    <div class="sign-card stagger-in" style="--i: ${Math.min(i, 20)}" onclick="showSignModal('${sign.id}')">
       <div class="sign-visual flex-center">
         ${renderSignShape(sign, 90)}
       </div>
